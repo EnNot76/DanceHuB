@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="de">
+  <!-- Wake up, Neo -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dance HUB Munich WebApp - Dance-Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<style>
+  :root {
+    --bg-page: #f5f5f7;
+    --bg-card: #ffffff;
+    --border-subtle: #e5e7eb;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --primary: #7d3cff;
+    --primary-hover: #6b21ff;
+    --primary-soft: #eef2ff;
+    --danger: #e11d48;
+    --danger-hover: #be123c;
+    --success: #16a34a;
+    --success-hover: #15803d;
+    --info: #0ea5e9;
+    --info-hover: #0284c7;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    max-width: 1500px;
+    margin: 12px auto;
+    padding: 16px;
+    background: var(--bg-page);
+    min-height: 100vh;
+    color: var(--text-main);
+  }
+
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #7d3cff, #4f46e5);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.4);
+    min-height: 72px;
+  }
+
+  .top-bar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .top-bar-logo-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .top-bar-logo {
+    width: 72px;
+    height: 52px;
+    border-radius: 16px;
+    object-fit: cover;
+    box-shadow: 0 0 0 3px #ffffff, 0 8px 18px rgba(15, 23, 42, 0.45);
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .top-bar-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .top-bar-title {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .top-bar-subtitle {
+    font-size: 12px;
+    opacity: 0.9;
+    max-width: 260px;
+  }
+
+  .top-bar-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    font-size: 12px;
+  }
+
+  .top-bar-date {
+    font-weight: 500;
+  }
+
+  .top-bar-tag {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.18);
+    font-size: 11px;
+  }
+
+  @media (max-width: 640px) {
+    .top-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .top-bar-right {
+      align-items: flex-start;
+    }
+    .top-bar-logo-title {
+      align-items: flex-start;
+    }
+  }
+
+  .layout {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .sidebar {
+    width: 190px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 14px 12px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .sidebar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .sidebar-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    padding: 0 10px;
+  }
+
+  .sidebar-link {
+    width: 100%;
+    justify-content: flex-start;
+    background: transparent;
+    color: #111827;
+    border-radius: 999px;
+    padding: 6px 10px;
+  }
+
+  .sidebar-link:hover {
+    background-color: #eef2ff;
+  }
+
+  .sidebar-link-active {
+    background-color: #e0e7ff;
+    color: #111827;
+    font-weight: 600;
+  }
+
+  .main-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
+    }
+    .sidebar {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .sidebar-section {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-title {
+      margin-bottom: 0;
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+    letter-spacing: 0.01em;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-top: 0;
+  }
+
+  h4 {
+    font-size: 15px;
+    margin: 0 0 8px;
+    color: var(--text-muted);
+  }
+
+  .form-container,
+  .search-container,
+  .csv-container {
+    margin-bottom: 20px;
+    background: var(--bg-card);
+    padding: 16px 18px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  input,
+  select {
+    width: 100%;
+    margin: 0;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  }
+
+  input::placeholder {
+    color: #9ca3af;
+  }
+
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px rgba(125, 60, 255, 0.2);
+    background-color: #ffffff;
+  }
+
+  .search-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-row input[type="text"] {
+    flex: 1 1 220px;
+  }
+
+  button,
+  label.secondary-btn {
+    padding: 6px 12px;
+    margin: 2px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition: background-color 0.2s, transform 0.08s, box-shadow 0.15s;
+  }
+
+  button:active,
+  label.secondary-btn:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .primary-btn {
+    background-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(125, 60, 255, 0.35);
+  }
+
+  .primary-btn:hover {
+    background-color: var(--primary-hover);
+  }
+
+  .edit-btn {
+    background-color: var(--info);
+    color: #ffffff;
+  }
+
+  .edit-btn:hover {
+    background-color: var(--info-hover);
+  }
+
+  .delete-btn {
+    background-color: var(--danger);
+    color: #ffffff;
+  }
+
+  .delete-btn:hover {
+    background-color: var(--danger-hover);
+  }
+
+  .invoice-btn {
+    background-color: var(--success);
+    color: #ffffff;
+  }
+
+  .invoice-btn:hover {
+    background-color: var(--success-hover);
+  }
+
+  .secondary-btn {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+
+  .secondary-btn:hover {
+    background-color: #d1d5db;
+  }
+
+  .danger-outline-btn {
+    background-color: #fef2f2;
+    color: var(--danger);
+    border: 1px solid #fecaca;
+  }
+
+  .danger-outline-btn:hover {
+    background-color: #fee2e2;
+  }
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  }
+
+  .table-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .table-container::-webkit-scrollbar-thumb {
+    background-color: #cbd5f5;
+    border-radius: 999px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    background: #ffffff;
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    border: 1px solid #e5e7eb;
+    padding: 6px 8px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  th {
+    background-color: var(--primary);
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
+
+  tbody tr:hover {
+    background-color: var(--primary-soft);
+  }
+
+  /* Colonne tabella desktop */
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 12%;
+  }
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 12%;
+  }
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 8%;
+  }
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 18%;
+  }
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: 12%;
+  }
+  th:nth-child(6),
+  td:nth-child(6) {
+    width: 26%;
+  }
+  th:nth-child(7),
+  td:nth-child(7) {
+    width: 8%;
+  }
+  th:nth-child(8),
+  td:nth-child(8) {
+    width: 12%;
+  }
+  th:nth-child(9),
+  td:nth-child(9) {
+    width: 16%;
+  }
+
+  .edit-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.98);
+    padding: 20px 22px;
+    border: 1px solid var(--border-subtle);
+    display: none;
+    z-index: 1000;
+    border-radius: 14px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
+    max-width: 420px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .edit-form input,
+  .edit-form select {
+    margin-bottom: 8px;
+  }
+
+  .edit-form-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .probeRow {
+    margin-bottom: 10px;
+  }
+
+  .footer-text {
+    color: var(--text-muted);
+    font-size: 11px;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 20px 0;
+  }
+
+  /* MOBILE: ottimizzazione per telefoni ~6" */
+  @media (max-width: 540px) {
+    body {
+      margin: 0;
+      padding: 8px;
+      max-width: 100%;
+    }
+
+    .top-bar {
+      border-radius: 0;
+      margin: 0 0 8px;
+      padding: 10px 12px;
+    }
+
+    .top-bar-logo {
+      width: 52px;
+      height: 40px;
+    }
+
+    .top-bar-title {
+      font-size: 16px;
+    }
+
+    .top-bar-subtitle {
+      font-size: 11px;
+      max-width: 200px;
+    }
+
+    .layout {
+      gap: 8px;
+    }
+
+    /* Sidebar come bottom tab-bar */
+    .sidebar {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      border-radius: 999px;
+      margin-top: 8px;
+      padding: 6px 8px;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .sidebar-section {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      display: none;
+    }
+
+    .sidebar-link {
+      flex: 1 1 0;
+      justify-content: center;
+      padding: 6px 4px;
+      font-size: 12px;
+    }
+
+    .form-container,
+    .search-container,
+    .csv-container {
+      padding: 12px 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    input,
+    select {
+      padding: 7px 8px;
+      font-size: 14px;
+    }
+
+    button,
+    label.secondary-btn {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    /* Modali adattati al piccolo schermo */
+    .edit-form {
+      width: 94%;
+      max-width: 94%;
+      padding: 12px 10px;
+    }
+
+    .edit-form input,
+    .edit-form select {
+      font-size: 14px;
+    }
+
+    /* Tabella → card verticali */
+    .table-container {
+      overflow-x: visible;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    table,
+    thead {
+      display: none;
+    }
+
+    #tableBody {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #tableBody tr {
+      display: block;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      padding: 8px 10px;
+    }
+
+    #tableBody td {
+      display: block;
+      border: none;
+      padding: 2px 0;
+      white-space: normal;
+    }
+
+    #tableBody td:nth-child(1)::before {
+      content: "Vorname: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(2)::before {
+      content: "Nachname: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(3)::before {
+      content: "Geschlecht: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(4)::before {
+      content: "E-Mail: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(5)::before {
+      content: "Telefon: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(6)::before {
+      content: "Adresse: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(7)::before {
+      content: "PLZ: ";
+      font-weight: 600;
+    }
+    #tableBody td:nth-child(8)::before {
+      content: "Stadt: ";
+      font-weight: 600;
+    }
+
+    /* Azioni in fondo alla card */
+    #tableBody td:nth-child(9) {
+      margin-top: 6px;
+    }
+  }
+</style>
+
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <div class="top-bar-logo-title">
+            <img src="logo.png" alt="Dance HUB Munich Logo" class="top-bar-logo" />
+            <div class="top-bar-texts">
+              <div class="top-bar-title">Dance HUB Munich</div>
+              <div class="top-bar-subtitle">
+                Dance-Management &amp; Beleg-Erstellung
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <div class="top-bar-date" id="topBarDate"></div>
+          <div class="top-bar-tag">WebApp Dashboard</div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-title">Navigation</div>
+            <button
+              class="sidebar-link sidebar-link-active"
+              type="button"
+              onclick="showSection('create')"
+            >
+              ✚ Neue Tänzer*in
+            </button>
+            <button
+              class="sidebar-link"
+              type="button"
+              onclick="showSection('search')"
+            >
+              🔍 Tänzer*innen
+            </button>
+            <button
+              class="sidebar-link"
+              type="button"
+              onclick="showSection('csv')"
+            >
+              💾 Local Backup
+            </button>
+<button
+  class="sidebar-link"
+  type="button"
+  onclick="resetInvoiceCounter()"
+>
+  ♻️ Reset RG-Nummer
+</button>
+          </div>
+        </aside>
+
+        <main class="main-content">
+<!-- Section: Create -->
+<section id="section-create">
+  <div class="form-container">
+    <h2>Neue Tänzer*innen hinzufügen</h2>
+    <div class="form-grid">
+      <input type="text" id="nome" placeholder="Vorname" />
+      <input type="text" id="cognome" placeholder="Nachname" />
+      <select id="geschlecht">
+        <option value="">Geschlecht wählen</option>
+        <option value="männlich">männlich</option>
+        <option value="weiblich">weiblich</option>
+        <option value="divers">divers</option>
+      </select>
+      <input type="email" id="email" placeholder="E-Mail" />
+      <input type="tel" id="telefono" placeholder="Telefon" />
+      <input type="text" id="indirizzo" placeholder="Adresse" />
+      <input type="text" id="cap" placeholder="PLZ" />
+      <input type="text" id="citta" placeholder="Stadt" />
+
+      <!-- Interne Notiz, nur intern -->
+      <textarea
+        id="notiz"
+        placeholder="Interne Notiz (nur intern, nicht auf Beleg)"
+        rows="2"
+        style="grid-column: 1 / -1; resize: vertical;"
+      ></textarea>
+    </div>
+    <button class="primary-btn" onclick="aggiungiRecord()">
+      Hinzufügen
+    </button>
+  </div>
+</section>
+
+
+          <!-- Section: Search -->
+          <section id="section-search">
+            <div class="search-container">
+              <h2>Tänzer*innen suchen</h2>
+              <div class="search-row">
+                <input
+                  type="text"
+                  id="searchTerm"
+                  placeholder="In allen Feldern suchen..."
+                />
+                <button class="secondary-btn" onclick="cercaRecord()">
+                  Suchen
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th>Geschlecht</th>
+                    <th>E-Mail</th>
+                    <th>Telefon</th>
+                    <th>Adresse</th>
+                    <th>PLZ</th>
+                    <th>Stadt</th>
+                    <th>Aktionen</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Section: CSV / Backup -->
+<section id="section-csv">
+  <div class="csv-container">
+    <h2>CSV-Backup</h2>
+    <p
+      style="
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 0;
+        margin-bottom: 10px;
+      "
+    >
+      Erstelle eine Sicherungsdatei oder spiele ein vorhandenes Backup ein.
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+      <button class="secondary-btn" onclick="downloadCSV()">
+        Backup-Datei herunterladen
+      </button>
+
+      <label for="csvUpload" class="secondary-btn" style="cursor: pointer;">
+        Backup-Datei hochladen
+      </label>
+      <input
+        type="file"
+        id="csvUpload"
+        accept=".csv"
+        onchange="uploadCSV()"
+        style="display: none;"
+      />
+    </div>
+  </div>
+
+
+  <div class="footer-text">
+    Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version 1.0
+  </div>
+</section>
+
+<!-- Edit modal -->
+<div id="editForm" class="edit-form">
+  <h3>Tänzer*innen bearbeiten</h3>
+  <input type="hidden" id="editId" />
+  <input type="text" id="editNome" placeholder="Vorname" /><br />
+  <input type="text" id="editCognome" placeholder="Nachname" /><br />
+  <select id="editGeschlecht">
+    <option value="">Geschlecht wählen</option>
+    <option value="männlich">männlich</option>
+    <option value="weiblich">weiblich</option>
+    <option value="divers">divers</option>
+  </select><br />
+  <input type="email" id="editEmail" placeholder="E-Mail" /><br />
+  <input type="tel" id="editTelefono" placeholder="Telefon" /><br />
+  <input type="text" id="editIndirizzo" placeholder="Adresse" /><br />
+  <input type="text" id="editCap" placeholder="PLZ" /><br />
+  <input type="text" id="editCitta" placeholder="Stadt" /><br />
+
+  <!-- Interne Notiz -->
+  <textarea
+    id="editNotiz"
+    placeholder="Interne Notiz (nur intern)"
+    rows="3"
+    style="width: 100%; resize: vertical; margin-top: 4px;"
+  ></textarea><br />
+
+  <div class="edit-form-actions">
+    <button class="primary-btn" onclick="salvaModifiche()">
+      Speichern
+    </button>
+    <button class="secondary-btn" onclick="chiudiEditForm()">
+      Abbrechen
+    </button>
+  </div>
+</div>
+
+
+          <!-- Invoice modal -->
+          <div id="invoiceForm" class="edit-form">
+            <h3>Rechnung für <span id="invoiceName"></span> erstellen</h3>
+            <input type="hidden" id="invoiceId" />
+            <div id="probenContainer">
+              <h4>Proben hinzufügen</h4>
+              <div class="probeRow">
+                <input type="date" class="probeDate" />
+                <select class="probeService">
+                  <option value="0">Probe Solo (€25,00)</option>
+                  <option value="1">Probe kleine Gruppe (€15,00)</option>
+                  <option value="2">Probe grosse Gruppe (€10,00)</option>
+                  <option value="extra">Extra Probe</option>
+                </select>
+                <input
+                  type="number"
+                  class="probePrice"
+                  placeholder="Preis (€)"
+                  min="0"
+                  step="0.01"
+                  style="display: none;"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="edit-form-actions">
+              <button class="secondary-btn" onclick="aggiungiProbeRow()">
+                Weitere Probe
+              </button>
+              <button class="primary-btn" onclick="confermaRechnung()">
+                Bestätigen
+              </button>
+              <button class="secondary-btn" onclick="chiudiInvoiceForm()">
+                Abbrechen
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // ===== JSONBin Konfiguration =====
+      const JSONBIN_API_KEY = "$2a$10$Ptz6A3DYRVCx6xos.DtVCOj/GJTNXPZiOfRIKu/NGF7L.AniURKMm";
+      const JSONBIN_BIN_ID = "699c588743b1c97be996993d";
+      const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+
+      // In-memory Datenstruktur
+      let appData = {
+        records: [],
+        invoiceCounter: {}
+      };
+
+      console.log("The Matrix has you!");
+      console.log("Glitch detected. Rebooting...");
+
+      async function loadDataFromJsonBin() {
+        const res = await fetch(JSONBIN_URL + "/latest", {
+          headers: {
+            "X-Master-Key": JSONBIN_API_KEY
+          }
+        });
+        if (!res.ok) {
+          throw new Error("Fehler beim Laden der Daten aus JSONBin");
+        }
+        const json = await res.json();
+        appData = json.record || { records: [], invoiceCounter: {} };
+        if (!appData.records) appData.records = [];
+        if (!appData.invoiceCounter) appData.invoiceCounter = {};
+      }
+
+      async function saveDataToJsonBin() {
+        const res = await fetch(JSONBIN_URL, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": JSONBIN_API_KEY
+          },
+          body: JSON.stringify(appData)
+        });
+        if (!res.ok) {
+          throw new Error("Fehler beim Speichern der Daten in JSONBin");
+        }
+      }
+
+      // Navigation zwischen Sidebar-Sektionen
+      function showSection(section) {
+        const createSec = document.getElementById("section-create");
+        const searchSec = document.getElementById("section-search");
+        const csvSec = document.getElementById("section-csv");
+        const links = document.querySelectorAll(".sidebar-link");
+
+        createSec.style.display = "none";
+        searchSec.style.display = "none";
+        csvSec.style.display = "none";
+
+        if (section === "create") {
+          createSec.style.display = "";
+        } else if (section === "search") {
+          searchSec.style.display = "";
+        } else if (section === "csv") {
+          csvSec.style.display = "";
+        }
+
+        links.forEach((l) => l.classList.remove("sidebar-link-active"));
+        if (section === "create") {
+          links[0].classList.add("sidebar-link-active");
+        } else if (section === "search") {
+          links[1].classList.add("sidebar-link-active");
+        } else if (section === "csv") {
+          links[2].classList.add("sidebar-link-active");
+        }
+      }
+
+      // Initial laden
+      loadDataFromJsonBin()
+        .then(() => {
+          mostraTuttiRecord();
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Fehler beim Laden der Daten aus JSONBin.");
+        });
+
+      // Datum in der Top-Bar setzen
+      (function setTopBarDate() {
+        const el = document.getElementById("topBarDate");
+        if (!el) return;
+        const heute = new Date();
+        const formatter = new Intl.DateTimeFormat("de-DE", {
+          weekday: "short",
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
+        el.textContent = formatter.format(heute);
+      })();
+
+      // Sidebar Startzustand
+      showSection("create");
+
+async function aggiungiRecord() {
+  const neuerRecord = {
+    id: (appData.records[appData.records.length - 1]?.id || 0) + 1,
+    vorname: document.getElementById("nome").value,
+    nachname: document.getElementById("cognome").value,
+    geschlecht: document.getElementById("geschlecht").value,
+    email: document.getElementById("email").value,
+    telefon: document.getElementById("telefono").value,
+    adresse: document.getElementById("indirizzo").value,
+    plz: document.getElementById("cap").value,
+    stadt: document.getElementById("citta").value,
+    notiz: document.getElementById("notiz").value || ""
+  };
+
+  appData.records.push(neuerRecord);
+
+  try {
+    await saveDataToJsonBin();
+    pulisciForm();
+    mostraTuttiRecord();
+    showSection("search");
+  } catch (e) {
+    console.error(e);
+    alert("Fehler beim Speichern der Daten in JSONBin.");
+  }
+}
+
+
+      function mostraTuttiRecord() {
+        const sorted = [...appData.records].sort((a, b) =>
+          String(a.nachname || "").localeCompare(String(b.nachname || ""), "de-DE")
+        );
+        visualizzaRecord(sorted);
+      }
+
+
+      function visualizzaRecord(recordList) {
+        const tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+        recordList.forEach((record) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${record.vorname || ""}</td>
+            <td>${record.nachname || ""}</td>
+            <td>${record.geschlecht || ""}</td>
+            <td>${record.email || ""}</td>
+            <td>${record.telefon || ""}</td>
+            <td>${record.adresse || ""}</td>
+            <td>${record.plz || ""}</td>
+            <td>${record.stadt || ""}</td>
+            <td>
+  <button class="edit-btn"
+          onclick="modificaRecord(${record.id})"
+          title="${(record.notiz || '').replace(/"/g, '\'')}">
+    ✎
+  </button>
+  <button class="delete-btn" onclick="eliminaRecord(${record.id})" title="Eintrag entfernen">✖</button>
+  <button class="invoice-btn" onclick="generaRechnung(${record.id})" title="Beleg erstellen">€</button>
+</td>
+
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+
+function modificaRecord(id) {
+  const record = appData.records.find((r) => r.id === id);
+  if (!record) return;
+
+  document.getElementById("editId").value = record.id;
+  document.getElementById("editNome").value = record.vorname;
+  document.getElementById("editCognome").value = record.nachname;
+  document.getElementById("editGeschlecht").value = record.geschlecht || "";
+  document.getElementById("editEmail").value = record.email;
+  document.getElementById("editTelefono").value = record.telefon;
+  document.getElementById("editIndirizzo").value = record.adresse;
+  document.getElementById("editCap").value = record.plz;
+  document.getElementById("editCitta").value = record.stadt;
+  document.getElementById("editNotiz").value = record.notiz || "";
+  document.getElementById("editForm").style.display = "block";
+}
+
+async function salvaModifiche() {
+  const id = parseInt(document.getElementById("editId").value);
+  const record = appData.records.find((r) => r.id === id);
+  if (!record) return;
+
+  record.vorname = document.getElementById("editNome").value;
+  record.nachname = document.getElementById("editCognome").value;
+  record.geschlecht = document.getElementById("editGeschlecht").value;
+  record.email = document.getElementById("editEmail").value;
+  record.telefon = document.getElementById("editTelefono").value;
+  record.adresse = document.getElementById("editIndirizzo").value;
+  record.plz = document.getElementById("editCap").value;
+  record.stadt = document.getElementById("editCitta").value;
+  record.notiz = document.getElementById("editNotiz").value;
+
+  try {
+    await saveDataToJsonBin();
+    mostraTuttiRecord();
+    chiudiEditForm();
+  } catch (e) {
+    console.error(e);
+    alert("Fehler beim Speichern der Daten in JSONBin.");
+  }
+}
+
+      async function eliminaRecord(id) {
+        if (
+          !confirm(
+            `Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?`
+          )
+        ) {
+          return;
+        }
+
+        appData.records = appData.records.filter((r) => r.id !== id);
+
+        try {
+          await saveDataToJsonBin();
+          mostraTuttiRecord();
+        } catch (e) {
+          console.error(e);
+          alert("Fehler beim Speichern der Daten in JSONBin.");
+        }
+      }
+
+      function chiudiEditForm() {
+        document.getElementById("editForm").style.display = "none";
+      }
+
+function pulisciForm() {
+  document.getElementById("nome").value = "";
+  document.getElementById("cognome").value = "";
+  document.getElementById("geschlecht").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("telefono").value = "";
+  document.getElementById("indirizzo").value = "";
+  document.getElementById("cap").value = "";
+  document.getElementById("citta").value = "";
+  const notizEl = document.getElementById("notiz");
+  if (notizEl) notizEl.value = "";
+}
+
+
+      function generaRechnung(id) {
+        const record = appData.records.find((r) => r.id === id);
+        if (!record) return;
+
+        document.getElementById("invoiceId").value = record.id;
+        document.getElementById(
+          "invoiceName"
+        ).textContent = `${record.vorname} ${record.nachname}`;
+        document.getElementById("invoiceForm").style.display = "block";
+
+        const probeRows = document.querySelectorAll(".probeRow");
+        probeRows.forEach((row) => {
+          const select = row.querySelector(".probeService");
+          const priceInput = row.querySelector(".probePrice");
+          select.addEventListener("change", handleServiceChange);
+          if (select.value === "extra") {
+            priceInput.style.display = "inline-block";
+            priceInput.disabled = false;
+          } else {
+            priceInput.style.display = "none";
+            priceInput.disabled = true;
+          }
+        });
+      }
+
+      function aggiungiProbeRow() {
+        const container = document.getElementById("probenContainer");
+        const newRow = document.createElement("div");
+        newRow.className = "probeRow";
+        newRow.innerHTML = `
+          <input type="date" class="probeDate" />
+          <select class="probeService">
+            <option value="0">Probe Solo (€25,00)</option>
+            <option value="1">Probe Kleine Gruppe (€15,00)</option>
+            <option value="2">Probe Grosse Gruppe (€10,00)</option>
+            <option value="extra">Extra Probe</option>
+          </select>
+          <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
+        `;
+        const select = newRow.querySelector(".probeService");
+        select.addEventListener("change", handleServiceChange);
+        container.appendChild(newRow);
+      }
+
+      function handleServiceChange(event) {
+        const select = event.target;
+        const row = select.closest(".probeRow");
+        const priceInput = row.querySelector(".probePrice");
+
+        if (select.value === "extra") {
+          priceInput.style.display = "inline-block";
+          priceInput.disabled = false;
+        } else {
+          priceInput.style.display = "none";
+          priceInput.disabled = true;
+          priceInput.value = "";
+        }
+      }
+
+      async function getInvoiceNumber() {
+        const currentYear = new Date().getFullYear().toString();
+
+        if (!appData.invoiceCounter[currentYear]) {
+          appData.invoiceCounter[currentYear] = 0;
+        }
+        appData.invoiceCounter[currentYear] += 1;
+
+        await saveDataToJsonBin();
+
+        const counter = appData.invoiceCounter[currentYear];
+        return `${currentYear}-${String(counter).padStart(3, "0")}`;
+      }
+
+      async function confermaRechnung() {
+        const probeRows = document.querySelectorAll(".probeRow");
+        let dienstenListe = [];
+        let gesamt = 0;
+        let confirmationText =
+          "Folgende Daten werden in die Rechnung aufgenommen:\n\n";
+
+        probeRows.forEach((row) => {
+          const date = row.querySelector(".probeDate").value;
+          const serviceIndex = row.querySelector(".probeService").value;
+          let beschreibung, preis;
+
+          if (serviceIndex === "extra") {
+            beschreibung = "Extra Probe";
+            preis = parseFloat(row.querySelector(".probePrice").value) || 0;
+          } else {
+            const diensten = [
+              { beschreibung: "Probe Solo", preis: 25.0 },
+              { beschreibung: "Probe Kleine Gruppe", preis: 15.0 },
+              { beschreibung: "Probe Grosse Gruppe", preis: 10.0 }
+            ];
+            const index = parseInt(serviceIndex);
+            beschreibung = diensten[index].beschreibung;
+            preis = diensten[index].preis;
+          }
+
+          if (date && preis > 0) {
+            dienstenListe.push([
+              date,
+              beschreibung,
+              `€${preis.toFixed(2)}`
+            ]);
+            gesamt += preis;
+            confirmationText += `${date}: ${beschreibung} - €${preis.toFixed(
+              2
+            )}\n`;
+          }
+        });
+
+        if (dienstenListe.length === 0) {
+          alert("Fügen Sie mindestens eine Probe hinzu!");
+          return;
+        }
+
+        confirmationText += `\nGesamt: €${gesamt.toFixed(
+          2
+        )}\n\nSind die Daten korrekt?`;
+
+        if (!confirm(confirmationText)) {
+          return;
+        }
+
+        const id = parseInt(document.getElementById("invoiceId").value);
+        const record = appData.records.find((r) => r.id === id);
+        if (!record) {
+          alert("Datensatz nicht gefunden.");
+          return;
+        }
+
+        const { jsPDF } = jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(12);
+        doc.text("Dance HUB Munich", 20, 20);
+        doc.text("Hofmannstraße 5", 20, 30);
+        doc.text("81379 München", 20, 40);
+        doc.text(
+          `Beleg für: ${record.vorname} ${record.nachname}`,
+          20,
+          60
+        );
+        doc.text(`E-Mail: ${record.email}`, 20, 70);
+        doc.text(`Telefon: ${record.telefon}`, 20, 80);
+        doc.text(
+          `Adresse: ${record.adresse}, ${record.plz} ${record.stadt}`,
+          20,
+          90
+        );
+
+        try {
+          const rechnungsNummer = await getInvoiceNumber();
+          doc.text(`Beleg #${rechnungsNummer}`, 20, 110);
+          doc.text(
+            `Datum: ${new Date().toLocaleDateString("de-DE")}`,
+            20,
+            120
+          );
+
+          doc.autoTable({
+            startY: 130,
+            head: [["Datum", "Beschreibung", "Preis"]],
+            body: dienstenListe,
+            theme: "grid",
+            styles: { fontSize: 10 },
+            columnStyles: { 2: { halign: "right" } }
+          });
+
+          const finalY = doc.lastAutoTable.finalY;
+          doc.text(
+            `Gesamt: €${gesamt.toFixed(2)}`,
+            150,
+            finalY + 10,
+            { align: "right" }
+          );
+          doc.text(
+            "Vielen Dank für Ihren Besuch! Bei Fragen kontaktieren Sie uns!",
+            20,
+            finalY + 20
+          );
+          doc.text(
+            "Bitte überweisen Sie den Gesamtbetrag unter Angabe des Namens der Teilnehmerin",
+            20,
+            finalY + 30
+          );
+          doc.text(
+            "und des Stichwortes -Proben- auf unser Konto. ",
+            20,
+            finalY + 40
+          );
+          doc.text(" ", 20, finalY + 50);
+          doc.text("Mit tänzerischen Grüßen,", 20, finalY + 60);
+          doc.text("Christiane und Maik", 20, finalY + 70);
+
+          doc.save(`Beleg_${rechnungsNummer}_${record.nachname}.pdf`);
+          chiudiInvoiceForm();
+        } catch (error) {
+          console.error(error);
+          alert("Fehler beim Generieren der Beleg: " + error);
+        }
+      }
+
+      function chiudiInvoiceForm() {
+        document.getElementById("invoiceForm").style.display = "none";
+        document.getElementById("probenContainer").innerHTML = `
+          <h4>Proben hinzufügen</h4>
+          <div class="probeRow">
+            <input type="date" class="probeDate" />
+            <select class="probeService">
+              <option value="0">Probe Solo (€25,00)</option>
+              <option value="1">Probe Kleine Gruppe (€15,00)</option>
+              <option value="2">Probe Grosse Gruppe (€10,00)</option>
+              <option value="extra">Extra Probe</option>
+            </select>
+            <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
+          </div>
+        `;
+      }
+
+      function cercaRecord() {
+        const term = document
+          .getElementById("searchTerm")
+          .value.toLowerCase();
+        const tableBody = document.getElementById("tableBody");
+        const rows = tableBody.getElementsByTagName("tr");
+        for (let row of rows) {
+          const cells = row.getElementsByTagName("td");
+          let found = false;
+          for (let i = 0; i < cells.length - 1; i++) {
+            if (cells[i].textContent.toLowerCase().includes(term)) {
+              found = true;
+              break;
+            }
+          }
+          row.style.display = found ? "" : "none";
+        }
+      }
+
+      function downloadCSV() {
+        const records = appData.records || [];
+        let csv =
+          "id,vorname,nachname,geschlecht,email,telefon,adresse,plz,stadt\n";
+
+        records.forEach((record) => {
+          csv += `${record.id},"${record.vorname}","${record.nachname}","${record.geschlecht || ""}","${record.email}","${record.telefon}","${record.adresse}","${record.plz}","${record.stadt}"\n`;
+        });
+
+        // UTF‑8 BOM, damit Excel ä/ö/ü korrekt erkennt
+        const bom = "\uFEFF";
+        const blob = new Blob([bom + csv], {
+          type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "dance_records.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      async function uploadCSV() {
+        const fileInput = document.getElementById("csvUpload");
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function (e) {
+          const text = e.target.result;
+          const lines = text.split("\n");
+          if (lines.length > 1) {
+            for (let i = 1; i < lines.length; i++) {
+              if (lines[i].trim() === "") continue;
+              const values = lines[i].split(
+                /,(?=(?:(?:[^"]*"){2})*[^"]*$)/
+              );
+              for (let j = 0; j < values.length; j++) {
+                values[j] = values[j].replace(/^"|"$/g, "").trim();
+              }
+              const record = {
+                id:
+                  (appData.records[appData.records.length - 1]?.id ||
+                    0) + 1,
+                vorname: values[1] || "",
+                nachname: values[2] || "",
+                geschlecht: values[3] || "",
+                email: values[4] || "",
+                telefon: values[5] || "",
+                adresse: values[6] || "",
+                plz: values[7] || "",
+                stadt: values[8] || ""
+              };
+              appData.records.push(record);
+            }
+            try {
+              await saveDataToJsonBin();
+              mostraTuttiRecord();
+            } catch (e) {
+              console.error(e);
+              alert(
+                "Fehler beim Speichern der CSV-Daten in JSONBin."
+              );
+            }
+          }
+        };
+        reader.readAsText(file, "UTF-8");
+      }
+
+      async function resetInvoiceCounter() {
+        if (
+          !confirm(
+            "Rechnungszähler wirklich zurücksetzen? Alle Jahreszähler werden auf 0 gesetzt."
+          )
+        ) {
+          return;
+        }
+        appData.invoiceCounter = {};
+        try {
+          await saveDataToJsonBin();
+          alert(
+            "Rechnungszähler wurde zurückgesetzt! Die nächste Rechnung beginnt wieder mit 001."
+          );
+        } catch (e) {
+          console.error(e);
+          alert(
+            "Fehler beim Zurücksetzen des Rechnungszählers in JSONBin."
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
