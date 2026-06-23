@@ -674,65 +674,48 @@
     }
   }
 
-/* Migliora leggibilità e touch su smartphone */
-@media (max-width: 540px) {
-  body {
-    font-size: 16px;
-    line-height: 1.5;
-  }
+/* Sidebar off‑canvas + overlay su mobile */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 900;
+}
 
-  h2 {
-    font-size: 18px;
-  }
-
-  .form-container,
-  .search-container,
-  .csv-container {
-    padding: 14px 12px;
-  }
-
-  input,
-  select,
-  textarea {
-    font-size: 15px;
-    padding: 10px 12px;
-  }
-
-  button,
-  label.secondary-btn {
-    font-size: 14px;
-    padding: 10px 14px;
-    min-height: 40px;
-  }
-
+@media (max-width: 768px) {
   .sidebar {
-    padding: 8px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 230px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    border-radius: 0;
+    z-index: 1000;
   }
 
-  .sidebar-link {
-    font-size: 13px;
-    padding: 8px 6px;
+  .sidebar-open {
+    transform: translateX(0);
   }
 
-  #tableBody tr {
-    padding: 10px 12px;
+  .topbar-menu-btn {
+    display: inline-flex;
+    margin-bottom: 4px;
   }
 
-  #tableBody td {
-    padding: 3px 0;
+  .app-shell.sidebar-open-active .sidebar-overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
+}
 
-  .top-bar {
-    padding: 8px 10px;
-  }
-
-  .top-bar-logo {
-    width: 44px;
-    height: 34px;
-  }
-
-  .top-bar-title {
-    font-size: 15px;
+@media (min-width: 769px) {
+  .topbar-menu-btn {
+    display: none;
   }
 }
 
@@ -741,6 +724,7 @@
   </head>
   <body>
     <div class="app-shell">
+      <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
       <div class="top-bar">
         <div class="top-bar-left">
           <div class="top-bar-logo-title">
@@ -755,6 +739,7 @@
           </div>
         </div>
         <div class="top-bar-right">
+          <button class="secondary-btn topbar-menu-btn" onclick="toggleSidebar()">☰ Menü</button>
           <div class="top-bar-date" id="topBarDate"></div>
           <div class="top-bar-tag">WebApp Dashboard</div>
         </div>
@@ -1024,6 +1009,19 @@
         });
         if (!res.ok) {
           throw new Error("Fehler beim Speichern der Daten in JSONBin");
+        }
+      }
+
+
+      function toggleSidebar() {
+        const sidebar = document.querySelector(".sidebar");
+        const appShell = document.querySelector(".app-shell");
+        if (!sidebar || !appShell) return;
+        const isOpen = sidebar.classList.toggle("sidebar-open");
+        if (isOpen) {
+          appShell.classList.add("sidebar-open-active");
+        } else {
+          appShell.classList.remove("sidebar-open-active");
         }
       }
 
