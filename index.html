@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-  <!-- Wake up, Neo -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,9 +24,7 @@
     --info-hover: #0284c7;
   }
 
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -43,42 +40,7 @@
   .app-shell {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
-
-  .home-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-    margin-top: 10px;
-  }
-
-  .home-tile {
-    width: 100%;
-    justify-content: flex-start;
-    padding: 14px 16px;
-    border-radius: 14px;
-    font-size: 14px;
-    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
-  }
-
-  .home-tile-main {
-    background-color: var(--primary);
-    color: #ffffff;
-  }
-
-  .home-tile-main:hover {
-    background-color: var(--primary-hover);
-  }
-
-  .home-tile-danger {
-    background-color: #fef2f2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
-  }
-
-  .home-tile-danger:hover {
-    background-color: #fee2e2;
+    gap: 10px;
   }
 
   .top-bar {
@@ -86,7 +48,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 14px 18px;
-    margin-bottom: 16px;
     border-radius: 14px;
     background: linear-gradient(135deg, #7d3cff, #4f46e5);
     color: #ffffff;
@@ -97,7 +58,7 @@
   .top-bar-left {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
   }
 
   .top-bar-logo-title {
@@ -142,9 +103,7 @@
     font-size: 12px;
   }
 
-  .top-bar-date {
-    font-weight: 500;
-  }
+  .top-bar-date { font-weight: 500; }
 
   .top-bar-tag {
     padding: 2px 8px;
@@ -159,106 +118,79 @@
       align-items: flex-start;
       gap: 6px;
     }
-    .top-bar-right {
-      align-items: flex-start;
+    .top-bar-right { align-items: flex-start; }
+    .top-bar-logo-title { align-items: flex-start; }
+    .top-bar-logo { width: 70px; height: 50px; }
+  }
+
+  /* NAV BAR ORIZZONTALE */
+  .main-nav {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .nav-button {
+    flex: 1 1 120px;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: transparent;
+    color: #111827;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+
+  .nav-button:hover {
+    background-color: #eef2ff;
+  }
+
+  .nav-button-active {
+    background-color: #e0e7ff;
+    color: #111827;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+  }
+
+  @media (max-width: 540px) {
+    .main-nav {
+      border-radius: 12px;
+      padding: 4px 6px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
     }
-    .top-bar-logo-title {
-      align-items: flex-start;
+    .main-nav::-webkit-scrollbar { height: 4px; }
+    .main-nav::-webkit-scrollbar-thumb {
+      background-color: #cbd5f5;
+      border-radius: 999px;
+    }
+    .nav-button {
+      flex: 0 0 auto;
+      font-size: 12px;
+      padding: 5px 8px;
     }
   }
 
   .layout {
+    margin-top: 4px;
     display: flex;
-    gap: 16px;
     align-items: flex-start;
   }
 
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 240px;
-    background: #ffffff;
-    border-radius: 0;
-    padding: 14px 12px;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
-    border: 1px solid var(--border-subtle);
-    flex-shrink: 0;
-    transform: translateX(-110%);
-    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    z-index: 1000;
-  }
-
-  .sidebar-section {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .sidebar-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-    padding: 0 10px;
-  }
-
-  .sidebar-link {
-    width: 100%;
-    justify-content: flex-start;
-    background: transparent;
-    color: #111827;
-    border-radius: 999px;
-    padding: 6px 10px;
-  }
-
-  .sidebar-link:hover {
-    background-color: #eef2ff;
-  }
-
-  .sidebar-link-active {
-    background-color: #e0e7ff;
-    color: #111827;
-    font-weight: 600;
-  }
-
-  .main-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  @media (max-width: 768px) {
-    .layout {
-      flex-direction: column;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 240px;
-      background: #ffffff;
-      border-radius: 0;
-      padding: 14px 12px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
-      border: 1px solid var(--border-subtle);
-      flex-shrink: 0;
-      transform: translateX(-110%);
-      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: 1000;
-    }
-    .sidebar-section {
-      flex-direction: row;
-      align-items: center;
-      gap: 8px;
-    }
-    .sidebar-title {
-      margin-bottom: 0;
-    }
-  }
+  .main-content { flex: 1; min-width: 0; }
 
   h2 {
     font-size: 20px;
@@ -266,10 +198,7 @@
     letter-spacing: 0.01em;
   }
 
-  h3 {
-    font-size: 18px;
-    margin-top: 0;
-  }
+  h3 { font-size: 18px; margin-top: 0; }
 
   h4 {
     font-size: 15px;
@@ -280,7 +209,7 @@
   .form-container,
   .search-container,
   .csv-container {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     background: var(--bg-card);
     padding: 16px 18px;
     border-radius: 12px;
@@ -296,9 +225,7 @@
   }
 
   @media (max-width: 640px) {
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
+    .form-grid { grid-template-columns: 1fr; gap: 6px; }
   }
 
   input,
@@ -314,9 +241,7 @@
   }
 
   input::placeholder,
-  textarea::placeholder {
-    color: #9ca3af;
-  }
+  textarea::placeholder { color: #9ca3af; }
 
   input:focus,
   select:focus,
@@ -334,9 +259,7 @@
     flex-wrap: wrap;
   }
 
-  .search-row input[type="text"] {
-    flex: 1 1 220px;
-  }
+  .search-row input[type="text"] { flex: 1 1 220px; }
 
   button,
   label.secondary-btn {
@@ -366,68 +289,19 @@
     box-shadow: 0 4px 10px rgba(125, 60, 255, 0.35);
   }
 
-  .primary-btn:hover {
-    background-color: var(--primary-hover);
-  }
+  .primary-btn:hover { background-color: var(--primary-hover); }
 
-  .edit-btn {
-    background-color: var(--info);
-    color: #ffffff;
-  }
+  .edit-btn { background-color: var(--info); color: #ffffff; }
+  .edit-btn:hover { background-color: var(--info-hover); }
 
-  .edit-btn:hover {
-    background-color: var(--info-hover);
-  }
+  .delete-btn { background-color: var(--danger); color: #ffffff; }
+  .delete-btn:hover { background-color: var(--danger-hover); }
 
-  .delete-btn {
-    background-color: var(--danger);
-    color: #ffffff;
-  }
+  .invoice-btn { background-color: var(--success); color: #ffffff; }
+  .invoice-btn:hover { background-color: var(--success-hover); }
 
-  .delete-btn:hover {
-    background-color: var(--danger-hover);
-  }
-
-  .invoice-btn {
-    background-color: var(--success);
-    color: #ffffff;
-  }
-
-  .invoice-btn:hover {
-    background-color: var(--success-hover);
-  }
-
-  .secondary-btn {
-    background-color: #e5e7eb;
-    color: #374151;
-  }
-
-  .secondary-btn:hover {
-    background-color: #d1d5db;
-  }
-
-  /* Menü-Button in der Top-Bar: komplett eigenes Styling */
-  .topbar-menu-btn {
-    all: unset;            /* cancella TUTTI gli stili ereditati */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    margin-top: 6px;
-    margin-bottom: 2px;
-    border-radius: 999px;
-    background-color: #ffffff;
-    color: #111827;
-    font-size: 18px;
-    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.25);
-  }
-
-  .topbar-menu-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25);
-  }
+  .secondary-btn { background-color: #e5e7eb; color: #374151; }
+  .secondary-btn:hover { background-color: #d1d5db; }
 
   .danger-outline-btn {
     background-color: #fef2f2;
@@ -435,9 +309,7 @@
     border: 1px solid #fecaca;
   }
 
-  .danger-outline-btn:hover {
-    background-color: #fee2e2;
-  }
+  .danger-outline-btn:hover { background-color: #fee2e2; }
 
   .table-container {
     width: 100%;
@@ -446,19 +318,9 @@
     box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
   }
 
-  .table-container::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .table-container::-webkit-scrollbar-thumb {
-    background-color: #cbd5f5;
-    border-radius: 999px;
-  }
-
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 0;
     background: #ffffff;
     font-size: 13px;
   }
@@ -479,13 +341,8 @@
     font-weight: 600;
   }
 
-  tbody tr:nth-child(even) {
-    background-color: #f9fafb;
-  }
-
-  tbody tr:hover {
-    background-color: var(--primary-soft);
-  }
+  tbody tr:nth-child(even) { background-color: #f9fafb; }
+  tbody tr:hover { background-color: var(--primary-soft); }
 
   th:nth-child(1),
   td:nth-child(1) { width: 12%; }
@@ -538,21 +395,11 @@
     flex-wrap: wrap;
   }
 
-  .probeRow {
-    margin-bottom: 10px;
-  }
-
   .footer-text {
     color: var(--text-muted);
     font-size: 11px;
     text-align: center;
     margin-top: 16px;
-  }
-
-  hr {
-    border: none;
-    border-top: 1px solid #e5e7eb;
-    margin: 20px 0;
   }
 
   /* Course picker styling */
@@ -601,97 +448,56 @@
     word-break: break-word;
   }
 
-  .course-code {
-    font-weight: 600;
-  }
+  .course-code { font-weight: 600; }
 
   @media (max-width: 640px) {
-    .course-picker-grid {
-      grid-template-columns: 1fr;
-      max-height: 320px;
-    }
+    .course-picker-grid { grid-template-columns: 1fr; max-height: 320px; }
   }
 
-  /* MOBILE */
+  /* HOME tiles */
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  .home-tile {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+  }
+
+  .home-tile-main {
+    background-color: var(--primary);
+    color: #ffffff;
+  }
+
+  .home-tile-main:hover {
+    background-color: var(--primary-hover);
+  }
+
+  .home-tile-danger {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .home-tile-danger:hover {
+    background-color: #fee2e2;
+  }
+
+  /* MOBILE extra */
   @media (max-width: 540px) {
-    body {
-      margin: 0;
-      padding: 8px;
-      max-width: 100%;
-    }
-
-  .topbar-menu-btn {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 6px;
-    background-color: #ffffff;
-    color: #111827;
-    padding: 4px;          /* niente padding orizzontale grande */
-    width: 32px;           /* larghezza fissa, rende il tasto corto */
-    height: 32px;          /* altezza fissa */
-    border-radius: 999px;  /* resta rotondo */
-  }
-
-  @media (max-width: 540px) {
-    .topbar-menu-btn {
-      width: 32px;
-      height: 32px;
-    }
-  }
+    body { margin: 0; padding: 8px; max-width: 100%; }
 
     .top-bar {
       border-radius: 0;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       padding: 10px 12px;
-    }
-
-    .top-bar-logo {
-      width: 52px;
-      height: 40px;
-    }
-
-    .top-bar-title {
-      font-size: 16px;
-    }
-
-    .top-bar-subtitle {
-      font-size: 11px;
-      max-width: 200px;
-    }
-
-    .layout { gap: 8px; }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 240px;
-      background: #ffffff;
-      border-radius: 0;
-      padding: 14px 12px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
-      border: 1px solid var(--border-subtle);
-      flex-shrink: 0;
-      transform: translateX(-110%);
-      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: 1000;
-    }
-
-    .sidebar-section {
-      width: 100%;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-
-    .sidebar-title { display: none; }
-
-    .sidebar-link {
-      flex: 1 1 0;
-      justify-content: center;
-      padding: 6px 4px;
-      font-size: 12px;
     }
 
     .form-container,
@@ -702,15 +508,9 @@
       margin-bottom: 10px;
     }
 
-    h2 {
-      font-size: 17px;
-      margin-bottom: 8px;
-    }
+    h2 { font-size: 17px; margin-bottom: 8px; }
 
-    .form-grid {
-      grid-template-columns: 1fr;
-      gap: 6px;
-    }
+    .form-grid { grid-template-columns: 1fr; gap: 6px; }
 
     input,
     select,
@@ -719,32 +519,8 @@
       font-size: 14px;
     }
 
-    button,
-    label.secondary-btn {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-
-    .edit-form {
-      width: 94%;
-      max-width: 94%;
-      padding: 12px 10px;
-    }
-
-    .edit-form input,
-    .edit-form select,
-    .edit-form textarea {
-      font-size: 14px;
-    }
-
-    .table-container {
-      overflow-x: visible;
-      border-radius: 0;
-      box-shadow: none;
-    }
-
-    table,
-    thead { display: none; }
+    .table-container { overflow-x: visible; border-radius: 0; box-shadow: none; }
+    table, thead { display: none; }
 
     #tableBody {
       display: flex;
@@ -778,39 +554,10 @@
 
     #tableBody td:nth-child(9) { margin-top: 6px; }
   }
-
-  .sidebar-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.35);
-    backdrop-filter: blur(3px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-    z-index: 900;
-  }
-
-  .sidebar-open { transform: translateX(0); }
-
-.topbar-menu-btn {
-  display: inline-flex;
-  margin-top: 6px;
-  background-color: #ffffff;
-  color: #111827;
-}
-
-  .app-shell.sidebar-open-active .sidebar-overlay {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .layout { margin-top: 8px; }
 </style>
-
   </head>
   <body>
     <div class="app-shell">
-      <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
       <div class="top-bar">
         <div class="top-bar-left">
           <div class="top-bar-logo-title">
@@ -826,12 +573,6 @@
               </div>
             </div>
           </div>
-<button
-  class="topbar-menu-btn"
-  onclick="toggleSidebar()"
->
-  ☰
-</button>
         </div>
         <div class="top-bar-right">
           <div class="top-bar-date" id="topBarDate"></div>
@@ -839,57 +580,59 @@
         </div>
       </div>
 
+      <!-- NAV BAR ORIZZONTALE -->
+      <nav class="main-nav">
+        <button
+          class="nav-button nav-button-active"
+          type="button"
+          data-section="home"
+          onclick="showSection('home')"
+        >
+          🏠 Start
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="search"
+          onclick="showSection('search')"
+        >
+          🔍 Tänzer*innen
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="create"
+          onclick="showSection('create')"
+        >
+          ✚ Neue Tänzer*in
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="invoices"
+          onclick="showSection('invoices')"
+        >
+          📄 Rechnungsarchiv
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="csv"
+          onclick="showSection('csv')"
+        >
+          💾 Lokales Backup
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          onclick="resetInvoiceCounter()"
+          title="Nur für Test-Phase zurücksetzen"
+        >
+          ⚠️ Reset RG-Nummer
+        </button>
+      </nav>
+
       <div class="layout">
-        <aside class="sidebar">
-          <div class="sidebar-section">
-            <div class="sidebar-title">Navigation</div>
-
-            <button
-              class="sidebar-link sidebar-link-active"
-              type="button"
-              onclick="showSection('home')"
-            >
-              🏠 Start / Übersicht
-            </button>
-            <button
-              class="sidebar-link"
-              type="button"
-              onclick="showSection('search')"
-            >
-              🔍 Tänzer*innen
-            </button>
-            <button
-              class="sidebar-link"
-              type="button"
-              onclick="showSection('create')"
-            >
-              ✚ Neue Tänzer*in
-            </button>
-            <button
-              class="sidebar-link"
-              type="button"
-              onclick="showSection('invoices')"
-            >
-              📄 Rechnungsarchiv
-            </button>
-            <button
-              class="sidebar-link"
-              type="button"
-              onclick="showSection('csv')"
-            >
-              💾 Lokales Backup
-            </button>
-            <button
-              class="sidebar-link"
-              type="button"
-              onclick="resetInvoiceCounter()"
-              title="Nur für Test-Phase zurücksetzen"
-            >
-              ⚠️ Reset RG-Nummer
-            </button>
-          </div>
-        </aside>
-
         <main class="main-content">
 <!-- HOME / WELCOME -->
 <section id="section-home">
@@ -934,11 +677,12 @@
       >
         ⚠️ Reset RG-Nummer (nur Test-Phase)
       </button>
-    </div>    </div>
+    </div>
   </div>
 </section>
-<!-- Section: Create -->
-<section id="section-create">
+
+<!-- CREATE -->
+<section id="section-create" style="display:none;">
   <div class="form-container">
     <h2>Neue Tänzer*innen hinzufügen</h2>
     <div class="form-grid">
@@ -956,10 +700,8 @@
       <input type="text" id="cap" placeholder="PLZ" />
       <input type="text" id="citta" placeholder="Stadt" />
 
-      <label
-        for="coursesSummary"
-        style="grid-column: 1 / -1; font-size: 13px; color: var(--text-muted);"
-      >
+      <label for="coursesSummary"
+        style="grid-column: 1 / -1; font-size: 13px; color: var(--text-muted);">
         Zugeordnete Kurse:
       </label>
 
@@ -988,14 +730,12 @@
         style="grid-column: 1 / -1; resize: vertical;"
       ></textarea>
     </div>
-    <button class="primary-btn" onclick="aggiungiRecord()">
-      Hinzufügen
-    </button>
+    <button class="primary-btn" onclick="aggiungiRecord()">Hinzufügen</button>
   </div>
 </section>
 
-<!-- Section: Search -->
-<section id="section-search">
+<!-- SEARCH -->
+<section id="section-search" style="display:none;">
   <div class="search-container">
     <h2>Tänzer*innen suchen</h2>
     <div class="search-row">
@@ -1004,9 +744,7 @@
         id="searchTerm"
         placeholder="In allen Feldern suchen..."
       />
-      <button class="secondary-btn" onclick="cercaRecord()">
-        Suchen
-      </button>
+      <button class="secondary-btn" onclick="cercaRecord()">Suchen</button>
     </div>
   </div>
 
@@ -1031,8 +769,8 @@
   </div>
 </section>
 
-<!-- Section: Rechnungsarchiv -->
-<section id="section-invoices" style="display: none;">
+<!-- INVOICES -->
+<section id="section-invoices" style="display:none;">
   <div class="search-container">
     <h2>Rechnungsarchiv</h2>
     <div class="search-row">
@@ -1046,9 +784,7 @@
         <option value="paid">Bezahlt</option>
         <option value="unpaid">Offen</option>
       </select>
-      <button class="secondary-btn" onclick="filterInvoices()">
-        Filtern
-      </button>
+      <button class="secondary-btn" onclick="filterInvoices()">Filtern</button>
       <button class="secondary-btn" onclick="downloadInvoicesCSV()">
         Rechnung-Liste CSV
       </button>
@@ -1071,18 +807,11 @@
   </div>
 </section>
 
-<!-- Section: CSV / Backup -->
-<section id="section-csv">
+<!-- CSV / BACKUP -->
+<section id="section-csv" style="display:none;">
   <div class="csv-container">
     <h2>CSV-Backup</h2>
-    <p
-      style="
-        font-size: 13px;
-        color: var(--text-muted);
-        margin-top: 0;
-        margin-bottom: 10px;
-      "
-    >
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 10px;">
       Erstelle eine Sicherungsdatei oder spiele ein vorhandenes Backup ein.
     </p>
 
@@ -1108,7 +837,7 @@
   </div>
 </section>
 
-<!-- Edit modal -->
+<!-- EDIT MODAL -->
 <div id="editForm" class="edit-form">
   <h3>Tänzer*innen bearbeiten</h3>
   <input type="hidden" id="editId" />
@@ -1126,10 +855,7 @@
   <input type="text" id="editCap" placeholder="PLZ" /><br />
   <input type="text" id="editCitta" placeholder="Stadt" /><br />
 
-  <label
-    for="editCoursesSummary"
-    style="font-size: 12px; color: var(--text-muted);"
-  >
+  <label for="editCoursesSummary" style="font-size: 12px; color: var(--text-muted);">
     Zugeordnete Kurse:
   </label><br />
   <input
@@ -1157,16 +883,12 @@
   ></textarea><br />
 
   <div class="edit-form-actions">
-    <button class="primary-btn" onclick="salvaModifiche()">
-      Speichern
-    </button>
-    <button class="secondary-btn" onclick="chiudiEditForm()">
-      Abbrechen
-    </button>
+    <button class="primary-btn" onclick="salvaModifiche()">Speichern</button>
+    <button class="secondary-btn" onclick="chiudiEditForm()">Abbrechen</button>
   </div>
 </div>
 
-<!-- Invoice modal -->
+<!-- INVOICE MODAL -->
 <div id="invoiceForm" class="edit-form">
   <h3>Rechnung für <span id="invoiceName"></span> erstellen</h3>
   <input type="hidden" id="invoiceId" />
@@ -1204,7 +926,7 @@
   </div>
 </div>
 
-<!-- Course picker modal -->
+<!-- COURSE PICKER MODAL -->
 <div
   id="coursePickerModal"
   class="edit-form"
@@ -1212,7 +934,7 @@
 >
   <h3>Kurse auswählen</h3>
   <div id="coursePickerList" class="course-picker-grid">
-    <!-- Checkbox-Liste wird per JS gefüllt -->
+    <!-- per JS -->
   </div>
   <div class="edit-form-actions">
     <button class="secondary-btn" type="button" onclick="closeCoursePicker()">
@@ -1224,7 +946,7 @@
   </div>
 </div>
 
-      </main>
+        </main>
       </div>
     </div>
 
@@ -1302,34 +1024,19 @@
     if (!res.ok) throw new Error("Fehler beim Speichern der Daten in JSONBin");
   }
 
-  function toggleSidebar() {
-    const sidebar = document.querySelector(".sidebar");
-    const appShell = document.querySelector(".app-shell");
-    if (!sidebar || !appShell) return;
-    const isOpen = sidebar.classList.toggle("sidebar-open");
-    if (isOpen) {
-      appShell.classList.add("sidebar-open-active");
-    } else {
-      appShell.classList.remove("sidebar-open-active");
-    }
-  }
-
   function showSection(section) {
     const homeSec = document.getElementById("section-home");
     const createSec = document.getElementById("section-create");
     const searchSec = document.getElementById("section-search");
     const invoicesSec = document.getElementById("section-invoices");
     const csvSec = document.getElementById("section-csv");
-    const links = document.querySelectorAll(".sidebar-link");
 
-    // Tutto nascosto
     homeSec.style.display = "none";
     createSec.style.display = "none";
     searchSec.style.display = "none";
     invoicesSec.style.display = "none";
     csvSec.style.display = "none";
 
-    // Mostra sezione richiesta
     if (section === "home") homeSec.style.display = "";
     else if (section === "create") createSec.style.display = "";
     else if (section === "search") searchSec.style.display = "";
@@ -1338,55 +1045,49 @@
       renderInvoiceTable(appData.invoices);
     } else if (section === "csv") csvSec.style.display = "";
 
-    // Stato attivo nel menù, ordine coerente con l'HTML della sidebar
-    links.forEach((l) => l.classList.remove("sidebar-link-active"));
-
-    if (section === "home")       links[0].classList.add("sidebar-link-active");
-    else if (section === "search")   links[1].classList.add("sidebar-link-active");
-    else if (section === "create")   links[2].classList.add("sidebar-link-active");
-    else if (section === "invoices") links[3].classList.add("sidebar-link-active");
-    else if (section === "csv")      links[4].classList.add("sidebar-link-active");
-    // il tasto Reset non apre una sezione, quindi non viene marcato attivo
+    const navButtons = document.querySelectorAll(".main-nav .nav-button");
+    navButtons.forEach(btn => btn.classList.remove("nav-button-active"));
+    const active = document.querySelector(`.main-nav .nav-button[data-section="${section}"]`);
+    if (active) active.classList.add("nav-button-active");
   }
 
   function populateCoursesSelect() {
     const pickerContainer = document.getElementById("coursePickerList");
-    if (pickerContainer) {
-      pickerContainer.innerHTML = "";
-      const sorted = [...COURSES].sort((a, b) =>
-        a.id.localeCompare(b.id, "de-DE")
-      );
-      sorted.forEach((course) => {
-        const card = document.createElement("div");
-        card.className = "course-picker-item";
+    if (!pickerContainer) return;
+    pickerContainer.innerHTML = "";
+    const sorted = [...COURSES].sort((a, b) =>
+      a.id.localeCompare(b.id, "de-DE")
+    );
+    sorted.forEach((course) => {
+      const card = document.createElement("div");
+      card.className = "course-picker-item";
 
-        const label = document.createElement("label");
-        label.className = "course-picker-label";
+      const label = document.createElement("label");
+      label.className = "course-picker-label";
 
-        const cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.value = course.id;
-        cb.className = "course-picker-checkbox";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = course.id;
+      cb.className = "course-picker-checkbox";
 
-        const textWrap = document.createElement("div");
-        textWrap.className = "course-picker-text";
+      const textWrap = document.createElement("div");
+      textWrap.className = "course-picker-text";
 
-        const codeSpan = document.createElement("span");
-        codeSpan.className = "course-code";
-        codeSpan.textContent = course.id;
+      const codeSpan = document.createElement("span");
+      codeSpan.className = "course-code";
+      codeSpan.textContent = course.id;
 
-        const descSpan = document.createElement("span");
-        descSpan.textContent = " – " + course.label.replace(/^.*?–\s*/, "");
+      const descSpan = document.createElement("span");
+      descSpan.textContent = " – " + course.label.replace(/^.*?–\s*/, "");
 
-        textWrap.appendChild(codeSpan);
-        textWrap.appendChild(descSpan);
+      textWrap.appendChild(codeSpan);
+      textWrap.appendChild(descSpan);
 
-        label.appendChild(cb);
-        label.appendChild(textWrap);
-        card.appendChild(label);
-        pickerContainer.appendChild(card);
-      });
-    }
+      label.appendChild(cb);
+      label.appendChild(textWrap);
+      card.appendChild(label);
+      pickerContainer.appendChild(card);
+    });
   }
 
   function openCoursePicker(mode) {
@@ -1403,17 +1104,14 @@
         : selectedCoursesCreate;
 
     const set = new Set(ids || []);
-    checkboxes.forEach((cb) => {
-      cb.checked = set.has(cb.value);
-    });
+    checkboxes.forEach((cb) => { cb.checked = set.has(cb.value); });
 
     modal.style.display = "block";
   }
 
   function closeCoursePicker() {
     const modal = document.getElementById("coursePickerModal");
-    if (!modal) return;
-    modal.style.display = "none";
+    if (modal) modal.style.display = "none";
   }
 
   function mapCourseIdsToShortLabels(ids) {
@@ -1482,8 +1180,9 @@
     });
 
   async function aggiungiRecord() {
-    const neuerRecord = {
-      id: (appData.records[appData.records.length - 1]?.id || 0) + 1,
+    const nuovoId = (appData.records[appData.records.length - 1]?.id || 0) + 1;
+    const nuovo = {
+      id: nuovoId,
       vorname: document.getElementById("nome").value,
       nachname: document.getElementById("cognome").value,
       geschlecht: document.getElementById("geschlecht").value,
@@ -1495,8 +1194,7 @@
       notiz: document.getElementById("notiz").value || "",
       courses: [...selectedCoursesCreate]
     };
-
-    appData.records.push(neuerRecord);
+    appData.records.push(nuovo);
 
     try {
       await saveDataToJsonBin();
@@ -1516,10 +1214,10 @@
     visualizzaRecord(sorted);
   }
 
-  function visualizzaRecord(recordList) {
-    const tableBody = document.getElementById("tableBody");
-    tableBody.innerHTML = "";
-    recordList.forEach((record) => {
+  function visualizzaRecord(list) {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+    list.forEach((record) => {
       const row = document.createElement("tr");
       const courseLabel = record.courses && record.courses.length
         ? mapCourseIdsToShortLabels(record.courses)
@@ -1544,7 +1242,7 @@
           <button class="invoice-btn" onclick="generaRechnung(${record.id})" title="Beleg erstellen">€</button>
         </td>
       `;
-      tableBody.appendChild(row);
+      tbody.appendChild(row);
     });
   }
 
@@ -1589,7 +1287,6 @@
     record.plz = document.getElementById("editCap").value;
     record.stadt = document.getElementById("editCitta").value;
     record.notiz = document.getElementById("editNotiz").value;
-
     record.courses = [...selectedCoursesEdit];
 
     try {
@@ -1606,9 +1303,7 @@
     if (!confirm("Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?")) {
       return;
     }
-
     appData.records = appData.records.filter((r) => r.id !== id);
-
     try {
       await saveDataToJsonBin();
       mostraTuttiRecord();
@@ -1633,7 +1328,6 @@
     document.getElementById("citta").value = "";
     const notizEl = document.getElementById("notiz");
     if (notizEl) notizEl.value = "";
-
     selectedCoursesCreate = [];
     const summary = document.getElementById("coursesSummary");
     if (summary) summary.value = "";
@@ -1652,17 +1346,8 @@
 
   function downloadCSV() {
     const headers = [
-      "ID",
-      "Vorname",
-      "Nachname",
-      "Geschlecht",
-      "E-Mail",
-      "Telefon",
-      "Adresse",
-      "PLZ",
-      "Stadt",
-      "Notiz",
-      "Kurse"
+      "ID","Vorname","Nachname","Geschlecht","E-Mail",
+      "Telefon","Adresse","PLZ","Stadt","Notiz","Kurse"
     ];
     const rows = appData.records.map((record) => [
       record.id,
@@ -1678,17 +1363,15 @@
       (record.courses || []).join(";")
     ]);
 
-    let csvContent =
+    const csvContent =
       "data:text/csv;charset=utf-8," +
       [headers.join(";"), ...rows.map((r) => r.join(";"))].join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute(
-      "download",
-      "dancehub_taenzer_backup_" + new Date().toISOString().slice(0, 10) + ".csv"
-    );
+    link.href = encodedUri;
+    link.download =
+      "dancehub_taenzer_backup_" + new Date().toISOString().slice(0,10) + ".csv";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1828,11 +1511,7 @@
 
   function downloadInvoicesCSV() {
     const headers = [
-      "Rechnungsnummer",
-      "Datum",
-      "Empfänger",
-      "Betrag",
-      "Bezahlt"
+      "Rechnungsnummer","Datum","Empfänger","Betrag","Bezahlt"
     ];
     const rows = (appData.invoices || []).map(inv => [
       inv.invoiceNumber || "",
@@ -1842,17 +1521,15 @@
       inv.paid ? "Ja" : "Nein"
     ]);
 
-    let csvContent =
+    const csvContent =
       "data:text/csv;charset=utf-8," +
       [headers.join(";"), ...rows.map((r) => r.join(";"))].join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute(
-      "download",
-      "dancehub_rechnungen_" + new Date().toISOString().slice(0, 10) + ".csv"
-    );
+    link.href = encodedUri;
+    link.download =
+      "dancehub_rechnungen_" + new Date().toISOString().slice(0,10) + ".csv";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1934,8 +1611,7 @@
     const probeRows = document.querySelectorAll(".probeRow");
     let dienstenListe = [];
     let gesamt = 0;
-    let confirmationText =
-      "Folgende Daten werden in die Rechnung aufgenommen:\n\n";
+    let confirmationText = "Folgende Daten werden in die Rechnung aufgenommen:\n\n";
 
     probeRows.forEach((row) => {
       const date = row.querySelector(".probeDate").value;
@@ -1951,7 +1627,7 @@
           { beschreibung: "Probe Kleine Gruppe", preis: 15.0 },
           { beschreibung: "Probe Grosse Gruppe", preis: 10.0 }
         ];
-        const index = parseInt(serviceIndex);
+        const index = parseInt(serviceIndex, 10);
         beschreibung = diensten[index].beschreibung;
         preis = diensten[index].preis;
       }
@@ -1961,20 +1637,16 @@
       confirmationText += `${date}: ${beschreibung} - €${preis.toFixed(2)}\n`;
     });
 
-    confirmationText += `\nGesamt: €${gesamt.toFixed(2)}\n\nBestätigen?`;
+    confirmationText += `\nGesamt (brutto): €${gesamt.toFixed(2)}\n\nBestätigen?`;
+    if (!confirm(confirmationText)) return;
 
-    if (!confirm(confirmationText)) {
-      return;
-    }
-
-    const invoiceId = parseInt(document.getElementById("invoiceId").value);
+    const invoiceId = parseInt(document.getElementById("invoiceId").value, 10);
     const record = appData.records.find((r) => r.id === invoiceId);
     if (!record) return;
 
     const invoiceNumber = await getInvoiceNumber();
-    const today = new Date().toISOString().slice(0, 10); // yyyy-mm-dd
+    const today = new Date().toISOString().slice(0, 10);
 
-    // Archiv-Eintrag anlegen (come già nel tuo file attuale)
     if (!appData.invoices) appData.invoices = [];
     appData.invoices.push({
       invoiceNumber,
@@ -1990,7 +1662,7 @@
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF("p", "mm", "a4");
 
-    // Absenderblock (oben links)
+    // Absender
     doc.setFontSize(10);
     doc.text("Dance HUB Munich", 20, 20);
     doc.text("Musterstraße 1", 20, 25);
@@ -1998,25 +1670,17 @@
     doc.text("Tel.: 089 / 123456", 20, 35);
     doc.text("E-Mail: info@dancehub-munich.de", 20, 40);
 
-    // Empfängerblock (klassisch, etwas tiefer)
-    const empfaengerY = 55;
-    doc.text(
-      `${record.vorname} ${record.nachname}`,
-      20,
-      empfaengerY
-    );
-    if (record.adresse) doc.text(record.adresse, 20, empfaengerY + 5);
-    let lineY = empfaengerY + 10;
+    // Empfänger
+    const empY = 55;
+    doc.text(`${record.vorname} ${record.nachname}`, 20, empY);
+    if (record.adresse) doc.text(record.adresse, 20, empY + 5);
+    let lineY = empY + 10;
     if (record.plz || record.stadt) {
-      doc.text(
-        `${record.plz || ""} ${record.stadt || ""}`.trim(),
-        20,
-        lineY
-      );
+      doc.text(`${record.plz || ""} ${record.stadt || ""}`.trim(), 20, lineY);
       lineY += 5;
     }
 
-    // Rechnungsüberschrift + Kopfdaten
+    // Kopf
     const headerY = lineY + 10;
     doc.setFontSize(12);
     doc.setFont(undefined, "bold");
@@ -2029,9 +1693,8 @@
     doc.text(`Rechnungsdatum: ${today}`, 20, kopfY + 5);
     doc.text(`Kunde: ${record.vorname} ${record.nachname}`, 20, kopfY + 10);
 
-    // Tabelle der Leistungen (mit Netto/Brutto-Struktur, aber hier Brutto = Gesamt)
+    // Tabelle
     const tableStartY = kopfY + 18;
-
     const tableColumn = ["Datum", "Leistung", "Menge", "Einzelpreis (€)", "Betrag (€)"];
     const tableRows = dienstenListe.map((item) => [
       item.date || "",
@@ -2046,7 +1709,7 @@
       body: tableRows,
       startY: tableStartY,
       styles: { fontSize: 10 },
-      headStyles: { fillColor: [125, 60, 255] }, // Lila Kopfzeile wie UI
+      headStyles: { fillColor: [125, 60, 255] },
       columnStyles: {
         0: { cellWidth: 25 },
         1: { cellWidth: 80 },
@@ -2058,13 +1721,10 @@
 
     const afterTableY = doc.lastAutoTable.finalY + 8;
 
-    // === Summenblock unter der Spalte "Betrag (€)" ===
-    // In der Tabelle hat die Spalte "Betrag (€)" die Breite 25 und sitzt am rechten Rand.
-    // Wir nutzen denselben rechten Rand (ca. x = 190) und align: "right".
+    // Summenblock unter der Spalte "Betrag (€)"
     const sumXRight = 190;
     const netto = gesamt / 1.19;
     const mwst = gesamt - netto;
-
     const rowSpacing = 5;
     let sumY = afterTableY + 4;
 
@@ -2081,14 +1741,8 @@
     doc.text("Rechnungsbetrag:", sumXRight - 50, sumY);
     doc.text(gesamt.toFixed(2) + " €", sumXRight, sumY, { align: "right" });
 
-    // Falls du später USt trennen willst: hier Zwischenschritt einbauen.
-    // Aktuell: gleiche Summe als Rechnungsbetrag
-    doc.setFont(undefined, "bold");
-    doc.text("Rechnungsbetrag:", sumXLabel, afterTableY + 7);
-    doc.text(`${gesamt.toFixed(2)} €`, sumXValue, afterTableY + 7, { align: "right" });
-
-    // Fußtext / Zahlungsbedingungen
-    const footerY = afterTableY + 20;
+    // Fußtext
+    const footerY = sumY + 15;
     doc.setFontSize(9);
     doc.setFont(undefined, "normal");
     doc.text(
@@ -2107,17 +1761,13 @@
       footerY + 10
     );
 
-    doc.save(
-      `Rechnung_${invoiceNumber}_${record.nachname}_${record.vorname}.pdf`
-    );
-
-    chiudiInvoiceForm();
-
+    doc.save(`Rechnung_${invoiceNumber}_${record.nachname}_${record.vorname}.pdf`);
     chiudiInvoiceForm();
   }
 
   function chiudiInvoiceForm() {
-    document.getElementById("invoiceForm").style.display = "none";
+    const form = document.getElementById("invoiceForm");
+    if (form) form.style.display = "none";
   }
 </script>
   </body>
