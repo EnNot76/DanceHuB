@@ -53,6 +53,35 @@
     color: #ffffff;
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.4);
     min-height: 72px;
+    position: relative; /* aggiungi se non c'è già */
+    overflow: hidden;   /* per tagliare l'effetto ai bordi arrotondati */
+  }
+
+  .top-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.0) 0%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0.0) 100%
+    );
+    transform: skewX(-20deg);
+    pointer-events: none;
+    opacity: 0;
+    animation: topbar-sheen 52s infinite;
+  }
+
+@keyframes topbar-sheen {
+  0% { opacity: 0; left: -60%; }
+  8% { opacity: 0.8; left: 110%; }
+  12% { opacity: 0; left: 110%; }
+  100% { opacity: 0; left: 110%; }
+}
   }
 
   .top-bar-left {
@@ -913,10 +942,13 @@
       />
     </div>
   </div>
-  <div class="footer-text">
-    Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version 1.0
-  </div>
+
 </section>
+
+          <div class="footer-text">
+            Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version 1.0<br />
+            Dance Hub Dancers • © 2026 • All Rights Reserved
+          </div>
 
 <!-- EDIT MODAL -->
 <div id="editForm" class="edit-form">
@@ -1026,6 +1058,7 @@
     </button>
   </div>
 </div>
+
 
         </main>
       </div>
