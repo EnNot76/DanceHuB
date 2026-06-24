@@ -454,7 +454,20 @@
     .course-picker-grid { grid-template-columns: 1fr; max-height: 320px; }
   }
 
-  /* HOME tiles */
+  /* HOME layout + tiles */
+  .home-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    .home-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .home-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -488,6 +501,41 @@
 
   .home-tile-danger:hover {
     background-color: #fee2e2;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .stats-card {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  }
+
+  .stats-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .stats-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .stats-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
   }
 
   /* MOBILE extra */
@@ -637,46 +685,79 @@
 <!-- HOME / WELCOME -->
 <section id="section-home">
   <div class="form-container">
-    <h2>Willkommen im Dance HUB Dashboard</h2>
-    <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">
-      Wähle, was du machen möchtest:
-    </p>
+    <div class="home-layout">
+      <!-- Linke Spalte: Statistik -->
+      <div>
+        <h2>Willkommen im Dance HUB Dashboard</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 8px;">
+          Kurzer Überblick über deine aktuelle Datenlage.
+        </p>
 
-    <div class="home-grid">
-      <button
-        class="primary-btn home-tile home-tile-main"
-        onclick="showSection('search')"
-      >
-        🔍 Tänzer*innen verwalten
-      </button>
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-label">Tänzer*innen gesamt</div>
+            <div class="stats-value" id="statsTotalDancers">–</div>
+            <div class="stats-sub">Alle Einträge im System</div>
+          </div>
 
-      <button
-        class="secondary-btn home-tile"
-        onclick="showSection('create')"
-      >
-        ✚ Neue Tänzer*in anlegen
-      </button>
+          <div class="stats-card">
+            <div class="stats-label">Rechnungen dieses Jahr</div>
+            <div class="stats-value" id="statsInvoicesYear">–</div>
+            <div class="stats-sub">Erstellte Rechnungen im laufenden Jahr</div>
+          </div>
 
-      <button
-        class="secondary-btn home-tile"
-        onclick="showSection('invoices')"
-      >
-        📄 Rechnungsarchiv öffnen
-      </button>
+          <div class="stats-card">
+            <div class="stats-label">Offene Rechnungen</div>
+            <div class="stats-value" id="statsInvoicesOpen">–</div>
+            <div class="stats-sub">Noch nicht als bezahlt markiert</div>
+          </div>
+        </div>
+      </div>
 
-      <button
-        class="secondary-btn home-tile"
-        onclick="showSection('csv')"
-      >
-        💾 Lokales Backup (CSV)
-      </button>
+      <!-- Rechte Spalte: Schnellzugriff -->
+      <div>
+        <h3 style="margin-bottom: 6px;">Schnellzugriff</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 0; margin-bottom: 8px;">
+          Häufige Aktionen direkt erreichbar.
+        </p>
 
-      <button
-        class="home-tile home-tile-danger"
-        onclick="resetInvoiceCounter()"
-      >
-        ⚠️ Reset RG-Nummer (nur Test-Phase)
-      </button>
+        <div class="home-grid">
+          <button
+            class="primary-btn home-tile home-tile-main"
+            onclick="showSection('search')"
+          >
+            🔍 Tänzer*innen verwalten
+          </button>
+
+          <button
+            class="secondary-btn home-tile"
+            onclick="showSection('create')"
+          >
+            ✚ Neue Tänzer*in anlegen
+          </button>
+
+          <button
+            class="secondary-btn home-tile"
+            onclick="showSection('invoices')"
+          >
+            📄 Rechnungsarchiv öffnen
+          </button>
+
+          <button
+            class="secondary-btn home-tile"
+            onclick="showSection('csv')"
+          >
+            💾 Lokales Backup (CSV)
+          </button>
+
+          <button
+            class="home-tile home-tile-danger"
+            onclick="resetInvoiceCounter()"
+          >
+            ⚠️ Reset RG-Nummer (nur Test-Phase)
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1166,6 +1247,27 @@
     el.textContent = formatter.format(heute);
   })();
 
+  function updateDashboardStats() {
+    // Tänzer*innen gesamt
+    const totalDancers = (appData.records || []).length;
+    const elDancers = document.getElementById("statsTotalDancers");
+    if (elDancers) elDancers.textContent = String(totalDancers);
+
+    // Rechnungen dieses Jahr (anhand der Rechnungsnummern)
+    const currentYear = new Date().getFullYear().toString();
+    const invoices = appData.invoices || [];
+    const invoicesThisYear = invoices.filter(inv =>
+      String(inv.invoiceNumber || "").startsWith(currentYear + "-")
+    ).length;
+    const elInvYear = document.getElementById("statsInvoicesYear");
+    if (elInvYear) elInvYear.textContent = String(invoicesThisYear);
+
+    // Offene Rechnungen
+    const openInvoices = invoices.filter(inv => !inv.paid).length;
+    const elInvOpen = document.getElementById("statsInvoicesOpen");
+    if (elInvOpen) elInvOpen.textContent = String(openInvoices);
+  }
+
   showSection("home");
 
   loadDataFromJsonBin()
@@ -1173,6 +1275,7 @@
       populateCoursesSelect();
       mostraTuttiRecord();
       renderInvoiceTable(appData.invoices);
+      updateDashboardStats();
     })
     .catch((error) => {
       console.error(error);
@@ -1200,6 +1303,7 @@
       await saveDataToJsonBin();
       pulisciForm();
       mostraTuttiRecord();
+      updateDashboardStats();
       showSection("search");
     } catch (e) {
       console.error(e);
@@ -1292,6 +1396,7 @@
     try {
       await saveDataToJsonBin();
       mostraTuttiRecord();
+      updateDashboardStats();
       chiudiEditForm();
     } catch (e) {
       console.error(e);
@@ -1307,6 +1412,7 @@
     try {
       await saveDataToJsonBin();
       mostraTuttiRecord();
+      updateDashboardStats();
     } catch (e) {
       console.error(e);
       alert("Fehler beim Speichern der Daten in JSONBin.");
@@ -1423,6 +1529,7 @@
       try {
         await saveDataToJsonBin();
         mostraTuttiRecord();
+        updateDashboardStats();
         alert("Backup erfolgreich geladen.");
       } catch (e) {
         console.error(e);
@@ -1440,7 +1547,10 @@
     const currentYear = new Date().getFullYear().toString();
     appData.invoiceCounter[currentYear] = 0;
     saveDataToJsonBin()
-      .then(() => alert("Rechnungscounter wurde zurückgesetzt."))
+      .then(() => {
+        alert("Rechnungscounter wurde zurückgesetzt.");
+        updateDashboardStats();
+      })
       .catch((e) => {
         console.error(e);
         alert("Fehler beim Zurücksetzen des Counters.");
@@ -1503,6 +1613,7 @@
     inv.paid = checked;
     try {
       await saveDataToJsonBin();
+      updateDashboardStats();
     } catch (e) {
       console.error(e);
       alert("Fehler beim Speichern des Rechnungsstatus.");
@@ -1658,6 +1769,7 @@
     });
     await saveDataToJsonBin();
     renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF("p", "mm", "a4");
