@@ -46,6 +46,41 @@
     gap: 16px;
   }
 
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  .home-tile {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+  }
+
+  .home-tile-main {
+    background-color: var(--primary);
+    color: #ffffff;
+  }
+
+  .home-tile-main:hover {
+    background-color: var(--primary-hover);
+  }
+
+  .home-tile-danger {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .home-tile-danger:hover {
+    background-color: #fee2e2;
+  }
+
   .top-bar {
     display: flex;
     align-items: center;
@@ -72,9 +107,9 @@
   }
 
   .top-bar-logo {
-    width: 72px;
-    height: 52px;
-    border-radius: 16px;
+    width: 90px;
+    height: 65px;
+    border-radius: 18px;
     object-fit: cover;
     box-shadow: 0 0 0 3px #ffffff, 0 8px 18px rgba(15, 23, 42, 0.45);
     background-color: rgba(255, 255, 255, 0.18);
@@ -139,13 +174,20 @@
   }
 
   .sidebar {
-    width: 190px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 240px;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 0;
     padding: 14px 12px;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
     border: 1px solid var(--border-subtle);
     flex-shrink: 0;
+    transform: translateX(-110%);
+    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: 1000;
   }
 
   .sidebar-section {
@@ -193,12 +235,20 @@
       flex-direction: column;
     }
     .sidebar {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 240px;
+      background: #ffffff;
+      border-radius: 0;
+      padding: 14px 12px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+      border: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      transform: translateX(-110%);
+      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+      z-index: 1000;
     }
     .sidebar-section {
       flex-direction: row;
@@ -252,7 +302,8 @@
   }
 
   input,
-  select {
+  select,
+  textarea {
     width: 100%;
     margin: 0;
     padding: 6px 8px;
@@ -262,12 +313,14 @@
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
   }
 
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: #9ca3af;
   }
 
   input:focus,
-  select:focus {
+  select:focus,
+  textarea:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 1px rgba(125, 60, 255, 0.2);
@@ -353,6 +406,29 @@
     background-color: #d1d5db;
   }
 
+  /* Menü-Button in der Top-Bar: komplett eigenes Styling */
+  .topbar-menu-btn {
+    all: unset;            /* cancella TUTTI gli stili ereditati */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: #111827;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.25);
+  }
+
+  .topbar-menu-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25);
+  }
+
   .danger-outline-btn {
     background-color: #fef2f2;
     color: var(--danger);
@@ -411,43 +487,24 @@
     background-color: var(--primary-soft);
   }
 
-  /* Colonne tabella desktop */
   th:nth-child(1),
-  td:nth-child(1) {
-    width: 12%;
-  }
+  td:nth-child(1) { width: 12%; }
   th:nth-child(2),
-  td:nth-child(2) {
-    width: 12%;
-  }
+  td:nth-child(2) { width: 12%; }
   th:nth-child(3),
-  td:nth-child(3) {
-    width: 8%;
-  }
+  td:nth-child(3) { width: 8%; }
   th:nth-child(4),
-  td:nth-child(4) {
-    width: 18%;
-  }
+  td:nth-child(4) { width: 18%; }
   th:nth-child(5),
-  td:nth-child(5) {
-    width: 12%;
-  }
+  td:nth-child(5) { width: 12%; }
   th:nth-child(6),
-  td:nth-child(6) {
-    width: 26%;
-  }
+  td:nth-child(6) { width: 26%; }
   th:nth-child(7),
-  td:nth-child(7) {
-    width: 8%;
-  }
+  td:nth-child(7) { width: 8%; }
   th:nth-child(8),
-  td:nth-child(8) {
-    width: 12%;
-  }
+  td:nth-child(8) { width: 12%; }
   th:nth-child(9),
-  td:nth-child(9) {
-    width: 16%;
-  }
+  td:nth-child(9) { width: 16%; }
 
   .edit-form {
     position: fixed;
@@ -468,7 +525,8 @@
   }
 
   .edit-form input,
-  .edit-form select {
+  .edit-form select,
+  .edit-form textarea {
     margin-bottom: 8px;
   }
 
@@ -497,13 +555,90 @@
     margin: 20px 0;
   }
 
-  /* MOBILE: ottimizzazione per telefoni ~6" */
+  /* Course picker styling */
+  .course-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 16px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    max-height: 380px;
+    overflow-y: auto;
+    font-size: 14px;
+  }
+
+  .course-picker-item {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .course-picker-item:hover {
+    background-color: #eef2ff;
+    border-color: #c7d2fe;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+  }
+
+  .course-picker-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .course-picker-checkbox {
+    margin-top: 2px;
+    flex: 0 0 18px;
+  }
+
+  .course-picker-text {
+    flex: 1 1 auto;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  .course-code {
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .course-picker-grid {
+      grid-template-columns: 1fr;
+      max-height: 320px;
+    }
+  }
+
+  /* MOBILE */
   @media (max-width: 540px) {
     body {
       margin: 0;
       padding: 8px;
       max-width: 100%;
     }
+
+  .topbar-menu-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6px;
+    background-color: #ffffff;
+    color: #111827;
+    padding: 4px;          /* niente padding orizzontale grande */
+    width: 32px;           /* larghezza fissa, rende il tasto corto */
+    height: 32px;          /* altezza fissa */
+    border-radius: 999px;  /* resta rotondo */
+  }
+
+  @media (max-width: 540px) {
+    .topbar-menu-btn {
+      width: 32px;
+      height: 32px;
+    }
+  }
 
     .top-bar {
       border-radius: 0;
@@ -525,22 +660,23 @@
       max-width: 200px;
     }
 
-    .layout {
-      gap: 8px;
-    }
+    .layout { gap: 8px; }
 
-    /* Sidebar come bottom tab-bar */
     .sidebar {
-      position: sticky;
-      bottom: 0;
+      position: fixed;
+      top: 0;
       left: 0;
-      right: 0;
-      width: 100%;
-      border-radius: 999px;
-      margin-top: 8px;
-      padding: 6px 8px;
-      justify-content: space-between;
-      z-index: 20;
+      height: 100vh;
+      width: 240px;
+      background: #ffffff;
+      border-radius: 0;
+      padding: 14px 12px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+      border: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      transform: translateX(-110%);
+      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+      z-index: 1000;
     }
 
     .sidebar-section {
@@ -549,9 +685,7 @@
       justify-content: space-between;
     }
 
-    .sidebar-title {
-      display: none;
-    }
+    .sidebar-title { display: none; }
 
     .sidebar-link {
       flex: 1 1 0;
@@ -579,7 +713,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea {
       padding: 7px 8px;
       font-size: 14px;
     }
@@ -590,7 +725,6 @@
       font-size: 12px;
     }
 
-    /* Modali adattati al piccolo schermo */
     .edit-form {
       width: 94%;
       max-width: 94%;
@@ -598,11 +732,11 @@
     }
 
     .edit-form input,
-    .edit-form select {
+    .edit-form select,
+    .edit-form textarea {
       font-size: 14px;
     }
 
-    /* Tabella → card verticali */
     .table-container {
       overflow-x: visible;
       border-radius: 0;
@@ -610,9 +744,7 @@
     }
 
     table,
-    thead {
-      display: none;
-    }
+    thead { display: none; }
 
     #tableBody {
       display: flex;
@@ -635,91 +767,44 @@
       white-space: normal;
     }
 
-    #tableBody td:nth-child(1)::before {
-      content: "Vorname: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(2)::before {
-      content: "Nachname: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(3)::before {
-      content: "Geschlecht: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(4)::before {
-      content: "E-Mail: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(5)::before {
-      content: "Telefon: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(6)::before {
-      content: "Adresse: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(7)::before {
-      content: "PLZ: ";
-      font-weight: 600;
-    }
-    #tableBody td:nth-child(8)::before {
-      content: "Stadt: ";
-      font-weight: 600;
-    }
+    #tableBody td:nth-child(1)::before { content: "Vorname: "; font-weight: 600; }
+    #tableBody td:nth-child(2)::before { content: "Nachname: "; font-weight: 600; }
+    #tableBody td:nth-child(3)::before { content: "Geschlecht: "; font-weight: 600; }
+    #tableBody td:nth-child(4)::before { content: "E-Mail: "; font-weight: 600; }
+    #tableBody td:nth-child(5)::before { content: "Telefon: "; font-weight: 600; }
+    #tableBody td:nth-child(6)::before { content: "Adresse: "; font-weight: 600; }
+    #tableBody td:nth-child(7)::before { content: "PLZ: "; font-weight: 600; }
+    #tableBody td:nth-child(8)::before { content: "Stadt: "; font-weight: 600; }
 
-    /* Azioni in fondo alla card */
-    #tableBody td:nth-child(9) {
-      margin-top: 6px;
-    }
+    #tableBody td:nth-child(9) { margin-top: 6px; }
   }
 
-/* Sidebar off‑canvas + overlay su mobile (slide + blur) */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.35);
-  backdrop-filter: blur(3px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-  z-index: 900;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
+  .sidebar-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 240px;
-    transform: translateX(-110%);
-    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    border-radius: 0;
-    z-index: 1000;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.35);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 900;
   }
 
-  .sidebar-open {
-    transform: translateX(0);
-  }
+  .sidebar-open { transform: translateX(0); }
 
-  .topbar-menu-btn {
-    display: inline-flex;
-    margin-bottom: 4px;
-  }
+.topbar-menu-btn {
+  display: inline-flex;
+  margin-top: 6px;
+  background-color: #ffffff;
+  color: #111827;
+}
 
   .app-shell.sidebar-open-active .sidebar-overlay {
     opacity: 1;
     pointer-events: auto;
   }
-}
 
-@media (min-width: 769px) {
-  .topbar-menu-btn {
-    display: none;
-  }
-}
-
+  .layout { margin-top: 8px; }
 </style>
 
   </head>
@@ -729,18 +814,26 @@
       <div class="top-bar">
         <div class="top-bar-left">
           <div class="top-bar-logo-title">
-            <img src="logo.png" alt="Dance HUB Munich Logo" class="top-bar-logo" />
+            <img
+              src="logo.png"
+              alt="Dance HUB Munich Logo"
+              class="top-bar-logo"
+            />
             <div class="top-bar-texts">
               <div class="top-bar-title">Dance HUB Munich</div>
               <div class="top-bar-subtitle">
                 Dance-Management &amp; Beleg-Erstellung
-
               </div>
             </div>
           </div>
+<button
+  class="topbar-menu-btn"
+  onclick="toggleSidebar()"
+>
+  ☰
+</button>
         </div>
         <div class="top-bar-right">
-          <button class="secondary-btn topbar-menu-btn" onclick="toggleSidebar()">☰ Menü</button>
           <div class="top-bar-date" id="topBarDate"></div>
           <div class="top-bar-tag">WebApp Dashboard</div>
         </div>
@@ -750,12 +843,13 @@
         <aside class="sidebar">
           <div class="sidebar-section">
             <div class="sidebar-title">Navigation</div>
+
             <button
               class="sidebar-link sidebar-link-active"
               type="button"
-              onclick="showSection('create')"
+              onclick="showSection('home')"
             >
-              ✚ Neue Tänzer*in
+              🏠 Start / Übersicht
             </button>
             <button
               class="sidebar-link"
@@ -767,21 +861,82 @@
             <button
               class="sidebar-link"
               type="button"
+              onclick="showSection('create')"
+            >
+              ✚ Neue Tänzer*in
+            </button>
+            <button
+              class="sidebar-link"
+              type="button"
+              onclick="showSection('invoices')"
+            >
+              📄 Rechnungsarchiv
+            </button>
+            <button
+              class="sidebar-link"
+              type="button"
               onclick="showSection('csv')"
             >
-              💾 Local Backup
+              💾 Lokales Backup
             </button>
-<button
-  class="sidebar-link"
-  type="button"
-  onclick="resetInvoiceCounter()"
->
-  ♻️ Reset RG-Nummer
-</button>
+            <button
+              class="sidebar-link"
+              type="button"
+              onclick="resetInvoiceCounter()"
+              title="Nur für Test-Phase zurücksetzen"
+            >
+              ⚠️ Reset RG-Nummer
+            </button>
           </div>
         </aside>
 
         <main class="main-content">
+<!-- HOME / WELCOME -->
+<section id="section-home">
+  <div class="form-container">
+    <h2>Willkommen im Dance HUB Dashboard</h2>
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">
+      Wähle, was du machen möchtest:
+    </p>
+
+    <div class="home-grid">
+      <button
+        class="primary-btn home-tile home-tile-main"
+        onclick="showSection('search')"
+      >
+        🔍 Tänzer*innen verwalten
+      </button>
+
+      <button
+        class="secondary-btn home-tile"
+        onclick="showSection('create')"
+      >
+        ✚ Neue Tänzer*in anlegen
+      </button>
+
+      <button
+        class="secondary-btn home-tile"
+        onclick="showSection('invoices')"
+      >
+        📄 Rechnungsarchiv öffnen
+      </button>
+
+      <button
+        class="secondary-btn home-tile"
+        onclick="showSection('csv')"
+      >
+        💾 Lokales Backup (CSV)
+      </button>
+
+      <button
+        class="home-tile home-tile-danger"
+        onclick="resetInvoiceCounter()"
+      >
+        ⚠️ Reset RG-Nummer (nur Test-Phase)
+      </button>
+    </div>    </div>
+  </div>
+</section>
 <!-- Section: Create -->
 <section id="section-create">
   <div class="form-container">
@@ -801,7 +956,31 @@
       <input type="text" id="cap" placeholder="PLZ" />
       <input type="text" id="citta" placeholder="Stadt" />
 
-      <!-- Interne Notiz, nur intern -->
+      <label
+        for="coursesSummary"
+        style="grid-column: 1 / -1; font-size: 13px; color: var(--text-muted);"
+      >
+        Zugeordnete Kurse:
+      </label>
+
+      <input
+        type="text"
+        id="coursesSummary"
+        readonly
+        placeholder="Keine Kurse ausgewählt"
+        style="grid-column: 1 / -1; background-color: #f9fafb; cursor: pointer;"
+        onclick="openCoursePicker('create')"
+      />
+
+      <button
+        type="button"
+        class="secondary-btn"
+        style="grid-column: 1 / -1; justify-content: center;"
+        onclick="openCoursePicker('create')"
+      >
+        Kurse auswählen
+      </button>
+
       <textarea
         id="notiz"
         placeholder="Interne Notiz (nur intern, nicht auf Beleg)"
@@ -815,44 +994,84 @@
   </div>
 </section>
 
+<!-- Section: Search -->
+<section id="section-search">
+  <div class="search-container">
+    <h2>Tänzer*innen suchen</h2>
+    <div class="search-row">
+      <input
+        type="text"
+        id="searchTerm"
+        placeholder="In allen Feldern suchen..."
+      />
+      <button class="secondary-btn" onclick="cercaRecord()">
+        Suchen
+      </button>
+    </div>
+  </div>
 
-          <!-- Section: Search -->
-          <section id="section-search">
-            <div class="search-container">
-              <h2>Tänzer*innen suchen</h2>
-              <div class="search-row">
-                <input
-                  type="text"
-                  id="searchTerm"
-                  placeholder="In allen Feldern suchen..."
-                />
-                <button class="secondary-btn" onclick="cercaRecord()">
-                  Suchen
-                </button>
-              </div>
-            </div>
+  <div class="table-container">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Vorname</th>
+          <th>Nachname</th>
+          <th>Geschlecht</th>
+          <th>E-Mail</th>
+          <th>Telefon</th>
+          <th>Adresse</th>
+          <th>PLZ</th>
+          <th>Stadt</th>
+          <th>Kurse</th>
+          <th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</section>
 
-            <div class="table-container">
-              <table id="dataTable">
-                <thead>
-                  <tr>
-                    <th>Vorname</th>
-                    <th>Nachname</th>
-                    <th>Geschlecht</th>
-                    <th>E-Mail</th>
-                    <th>Telefon</th>
-                    <th>Adresse</th>
-                    <th>PLZ</th>
-                    <th>Stadt</th>
-                    <th>Aktionen</th>
-                  </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-              </table>
-            </div>
-          </section>
+<!-- Section: Rechnungsarchiv -->
+<section id="section-invoices" style="display: none;">
+  <div class="search-container">
+    <h2>Rechnungsarchiv</h2>
+    <div class="search-row">
+      <input
+        type="text"
+        id="invoiceSearchTerm"
+        placeholder="Nach Rechnungsempfänger suchen..."
+      />
+      <select id="invoicePaidFilter">
+        <option value="all">Alle</option>
+        <option value="paid">Bezahlt</option>
+        <option value="unpaid">Offen</option>
+      </select>
+      <button class="secondary-btn" onclick="filterInvoices()">
+        Filtern
+      </button>
+      <button class="secondary-btn" onclick="downloadInvoicesCSV()">
+        Rechnung-Liste CSV
+      </button>
+    </div>
+  </div>
 
-          <!-- Section: CSV / Backup -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Rechnungsnr.</th>
+          <th>Datum</th>
+          <th>Empfänger</th>
+          <th>Betrag</th>
+          <th>Bezahlt</th>
+        </tr>
+      </thead>
+      <tbody id="invoiceTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Section: CSV / Backup -->
 <section id="section-csv">
   <div class="csv-container">
     <h2>CSV-Backup</h2>
@@ -884,8 +1103,6 @@
       />
     </div>
   </div>
-
-
   <div class="footer-text">
     Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version 1.0
   </div>
@@ -909,7 +1126,29 @@
   <input type="text" id="editCap" placeholder="PLZ" /><br />
   <input type="text" id="editCitta" placeholder="Stadt" /><br />
 
-  <!-- Interne Notiz -->
+  <label
+    for="editCoursesSummary"
+    style="font-size: 12px; color: var(--text-muted);"
+  >
+    Zugeordnete Kurse:
+  </label><br />
+  <input
+    type="text"
+    id="editCoursesSummary"
+    readonly
+    placeholder="Keine Kurse ausgewählt"
+    style="width: 100%; background-color: #f9fafb; cursor: pointer; margin-bottom: 6px;"
+    onclick="openCoursePicker('edit')"
+  /><br />
+  <button
+    type="button"
+    class="secondary-btn"
+    style="margin-bottom: 8px;"
+    onclick="openCoursePicker('edit')"
+  >
+    Kurse auswählen
+  </button><br />
+
   <textarea
     id="editNotiz"
     placeholder="Interne Notiz (nur intern)"
@@ -927,637 +1166,959 @@
   </div>
 </div>
 
+<!-- Invoice modal -->
+<div id="invoiceForm" class="edit-form">
+  <h3>Rechnung für <span id="invoiceName"></span> erstellen</h3>
+  <input type="hidden" id="invoiceId" />
+  <div id="probenContainer">
+    <h4>Proben hinzufügen</h4>
+    <div class="probeRow">
+      <input type="date" class="probeDate" />
+      <select class="probeService">
+        <option value="0">Probe Solo (€25,00)</option>
+        <option value="1">Probe kleine Gruppe (€15,00)</option>
+        <option value="2">Probe grosse Gruppe (€10,00)</option>
+        <option value="extra">Extra Probe</option>
+      </select>
+      <input
+        type="number"
+        class="probePrice"
+        placeholder="Preis (€)"
+        min="0"
+        step="0.01"
+        style="display: none;"
+        disabled
+      />
+    </div>
+  </div>
+  <div class="edit-form-actions">
+    <button class="secondary-btn" onclick="aggiungiProbeRow()">
+      Weitere Probe
+    </button>
+    <button class="primary-btn" onclick="confermaRechnung()">
+      Bestätigen
+    </button>
+    <button class="secondary-btn" onclick="chiudiInvoiceForm()">
+      Abbrechen
+    </button>
+  </div>
+</div>
 
-          <!-- Invoice modal -->
-          <div id="invoiceForm" class="edit-form">
-            <h3>Rechnung für <span id="invoiceName"></span> erstellen</h3>
-            <input type="hidden" id="invoiceId" />
-            <div id="probenContainer">
-              <h4>Proben hinzufügen</h4>
-              <div class="probeRow">
-                <input type="date" class="probeDate" />
-                <select class="probeService">
-                  <option value="0">Probe Solo (€25,00)</option>
-                  <option value="1">Probe kleine Gruppe (€15,00)</option>
-                  <option value="2">Probe grosse Gruppe (€10,00)</option>
-                  <option value="extra">Extra Probe</option>
-                </select>
-                <input
-                  type="number"
-                  class="probePrice"
-                  placeholder="Preis (€)"
-                  min="0"
-                  step="0.01"
-                  style="display: none;"
-                  disabled
-                />
-              </div>
-            </div>
-            <div class="edit-form-actions">
-              <button class="secondary-btn" onclick="aggiungiProbeRow()">
-                Weitere Probe
-              </button>
-              <button class="primary-btn" onclick="confermaRechnung()">
-                Bestätigen
-              </button>
-              <button class="secondary-btn" onclick="chiudiInvoiceForm()">
-                Abbrechen
-              </button>
-            </div>
-          </div>
-        </main>
+<!-- Course picker modal -->
+<div
+  id="coursePickerModal"
+  class="edit-form"
+  style="max-width: 900px; width: 98%;"
+>
+  <h3>Kurse auswählen</h3>
+  <div id="coursePickerList" class="course-picker-grid">
+    <!-- Checkbox-Liste wird per JS gefüllt -->
+  </div>
+  <div class="edit-form-actions">
+    <button class="secondary-btn" type="button" onclick="closeCoursePicker()">
+      Abbrechen
+    </button>
+    <button class="primary-btn" type="button" onclick="confirmCoursePicker()">
+      Übernehmen
+    </button>
+  </div>
+</div>
+
+      </main>
       </div>
     </div>
 
-    <script>
-      // ===== JSONBin Konfiguration =====
-      const JSONBIN_API_KEY = "$2a$10$Ptz6A3DYRVCx6xos.DtVCOj/GJTNXPZiOfRIKu/NGF7L.AniURKMm";
-      const JSONBIN_BIN_ID = "699c588743b1c97be996993d";
-      const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+<script>
+  const JSONBIN_API_KEY = "$2a$10$Ptz6A3DYRVCx6xos.DtVCOj/GJTNXPZiOfRIKu/NGF7L.AniURKMm";
+  const JSONBIN_BIN_ID = "699c588743b1c97be996993d";
+  const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
-      // In-memory Datenstruktur
-      let appData = {
-        records: [],
-        invoiceCounter: {}
-      };
+  const COURSES = [
+    { id: "1A",    label: "1A – Ballett 1A Kinder (Do 16:25–17:25 Saal 2)" },
+    { id: "1B",    label: "1B – Ballett 1B Kinder (Do 17:30–18:45 Saal 2)" },
+    { id: "1C",    label: "1C – Ballett 1C Kinder (Sa 17:30–18:45 Saal 1)" },
+    { id: "B2/3_DI", label: "B2/3 – Ballett 2/3 (Di 16:30–17:00 Saal 2)" },
+    { id: "B2/3_MO", label: "B2/3 – Ballett 2/3 (Mo 17:00–18:30 Saal 1)" },
+    { id: "B2/3F",   label: "B2/3 – Förderklasse (Di 17:00–18:30 Saal 2)" },
+    { id: "C1",      label: "C1 – Choreografie 1 (Di 19:00–20:00 Saal 1)" },
+    { id: "C2",      label: "C2 – Choreografie 2 (Di 18:00–19:00 Saal 1)" },
+    { id: "CHF",   label: "CHF – Charakter Förderklasse (Fr 16:45–17:30 Saal 1)" },
+    { id: "CO",   label: "CO – Company/Ensemble (Mi 19:30–20:30 Saal 1)" },
+    { id: "GK",   label: "GK – Boys (Mi 18:00–19:00 Saal 2)" },
+    { id: "JZ1",  label: "Jazz 1 (Mi 16:30–18:00 Saal 1)" },
+    { id: "K1",    label: "K1 – Ballett Erwachsene (Do 20:00–21:30 Saal 2)" },
+    { id: "K2",    label: "K2 – Ballett 2 (Sa 19:45–21:15 Saal 1)" },
+    { id: "K2/3", label: "K2/3 – Ballett 2/3 Erwachsene (Mo 19:45–21:15 Saal 1)" },
+    { id: "KA_FR", label: "KA – Ausbildung Jugend (Fr 15:15–16:45 Saal 1)" },
+    { id: "KA_MI",label: "KA – Klassische Ausbildung (Mi 18:00–19:30 Saal 1)" },
+    { id: "PBT1_DI", label: "PBT1 – Progressing Ballet Technique 1 (Di 15:30–16:30 Saal 2)" },
+    { id: "PBT1_MO", label: "PBT1 – Progressing Ballet Technique 1 (Mo 16:30–17:00 Saal 1)" },
+    { id: "PBT2",  label: "PBT2 – Prog. Ballet Technique 2 (Sa 18:45–19:45 Saal 1)" },
+    { id: "PBT3",  label: "PBT3 – Prog. Ballet Technique 3 (Fr 14:15–15:15 Saal 1)" },
+    { id: "TECH",  label: "TECH – Technik / Sprünge / Turns (Sa 10:00–11:30 Saal 1)" },
+    { id: "TF2",   label: "TF2 – Tanztheater 2 (Sa 16:00–17:30 Saal 1)" },
+    { id: "TT1",  label: "TT1 – Tanztheater 1 (Mo 15:30–16:30 Saal 1)" },
+    { id: "TT2",  label: "TT2 – Tanztheater 2 (Mi 15:30–16:30 Saal 1)" },
+    { id: "TT3",   label: "TT3 – Tanztheater 3 (Do 18:45–19:15 Saal 2)" },
+    { id: "TT4_DI",  label: "TT4 – Tanztheater 4 (Di 20:00–21:30 Saal 1)" },
+    { id: "TT4_FR",label: "TT4 – Tanztheater 4 (Fr 20:15–21:45 Saal 1)" },
+    { id: "VS/TF", label: "VS/TF – Minis (Do 15:20–16:20 Saal 2)" }
+  ];
 
-      console.log("The Matrix has you!");
-      console.log("Glitch detected. Rebooting...");
-
-      async function loadDataFromJsonBin() {
-        const res = await fetch(JSONBIN_URL + "/latest", {
-          headers: {
-            "X-Master-Key": JSONBIN_API_KEY
-          }
-        });
-        if (!res.ok) {
-          throw new Error("Fehler beim Laden der Daten aus JSONBin");
-        }
-        const json = await res.json();
-        appData = json.record || { records: [], invoiceCounter: {} };
-        if (!appData.records) appData.records = [];
-        if (!appData.invoiceCounter) appData.invoiceCounter = {};
-      }
-
-      async function saveDataToJsonBin() {
-        const res = await fetch(JSONBIN_URL, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Master-Key": JSONBIN_API_KEY
-          },
-          body: JSON.stringify(appData)
-        });
-        if (!res.ok) {
-          throw new Error("Fehler beim Speichern der Daten in JSONBin");
-        }
-      }
-
-
-      function toggleSidebar() {
-        const sidebar = document.querySelector(".sidebar");
-        const appShell = document.querySelector(".app-shell");
-        if (!sidebar || !appShell) return;
-        const isOpen = sidebar.classList.toggle("sidebar-open");
-        if (isOpen) {
-          appShell.classList.add("sidebar-open-active");
-        } else {
-          appShell.classList.remove("sidebar-open-active");
-        }
-      }
-
-      // Navigation zwischen Sidebar-Sektionen
-      function showSection(section) {
-        const createSec = document.getElementById("section-create");
-        const searchSec = document.getElementById("section-search");
-        const csvSec = document.getElementById("section-csv");
-        const links = document.querySelectorAll(".sidebar-link");
-
-        createSec.style.display = "none";
-        searchSec.style.display = "none";
-        csvSec.style.display = "none";
-
-        if (section === "create") {
-          createSec.style.display = "";
-        } else if (section === "search") {
-          searchSec.style.display = "";
-        } else if (section === "csv") {
-          csvSec.style.display = "";
-        }
-
-        links.forEach((l) => l.classList.remove("sidebar-link-active"));
-        if (section === "create") {
-          links[0].classList.add("sidebar-link-active");
-        } else if (section === "search") {
-          links[1].classList.add("sidebar-link-active");
-        } else if (section === "csv") {
-          links[2].classList.add("sidebar-link-active");
-        }
-      }
-
-      // Initial laden
-      loadDataFromJsonBin()
-        .then(() => {
-          mostraTuttiRecord();
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Fehler beim Laden der Daten aus JSONBin.");
-        });
-
-      // Datum in der Top-Bar setzen
-      (function setTopBarDate() {
-        const el = document.getElementById("topBarDate");
-        if (!el) return;
-        const heute = new Date();
-        const formatter = new Intl.DateTimeFormat("de-DE", {
-          weekday: "short",
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric"
-        });
-        el.textContent = formatter.format(heute);
-      })();
-
-      // Sidebar Startzustand
-      showSection("create");
-
-async function aggiungiRecord() {
-  const neuerRecord = {
-    id: (appData.records[appData.records.length - 1]?.id || 0) + 1,
-    vorname: document.getElementById("nome").value,
-    nachname: document.getElementById("cognome").value,
-    geschlecht: document.getElementById("geschlecht").value,
-    email: document.getElementById("email").value,
-    telefon: document.getElementById("telefono").value,
-    adresse: document.getElementById("indirizzo").value,
-    plz: document.getElementById("cap").value,
-    stadt: document.getElementById("citta").value,
-    notiz: document.getElementById("notiz").value || ""
+  let appData = {
+    records: [],
+    invoiceCounter: {},
+    invoices: []
   };
 
-  appData.records.push(neuerRecord);
+  let selectedCoursesCreate = [];
+  let selectedCoursesEdit = [];
+  let currentCoursePickerMode = "create";
 
-  try {
-    await saveDataToJsonBin();
-    pulisciForm();
-    mostraTuttiRecord();
-    showSection("search");
-  } catch (e) {
-    console.error(e);
-    alert("Fehler beim Speichern der Daten in JSONBin.");
+  console.log("The Matrix has you!");
+  console.log("Glitch detected. Rebooting...");
+
+  async function loadDataFromJsonBin() {
+    const res = await fetch(JSONBIN_URL + "/latest", {
+      headers: { "X-Master-Key": JSONBIN_API_KEY }
+    });
+    if (!res.ok) throw new Error("Fehler beim Laden der Daten aus JSONBin");
+    const json = await res.json();
+    appData = json.record || { records: [], invoiceCounter: {}, invoices: [] };
+    if (!appData.records) appData.records = [];
+    if (!appData.invoiceCounter) appData.invoiceCounter = {};
+    if (!appData.invoices) appData.invoices = [];
   }
-}
 
-
-      function mostraTuttiRecord() {
-        const sorted = [...appData.records].sort((a, b) =>
-          String(a.nachname || "").localeCompare(String(b.nachname || ""), "de-DE")
-        );
-        visualizzaRecord(sorted);
-      }
-
-
-      function visualizzaRecord(recordList) {
-        const tableBody = document.getElementById("tableBody");
-        tableBody.innerHTML = "";
-        recordList.forEach((record) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${record.vorname || ""}</td>
-            <td>${record.nachname || ""}</td>
-            <td>${record.geschlecht || ""}</td>
-            <td>${record.email || ""}</td>
-            <td>${record.telefon || ""}</td>
-            <td>${record.adresse || ""}</td>
-            <td>${record.plz || ""}</td>
-            <td>${record.stadt || ""}</td>
-            <td>
-  <button class="edit-btn"
-          onclick="modificaRecord(${record.id})"
-          title="${(record.notiz || '').replace(/"/g, '\'')}">
-    ✎
-  </button>
-  <button class="delete-btn" onclick="eliminaRecord(${record.id})" title="Eintrag entfernen">✖</button>
-  <button class="invoice-btn" onclick="generaRechnung(${record.id})" title="Beleg erstellen">€</button>
-</td>
-
-          `;
-          tableBody.appendChild(row);
-        });
-      }
-
-function modificaRecord(id) {
-  const record = appData.records.find((r) => r.id === id);
-  if (!record) return;
-
-  document.getElementById("editId").value = record.id;
-  document.getElementById("editNome").value = record.vorname;
-  document.getElementById("editCognome").value = record.nachname;
-  document.getElementById("editGeschlecht").value = record.geschlecht || "";
-  document.getElementById("editEmail").value = record.email;
-  document.getElementById("editTelefono").value = record.telefon;
-  document.getElementById("editIndirizzo").value = record.adresse;
-  document.getElementById("editCap").value = record.plz;
-  document.getElementById("editCitta").value = record.stadt;
-  document.getElementById("editNotiz").value = record.notiz || "";
-  document.getElementById("editForm").style.display = "block";
-}
-
-async function salvaModifiche() {
-  const id = parseInt(document.getElementById("editId").value);
-  const record = appData.records.find((r) => r.id === id);
-  if (!record) return;
-
-  record.vorname = document.getElementById("editNome").value;
-  record.nachname = document.getElementById("editCognome").value;
-  record.geschlecht = document.getElementById("editGeschlecht").value;
-  record.email = document.getElementById("editEmail").value;
-  record.telefon = document.getElementById("editTelefono").value;
-  record.adresse = document.getElementById("editIndirizzo").value;
-  record.plz = document.getElementById("editCap").value;
-  record.stadt = document.getElementById("editCitta").value;
-  record.notiz = document.getElementById("editNotiz").value;
-
-  try {
-    await saveDataToJsonBin();
-    mostraTuttiRecord();
-    chiudiEditForm();
-  } catch (e) {
-    console.error(e);
-    alert("Fehler beim Speichern der Daten in JSONBin.");
+  async function saveDataToJsonBin() {
+    const res = await fetch(JSONBIN_URL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Master-Key": JSONBIN_API_KEY
+      },
+      body: JSON.stringify(appData)
+    });
+    if (!res.ok) throw new Error("Fehler beim Speichern der Daten in JSONBin");
   }
-}
 
-      async function eliminaRecord(id) {
-        if (
-          !confirm(
-            `Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?`
-          )
-        ) {
-          return;
-        }
+  function toggleSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+    const appShell = document.querySelector(".app-shell");
+    if (!sidebar || !appShell) return;
+    const isOpen = sidebar.classList.toggle("sidebar-open");
+    if (isOpen) {
+      appShell.classList.add("sidebar-open-active");
+    } else {
+      appShell.classList.remove("sidebar-open-active");
+    }
+  }
 
-        appData.records = appData.records.filter((r) => r.id !== id);
+  function showSection(section) {
+    const homeSec = document.getElementById("section-home");
+    const createSec = document.getElementById("section-create");
+    const searchSec = document.getElementById("section-search");
+    const invoicesSec = document.getElementById("section-invoices");
+    const csvSec = document.getElementById("section-csv");
+    const links = document.querySelectorAll(".sidebar-link");
 
-        try {
-          await saveDataToJsonBin();
-          mostraTuttiRecord();
-        } catch (e) {
-          console.error(e);
-          alert("Fehler beim Speichern der Daten in JSONBin.");
-        }
+    // Tutto nascosto
+    homeSec.style.display = "none";
+    createSec.style.display = "none";
+    searchSec.style.display = "none";
+    invoicesSec.style.display = "none";
+    csvSec.style.display = "none";
+
+    // Mostra sezione richiesta
+    if (section === "home") homeSec.style.display = "";
+    else if (section === "create") createSec.style.display = "";
+    else if (section === "search") searchSec.style.display = "";
+    else if (section === "invoices") {
+      invoicesSec.style.display = "";
+      renderInvoiceTable(appData.invoices);
+    } else if (section === "csv") csvSec.style.display = "";
+
+    // Stato attivo nel menù, ordine coerente con l'HTML della sidebar
+    links.forEach((l) => l.classList.remove("sidebar-link-active"));
+
+    if (section === "home")       links[0].classList.add("sidebar-link-active");
+    else if (section === "search")   links[1].classList.add("sidebar-link-active");
+    else if (section === "create")   links[2].classList.add("sidebar-link-active");
+    else if (section === "invoices") links[3].classList.add("sidebar-link-active");
+    else if (section === "csv")      links[4].classList.add("sidebar-link-active");
+    // il tasto Reset non apre una sezione, quindi non viene marcato attivo
+  }
+
+  function populateCoursesSelect() {
+    const pickerContainer = document.getElementById("coursePickerList");
+    if (pickerContainer) {
+      pickerContainer.innerHTML = "";
+      const sorted = [...COURSES].sort((a, b) =>
+        a.id.localeCompare(b.id, "de-DE")
+      );
+      sorted.forEach((course) => {
+        const card = document.createElement("div");
+        card.className = "course-picker-item";
+
+        const label = document.createElement("label");
+        label.className = "course-picker-label";
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.value = course.id;
+        cb.className = "course-picker-checkbox";
+
+        const textWrap = document.createElement("div");
+        textWrap.className = "course-picker-text";
+
+        const codeSpan = document.createElement("span");
+        codeSpan.className = "course-code";
+        codeSpan.textContent = course.id;
+
+        const descSpan = document.createElement("span");
+        descSpan.textContent = " – " + course.label.replace(/^.*?–\s*/, "");
+
+        textWrap.appendChild(codeSpan);
+        textWrap.appendChild(descSpan);
+
+        label.appendChild(cb);
+        label.appendChild(textWrap);
+        card.appendChild(label);
+        pickerContainer.appendChild(card);
+      });
+    }
+  }
+
+  function openCoursePicker(mode) {
+    currentCoursePickerMode = mode === "edit" ? "edit" : "create";
+    const modal = document.getElementById("coursePickerModal");
+    if (!modal) return;
+
+    const checkboxes = modal.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((cb) => (cb.checked = false));
+
+    const ids =
+      currentCoursePickerMode === "edit"
+        ? selectedCoursesEdit
+        : selectedCoursesCreate;
+
+    const set = new Set(ids || []);
+    checkboxes.forEach((cb) => {
+      cb.checked = set.has(cb.value);
+    });
+
+    modal.style.display = "block";
+  }
+
+  function closeCoursePicker() {
+    const modal = document.getElementById("coursePickerModal");
+    if (!modal) return;
+    modal.style.display = "none";
+  }
+
+  function mapCourseIdsToShortLabels(ids) {
+    return ids
+      .map((id) => {
+        const c = COURSES.find((x) => x.id === id);
+        if (!c) return id;
+        const match = c.label.match(/\(([^)]+)\)/);
+        const timePart = match ? match[1].replace(/ Saal.*$/,"") : "";
+        return timePart ? `${c.id} (${timePart})` : c.id;
+      })
+      .join(", ");
+  }
+
+  function confirmCoursePicker() {
+    const modal = document.getElementById("coursePickerModal");
+    if (!modal) return;
+
+    const checked = Array.from(
+      modal.querySelectorAll("input[type='checkbox']:checked")
+    ).map((cb) => cb.value);
+
+    if (currentCoursePickerMode === "edit") {
+      selectedCoursesEdit = checked;
+      const summary = document.getElementById("editCoursesSummary");
+      if (summary) {
+        summary.value =
+          checked.length ? mapCourseIdsToShortLabels(checked) : "Keine Kurse ausgewählt";
       }
-
-      function chiudiEditForm() {
-        document.getElementById("editForm").style.display = "none";
+    } else {
+      selectedCoursesCreate = checked;
+      const summary = document.getElementById("coursesSummary");
+      if (summary) {
+        summary.value =
+          checked.length ? mapCourseIdsToShortLabels(checked) : "Keine Kurse ausgewählt";
       }
+    }
 
-function pulisciForm() {
-  document.getElementById("nome").value = "";
-  document.getElementById("cognome").value = "";
-  document.getElementById("geschlecht").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("telefono").value = "";
-  document.getElementById("indirizzo").value = "";
-  document.getElementById("cap").value = "";
-  document.getElementById("citta").value = "";
-  const notizEl = document.getElementById("notiz");
-  if (notizEl) notizEl.value = "";
-}
+    closeCoursePicker();
+  }
 
+  (function setTopBarDate() {
+    const el = document.getElementById("topBarDate");
+    if (!el) return;
+    const heute = new Date();
+    const formatter = new Intl.DateTimeFormat("de-DE", {
+      weekday: "short",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
+    el.textContent = formatter.format(heute);
+  })();
 
-      function generaRechnung(id) {
-        const record = appData.records.find((r) => r.id === id);
-        if (!record) return;
+  showSection("home");
 
-        document.getElementById("invoiceId").value = record.id;
-        document.getElementById(
-          "invoiceName"
-        ).textContent = `${record.vorname} ${record.nachname}`;
-        document.getElementById("invoiceForm").style.display = "block";
+  loadDataFromJsonBin()
+    .then(() => {
+      populateCoursesSelect();
+      mostraTuttiRecord();
+      renderInvoiceTable(appData.invoices);
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Fehler beim Laden der Daten aus JSONBin.");
+    });
 
-        const probeRows = document.querySelectorAll(".probeRow");
-        probeRows.forEach((row) => {
-          const select = row.querySelector(".probeService");
-          const priceInput = row.querySelector(".probePrice");
-          select.addEventListener("change", handleServiceChange);
-          if (select.value === "extra") {
-            priceInput.style.display = "inline-block";
-            priceInput.disabled = false;
-          } else {
-            priceInput.style.display = "none";
-            priceInput.disabled = true;
-          }
-        });
-      }
+  async function aggiungiRecord() {
+    const neuerRecord = {
+      id: (appData.records[appData.records.length - 1]?.id || 0) + 1,
+      vorname: document.getElementById("nome").value,
+      nachname: document.getElementById("cognome").value,
+      geschlecht: document.getElementById("geschlecht").value,
+      email: document.getElementById("email").value,
+      telefon: document.getElementById("telefono").value,
+      adresse: document.getElementById("indirizzo").value,
+      plz: document.getElementById("cap").value,
+      stadt: document.getElementById("citta").value,
+      notiz: document.getElementById("notiz").value || "",
+      courses: [...selectedCoursesCreate]
+    };
 
-      function aggiungiProbeRow() {
-        const container = document.getElementById("probenContainer");
-        const newRow = document.createElement("div");
-        newRow.className = "probeRow";
-        newRow.innerHTML = `
-          <input type="date" class="probeDate" />
-          <select class="probeService">
-            <option value="0">Probe Solo (€25,00)</option>
-            <option value="1">Probe Kleine Gruppe (€15,00)</option>
-            <option value="2">Probe Grosse Gruppe (€10,00)</option>
-            <option value="extra">Extra Probe</option>
-          </select>
-          <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
-        `;
-        const select = newRow.querySelector(".probeService");
-        select.addEventListener("change", handleServiceChange);
-        container.appendChild(newRow);
-      }
+    appData.records.push(neuerRecord);
 
-      function handleServiceChange(event) {
-        const select = event.target;
-        const row = select.closest(".probeRow");
-        const priceInput = row.querySelector(".probePrice");
+    try {
+      await saveDataToJsonBin();
+      pulisciForm();
+      mostraTuttiRecord();
+      showSection("search");
+    } catch (e) {
+      console.error(e);
+      alert("Fehler beim Speichern der Daten in JSONBin.");
+    }
+  }
 
-        if (select.value === "extra") {
-          priceInput.style.display = "inline-block";
-          priceInput.disabled = false;
-        } else {
-          priceInput.style.display = "none";
-          priceInput.disabled = true;
-          priceInput.value = "";
-        }
-      }
+  function mostraTuttiRecord() {
+    const sorted = [...appData.records].sort((a, b) =>
+      String(a.nachname || "").localeCompare(String(b.nachname || ""), "de-DE")
+    );
+    visualizzaRecord(sorted);
+  }
 
-      async function getInvoiceNumber() {
-        const currentYear = new Date().getFullYear().toString();
+  function visualizzaRecord(recordList) {
+    const tableBody = document.getElementById("tableBody");
+    tableBody.innerHTML = "";
+    recordList.forEach((record) => {
+      const row = document.createElement("tr");
+      const courseLabel = record.courses && record.courses.length
+        ? mapCourseIdsToShortLabels(record.courses)
+        : "";
+      row.innerHTML = `
+        <td>${record.vorname || ""}</td>
+        <td>${record.nachname || ""}</td>
+        <td>${record.geschlecht || ""}</td>
+        <td>${record.email || ""}</td>
+        <td>${record.telefon || ""}</td>
+        <td>${record.adresse || ""}</td>
+        <td>${record.plz || ""}</td>
+        <td>${record.stadt || ""}</td>
+        <td>${courseLabel}</td>
+        <td>
+          <button class="edit-btn"
+                  onclick="modificaRecord(${record.id})"
+                  title="${(record.notiz || "").replace(/"/g, '\\"')}">
+            ✎
+          </button>
+          <button class="delete-btn" onclick="eliminaRecord(${record.id})" title="Eintrag entfernen">✖</button>
+          <button class="invoice-btn" onclick="generaRechnung(${record.id})" title="Beleg erstellen">€</button>
+        </td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
 
-        if (!appData.invoiceCounter[currentYear]) {
-          appData.invoiceCounter[currentYear] = 0;
-        }
-        appData.invoiceCounter[currentYear] += 1;
+  function modificaRecord(id) {
+    const record = appData.records.find((r) => r.id === id);
+    if (!record) return;
 
-        await saveDataToJsonBin();
+    document.getElementById("editId").value = record.id;
+    document.getElementById("editNome").value = record.vorname;
+    document.getElementById("editCognome").value = record.nachname;
+    document.getElementById("editGeschlecht").value = record.geschlecht || "";
+    document.getElementById("editEmail").value = record.email;
+    document.getElementById("editTelefono").value = record.telefon;
+    document.getElementById("editIndirizzo").value = record.adresse;
+    document.getElementById("editCap").value = record.plz;
+    document.getElementById("editCitta").value = record.stadt;
+    document.getElementById("editNotiz").value = record.notiz || "";
 
-        const counter = appData.invoiceCounter[currentYear];
-        return `${currentYear}-${String(counter).padStart(3, "0")}`;
-      }
+    selectedCoursesEdit = [...(record.courses || [])];
+    const editSummary = document.getElementById("editCoursesSummary");
+    if (editSummary) {
+      editSummary.value =
+        (record.courses && record.courses.length)
+          ? mapCourseIdsToShortLabels(record.courses)
+          : "Keine Kurse ausgewählt";
+    }
 
-      async function confermaRechnung() {
-        const probeRows = document.querySelectorAll(".probeRow");
-        let dienstenListe = [];
-        let gesamt = 0;
-        let confirmationText =
-          "Folgende Daten werden in die Rechnung aufgenommen:\n\n";
+    document.getElementById("editForm").style.display = "block";
+  }
 
-        probeRows.forEach((row) => {
-          const date = row.querySelector(".probeDate").value;
-          const serviceIndex = row.querySelector(".probeService").value;
-          let beschreibung, preis;
+  async function salvaModifiche() {
+    const id = parseInt(document.getElementById("editId").value);
+    const record = appData.records.find((r) => r.id === id);
+    if (!record) return;
 
-          if (serviceIndex === "extra") {
-            beschreibung = "Extra Probe";
-            preis = parseFloat(row.querySelector(".probePrice").value) || 0;
-          } else {
-            const diensten = [
-              { beschreibung: "Probe Solo", preis: 25.0 },
-              { beschreibung: "Probe Kleine Gruppe", preis: 15.0 },
-              { beschreibung: "Probe Grosse Gruppe", preis: 10.0 }
-            ];
-            const index = parseInt(serviceIndex);
-            beschreibung = diensten[index].beschreibung;
-            preis = diensten[index].preis;
-          }
+    record.vorname = document.getElementById("editNome").value;
+    record.nachname = document.getElementById("editCognome").value;
+    record.geschlecht = document.getElementById("editGeschlecht").value;
+    record.email = document.getElementById("editEmail").value;
+    record.telefon = document.getElementById("editTelefono").value;
+    record.adresse = document.getElementById("editIndirizzo").value;
+    record.plz = document.getElementById("editCap").value;
+    record.stadt = document.getElementById("editCitta").value;
+    record.notiz = document.getElementById("editNotiz").value;
 
-          if (date && preis > 0) {
-            dienstenListe.push([
-              date,
-              beschreibung,
-              `€${preis.toFixed(2)}`
-            ]);
-            gesamt += preis;
-            confirmationText += `${date}: ${beschreibung} - €${preis.toFixed(
-              2
-            )}\n`;
-          }
-        });
+    record.courses = [...selectedCoursesEdit];
 
-        if (dienstenListe.length === 0) {
-          alert("Fügen Sie mindestens eine Probe hinzu!");
-          return;
-        }
+    try {
+      await saveDataToJsonBin();
+      mostraTuttiRecord();
+      chiudiEditForm();
+    } catch (e) {
+      console.error(e);
+      alert("Fehler beim Speichern der Daten in JSONBin.");
+    }
+  }
 
-        confirmationText += `\nGesamt: €${gesamt.toFixed(
-          2
-        )}\n\nSind die Daten korrekt?`;
+  async function eliminaRecord(id) {
+    if (!confirm("Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?")) {
+      return;
+    }
 
-        if (!confirm(confirmationText)) {
-          return;
-        }
+    appData.records = appData.records.filter((r) => r.id !== id);
 
-        const id = parseInt(document.getElementById("invoiceId").value);
-        const record = appData.records.find((r) => r.id === id);
-        if (!record) {
-          alert("Datensatz nicht gefunden.");
-          return;
-        }
+    try {
+      await saveDataToJsonBin();
+      mostraTuttiRecord();
+    } catch (e) {
+      console.error(e);
+      alert("Fehler beim Speichern der Daten in JSONBin.");
+    }
+  }
 
-        const { jsPDF } = jspdf;
-        const doc = new jsPDF();
-        doc.setFontSize(12);
-        doc.text("Dance HUB Munich", 20, 20);
-        doc.text("Hofmannstraße 5", 20, 30);
-        doc.text("81379 München", 20, 40);
-        doc.text(
-          `Beleg für: ${record.vorname} ${record.nachname}`,
-          20,
-          60
-        );
-        doc.text(`E-Mail: ${record.email}`, 20, 70);
-        doc.text(`Telefon: ${record.telefon}`, 20, 80);
-        doc.text(
-          `Adresse: ${record.adresse}, ${record.plz} ${record.stadt}`,
-          20,
-          90
-        );
+  function chiudiEditForm() {
+    document.getElementById("editForm").style.display = "none";
+  }
 
-        try {
-          const rechnungsNummer = await getInvoiceNumber();
-          doc.text(`Beleg #${rechnungsNummer}`, 20, 110);
-          doc.text(
-            `Datum: ${new Date().toLocaleDateString("de-DE")}`,
-            20,
-            120
-          );
+  function pulisciForm() {
+    document.getElementById("nome").value = "";
+    document.getElementById("cognome").value = "";
+    document.getElementById("geschlecht").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("telefono").value = "";
+    document.getElementById("indirizzo").value = "";
+    document.getElementById("cap").value = "";
+    document.getElementById("citta").value = "";
+    const notizEl = document.getElementById("notiz");
+    if (notizEl) notizEl.value = "";
 
-          doc.autoTable({
-            startY: 130,
-            head: [["Datum", "Beschreibung", "Preis"]],
-            body: dienstenListe,
-            theme: "grid",
-            styles: { fontSize: 10 },
-            columnStyles: { 2: { halign: "right" } }
-          });
+    selectedCoursesCreate = [];
+    const summary = document.getElementById("coursesSummary");
+    if (summary) summary.value = "";
+  }
 
-          const finalY = doc.lastAutoTable.finalY;
-          doc.text(
-            `Gesamt: €${gesamt.toFixed(2)}`,
-            150,
-            finalY + 10,
-            { align: "right" }
-          );
-          doc.text(
-            "Vielen Dank für Ihren Besuch! Bei Fragen kontaktieren Sie uns!",
-            20,
-            finalY + 20
-          );
-          doc.text(
-            "Bitte überweisen Sie den Gesamtbetrag unter Angabe des Namens der Teilnehmerin",
-            20,
-            finalY + 30
-          );
-          doc.text(
-            "und des Stichwortes -Proben- auf unser Konto. ",
-            20,
-            finalY + 40
-          );
-          doc.text(" ", 20, finalY + 50);
-          doc.text("Mit tänzerischen Grüßen,", 20, finalY + 60);
-          doc.text("Christiane und Maik", 20, finalY + 70);
+  function cercaRecord() {
+    const searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+    const filtered = appData.records.filter((record) =>
+      Object.values(record)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm)
+    );
+    visualizzaRecord(filtered);
+  }
 
-          doc.save(`Beleg_${rechnungsNummer}_${record.nachname}.pdf`);
-          chiudiInvoiceForm();
-        } catch (error) {
-          console.error(error);
-          alert("Fehler beim Generieren der Beleg: " + error);
-        }
-      }
+  function downloadCSV() {
+    const headers = [
+      "ID",
+      "Vorname",
+      "Nachname",
+      "Geschlecht",
+      "E-Mail",
+      "Telefon",
+      "Adresse",
+      "PLZ",
+      "Stadt",
+      "Notiz",
+      "Kurse"
+    ];
+    const rows = appData.records.map((record) => [
+      record.id,
+      record.vorname,
+      record.nachname,
+      record.geschlecht,
+      record.email,
+      record.telefon,
+      record.adresse,
+      record.plz,
+      record.stadt,
+      record.notiz || "",
+      (record.courses || []).join(";")
+    ]);
 
-      function chiudiInvoiceForm() {
-        document.getElementById("invoiceForm").style.display = "none";
-        document.getElementById("probenContainer").innerHTML = `
-          <h4>Proben hinzufügen</h4>
-          <div class="probeRow">
-            <input type="date" class="probeDate" />
-            <select class="probeService">
-              <option value="0">Probe Solo (€25,00)</option>
-              <option value="1">Probe Kleine Gruppe (€15,00)</option>
-              <option value="2">Probe Grosse Gruppe (€10,00)</option>
-              <option value="extra">Extra Probe</option>
-            </select>
-            <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
-          </div>
-        `;
-      }
+    let csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(";"), ...rows.map((r) => r.join(";"))].join("\n");
 
-      function cercaRecord() {
-        const term = document
-          .getElementById("searchTerm")
-          .value.toLowerCase();
-        const tableBody = document.getElementById("tableBody");
-        const rows = tableBody.getElementsByTagName("tr");
-        for (let row of rows) {
-          const cells = row.getElementsByTagName("td");
-          let found = false;
-          for (let i = 0; i < cells.length - 1; i++) {
-            if (cells[i].textContent.toLowerCase().includes(term)) {
-              found = true;
-              break;
-            }
-          }
-          row.style.display = found ? "" : "none";
-        }
-      }
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute(
+      "download",
+      "dancehub_taenzer_backup_" + new Date().toISOString().slice(0, 10) + ".csv"
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
-      function downloadCSV() {
-        const records = appData.records || [];
-        let csv =
-          "id,vorname,nachname,geschlecht,email,telefon,adresse,plz,stadt\n";
+  function uploadCSV() {
+    const fileInput = document.getElementById("csvUpload");
+    const file = fileInput.files[0];
+    if (!file) return;
 
-        records.forEach((record) => {
-          csv += `${record.id},"${record.vorname}","${record.nachname}","${record.geschlecht || ""}","${record.email}","${record.telefon}","${record.adresse}","${record.plz}","${record.stadt}"\n`;
-        });
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+      const text = e.target.result;
+      const lines = text.split("\n").filter((l) => l.trim() !== "");
+      const [headerLine, ...dataLines] = lines;
 
-        // UTF‑8 BOM, damit Excel ä/ö/ü korrekt erkennt
-        const bom = "\uFEFF";
-        const blob = new Blob([bom + csv], {
-          type: "text/csv;charset=utf-8;"
-        });
+      const headers = headerLine.split(";");
+      const idIndex = headers.indexOf("ID");
+      const vornameIndex = headers.indexOf("Vorname");
+      const nachnameIndex = headers.indexOf("Nachname");
+      const geschlechtIndex = headers.indexOf("Geschlecht");
+      const emailIndex = headers.indexOf("E-Mail");
+      const telefonIndex = headers.indexOf("Telefon");
+      const adresseIndex = headers.indexOf("Adresse");
+      const plzIndex = headers.indexOf("PLZ");
+      const stadtIndex = headers.indexOf("Stadt");
+      const notizIndex = headers.indexOf("Notiz");
+      const kurseIndex = headers.indexOf("Kurse");
 
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "dance_records.csv";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-
-      async function uploadCSV() {
-        const fileInput = document.getElementById("csvUpload");
-        const file = fileInput.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async function (e) {
-          const text = e.target.result;
-          const lines = text.split("\n");
-          if (lines.length > 1) {
-            for (let i = 1; i < lines.length; i++) {
-              if (lines[i].trim() === "") continue;
-              const values = lines[i].split(
-                /,(?=(?:(?:[^"]*"){2})*[^"]*$)/
-              );
-              for (let j = 0; j < values.length; j++) {
-                values[j] = values[j].replace(/^"|"$/g, "").trim();
-              }
-              const record = {
-                id:
-                  (appData.records[appData.records.length - 1]?.id ||
-                    0) + 1,
-                vorname: values[1] || "",
-                nachname: values[2] || "",
-                geschlecht: values[3] || "",
-                email: values[4] || "",
-                telefon: values[5] || "",
-                adresse: values[6] || "",
-                plz: values[7] || "",
-                stadt: values[8] || ""
-              };
-              appData.records.push(record);
-            }
-            try {
-              await saveDataToJsonBin();
-              mostraTuttiRecord();
-            } catch (e) {
-              console.error(e);
-              alert(
-                "Fehler beim Speichern der CSV-Daten in JSONBin."
-              );
-            }
-          }
+      const records = dataLines.map((line) => {
+        const cols = line.split(";");
+        return {
+          id: parseInt(cols[idIndex]),
+          vorname: cols[vornameIndex],
+          nachname: cols[nachnameIndex],
+          geschlecht: cols[geschlechtIndex],
+          email: cols[emailIndex],
+          telefon: cols[telefonIndex],
+          adresse: cols[adresseIndex],
+          plz: cols[plzIndex],
+          stadt: cols[stadtIndex],
+          notiz: cols[notizIndex] || "",
+          courses: cols[kurseIndex] ? cols[kurseIndex].split(";") : []
         };
-        reader.readAsText(file, "UTF-8");
+      });
+
+      appData.records = records;
+
+      try {
+        await saveDataToJsonBin();
+        mostraTuttiRecord();
+        alert("Backup erfolgreich geladen.");
+      } catch (e) {
+        console.error(e);
+        alert("Fehler beim Speichern der Daten in JSONBin.");
+      }
+    };
+
+    reader.readAsText(file, "UTF-8");
+  }
+
+  function resetInvoiceCounter() {
+    if (!confirm("Möchten Sie den Rechnungscounter wirklich zurücksetzen?")) {
+      return;
+    }
+    const currentYear = new Date().getFullYear().toString();
+    appData.invoiceCounter[currentYear] = 0;
+    saveDataToJsonBin()
+      .then(() => alert("Rechnungscounter wurde zurückgesetzt."))
+      .catch((e) => {
+        console.error(e);
+        alert("Fehler beim Zurücksetzen des Counters.");
+      });
+  }
+
+  function renderInvoiceTable(list) {
+    const tbody = document.getElementById("invoiceTableBody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    const sorted = [...(list || [])].sort((a, b) =>
+      String(a.invoiceNumber).localeCompare(String(b.invoiceNumber), "de-DE")
+    );
+
+    sorted.forEach((inv) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${inv.invoiceNumber || ""}</td>
+        <td>${inv.date || ""}</td>
+        <td>${inv.recipientName || ""}</td>
+        <td>${inv.amount != null ? inv.amount.toFixed(2) + " €" : ""}</td>
+        <td>
+          <input type="checkbox"
+                 ${inv.paid ? "checked" : ""}
+                 onclick="toggleInvoicePaid('${inv.invoiceNumber}', this.checked)" />
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function filterInvoices() {
+    const term = (document.getElementById("invoiceSearchTerm").value || "")
+      .toLowerCase();
+    const paidFilter = document.getElementById("invoicePaidFilter").value;
+
+    let list = appData.invoices || [];
+
+    if (term) {
+      list = list.filter(inv =>
+        String(inv.recipientName || "").toLowerCase().includes(term)
+      );
+    }
+
+    if (paidFilter === "paid") {
+      list = list.filter(inv => inv.paid);
+    } else if (paidFilter === "unpaid") {
+      list = list.filter(inv => !inv.paid);
+    }
+
+    renderInvoiceTable(list);
+  }
+
+  async function toggleInvoicePaid(invoiceNumber, checked) {
+    const inv = (appData.invoices || []).find(
+      i => i.invoiceNumber === invoiceNumber
+    );
+    if (!inv) return;
+    inv.paid = checked;
+    try {
+      await saveDataToJsonBin();
+    } catch (e) {
+      console.error(e);
+      alert("Fehler beim Speichern des Rechnungsstatus.");
+    }
+  }
+
+  function downloadInvoicesCSV() {
+    const headers = [
+      "Rechnungsnummer",
+      "Datum",
+      "Empfänger",
+      "Betrag",
+      "Bezahlt"
+    ];
+    const rows = (appData.invoices || []).map(inv => [
+      inv.invoiceNumber || "",
+      inv.date || "",
+      inv.recipientName || "",
+      inv.amount != null ? inv.amount.toFixed(2) : "",
+      inv.paid ? "Ja" : "Nein"
+    ]);
+
+    let csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(";"), ...rows.map((r) => r.join(";"))].join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute(
+      "download",
+      "dancehub_rechnungen_" + new Date().toISOString().slice(0, 10) + ".csv"
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function generaRechnung(id) {
+    const record = appData.records.find((r) => r.id === id);
+    if (!record) return;
+
+    document.getElementById("invoiceId").value = record.id;
+    document.getElementById("invoiceName").textContent =
+      `${record.vorname} ${record.nachname}`;
+    document.getElementById("invoiceForm").style.display = "block";
+
+    const probeRows = document.querySelectorAll(".probeRow");
+    probeRows.forEach((row) => {
+      const select = row.querySelector(".probeService");
+      const priceInput = row.querySelector(".probePrice");
+      select.addEventListener("change", handleServiceChange);
+      if (select.value === "extra") {
+        priceInput.style.display = "inline-block";
+        priceInput.disabled = false;
+      } else {
+        priceInput.style.display = "none";
+        priceInput.disabled = true;
+      }
+    });
+  }
+
+  function aggiungiProbeRow() {
+    const container = document.getElementById("probenContainer");
+    const newRow = document.createElement("div");
+    newRow.className = "probeRow";
+    newRow.innerHTML = `
+      <input type="date" class="probeDate" />
+      <select class="probeService">
+        <option value="0">Probe Solo (€25,00)</option>
+        <option value="1">Probe Kleine Gruppe (€15,00)</option>
+        <option value="2">Probe Grosse Gruppe (€10,00)</option>
+        <option value="extra">Extra Probe</option>
+      </select>
+      <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
+    `;
+    const select = newRow.querySelector(".probeService");
+    select.addEventListener("change", handleServiceChange);
+    container.appendChild(newRow);
+  }
+
+  function handleServiceChange(event) {
+    const select = event.target;
+    const row = select.closest(".probeRow");
+    const priceInput = row.querySelector(".probePrice");
+
+    if (select.value === "extra") {
+      priceInput.style.display = "inline-block";
+      priceInput.disabled = false;
+    } else {
+      priceInput.style.display = "none";
+      priceInput.disabled = true;
+      priceInput.value = "";
+    }
+  }
+
+  async function getInvoiceNumber() {
+    const currentYear = new Date().getFullYear().toString();
+
+    if (!appData.invoiceCounter[currentYear]) {
+      appData.invoiceCounter[currentYear] = 0;
+    }
+    appData.invoiceCounter[currentYear] += 1;
+
+    await saveDataToJsonBin();
+
+    const counter = appData.invoiceCounter[currentYear];
+    return `${currentYear}-${String(counter).padStart(3, "0")}`;
+  }
+
+  async function confermaRechnung() {
+    const probeRows = document.querySelectorAll(".probeRow");
+    let dienstenListe = [];
+    let gesamt = 0;
+    let confirmationText =
+      "Folgende Daten werden in die Rechnung aufgenommen:\n\n";
+
+    probeRows.forEach((row) => {
+      const date = row.querySelector(".probeDate").value;
+      const serviceIndex = row.querySelector(".probeService").value;
+      let beschreibung, preis;
+
+      if (serviceIndex === "extra") {
+        beschreibung = "Extra Probe";
+        preis = parseFloat(row.querySelector(".probePrice").value) || 0;
+      } else {
+        const diensten = [
+          { beschreibung: "Probe Solo", preis: 25.0 },
+          { beschreibung: "Probe Kleine Gruppe", preis: 15.0 },
+          { beschreibung: "Probe Grosse Gruppe", preis: 10.0 }
+        ];
+        const index = parseInt(serviceIndex);
+        beschreibung = diensten[index].beschreibung;
+        preis = diensten[index].preis;
       }
 
-      async function resetInvoiceCounter() {
-        if (
-          !confirm(
-            "Rechnungszähler wirklich zurücksetzen? Alle Jahreszähler werden auf 0 gesetzt."
-          )
-        ) {
-          return;
-        }
-        appData.invoiceCounter = {};
-        try {
-          await saveDataToJsonBin();
-          alert(
-            "Rechnungszähler wurde zurückgesetzt! Die nächste Rechnung beginnt wieder mit 001."
-          );
-        } catch (e) {
-          console.error(e);
-          alert(
-            "Fehler beim Zurücksetzen des Rechnungszählers in JSONBin."
-          );
-        }
+      dienstenListe.push({ date, beschreibung, preis });
+      gesamt += preis;
+      confirmationText += `${date}: ${beschreibung} - €${preis.toFixed(2)}\n`;
+    });
+
+    confirmationText += `\nGesamt: €${gesamt.toFixed(2)}\n\nBestätigen?`;
+
+    if (!confirm(confirmationText)) {
+      return;
+    }
+
+    const invoiceId = parseInt(document.getElementById("invoiceId").value);
+    const record = appData.records.find((r) => r.id === invoiceId);
+    if (!record) return;
+
+    const invoiceNumber = await getInvoiceNumber();
+    const today = new Date().toISOString().slice(0, 10); // yyyy-mm-dd
+
+    // Archiv-Eintrag anlegen (come già nel tuo file attuale)
+    if (!appData.invoices) appData.invoices = [];
+    appData.invoices.push({
+      invoiceNumber,
+      date: today,
+      recipientId: record.id,
+      recipientName: `${record.vorname} ${record.nachname}`,
+      amount: gesamt,
+      paid: false
+    });
+    await saveDataToJsonBin();
+    renderInvoiceTable(appData.invoices);
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("p", "mm", "a4");
+
+    // Absenderblock (oben links)
+    doc.setFontSize(10);
+    doc.text("Dance HUB Munich", 20, 20);
+    doc.text("Musterstraße 1", 20, 25);
+    doc.text("81234 München", 20, 30);
+    doc.text("Tel.: 089 / 123456", 20, 35);
+    doc.text("E-Mail: info@dancehub-munich.de", 20, 40);
+
+    // Empfängerblock (klassisch, etwas tiefer)
+    const empfaengerY = 55;
+    doc.text(
+      `${record.vorname} ${record.nachname}`,
+      20,
+      empfaengerY
+    );
+    if (record.adresse) doc.text(record.adresse, 20, empfaengerY + 5);
+    let lineY = empfaengerY + 10;
+    if (record.plz || record.stadt) {
+      doc.text(
+        `${record.plz || ""} ${record.stadt || ""}`.trim(),
+        20,
+        lineY
+      );
+      lineY += 5;
+    }
+
+    // Rechnungsüberschrift + Kopfdaten
+    const headerY = lineY + 10;
+    doc.setFontSize(12);
+    doc.setFont(undefined, "bold");
+    doc.text("Rechnung", 20, headerY);
+
+    doc.setFontSize(10);
+    doc.setFont(undefined, "normal");
+    const kopfY = headerY + 8;
+    doc.text(`Rechnungsnummer: ${invoiceNumber}`, 20, kopfY);
+    doc.text(`Rechnungsdatum: ${today}`, 20, kopfY + 5);
+    doc.text(`Kunde: ${record.vorname} ${record.nachname}`, 20, kopfY + 10);
+
+    // Tabelle der Leistungen (mit Netto/Brutto-Struktur, aber hier Brutto = Gesamt)
+    const tableStartY = kopfY + 18;
+
+    const tableColumn = ["Datum", "Leistung", "Menge", "Einzelpreis (€)", "Betrag (€)"];
+    const tableRows = dienstenListe.map((item) => [
+      item.date || "",
+      item.beschreibung,
+      "1",
+      item.preis.toFixed(2),
+      item.preis.toFixed(2)
+    ]);
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: tableStartY,
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [125, 60, 255] }, // Lila Kopfzeile wie UI
+      columnStyles: {
+        0: { cellWidth: 25 },
+        1: { cellWidth: 80 },
+        2: { cellWidth: 15, halign: "right" },
+        3: { cellWidth: 25, halign: "right" },
+        4: { cellWidth: 25, halign: "right" }
       }
-    </script>
+    });
+
+    const afterTableY = doc.lastAutoTable.finalY + 8;
+
+    // === Summenblock unter der Spalte "Betrag (€)" ===
+    // In der Tabelle hat die Spalte "Betrag (€)" die Breite 25 und sitzt am rechten Rand.
+    // Wir nutzen denselben rechten Rand (ca. x = 190) und align: "right".
+    const sumXRight = 190;
+    const netto = gesamt / 1.19;
+    const mwst = gesamt - netto;
+
+    const rowSpacing = 5;
+    let sumY = afterTableY + 4;
+
+    doc.setFont(undefined, "normal");
+    doc.text("Zwischensumme (netto):", sumXRight - 50, sumY);
+    doc.text(netto.toFixed(2) + " €", sumXRight, sumY, { align: "right" });
+
+    sumY += rowSpacing;
+    doc.text("zzgl. 19 % MwSt:", sumXRight - 50, sumY);
+    doc.text(mwst.toFixed(2) + " €", sumXRight, sumY, { align: "right" });
+
+    sumY += rowSpacing + 2;
+    doc.setFont(undefined, "bold");
+    doc.text("Rechnungsbetrag:", sumXRight - 50, sumY);
+    doc.text(gesamt.toFixed(2) + " €", sumXRight, sumY, { align: "right" });
+
+    // Falls du später USt trennen willst: hier Zwischenschritt einbauen.
+    // Aktuell: gleiche Summe als Rechnungsbetrag
+    doc.setFont(undefined, "bold");
+    doc.text("Rechnungsbetrag:", sumXLabel, afterTableY + 7);
+    doc.text(`${gesamt.toFixed(2)} €`, sumXValue, afterTableY + 7, { align: "right" });
+
+    // Fußtext / Zahlungsbedingungen
+    const footerY = afterTableY + 20;
+    doc.setFontSize(9);
+    doc.setFont(undefined, "normal");
+    doc.text(
+      "Bitte überweisen Sie den Rechnungsbetrag innerhalb von 14 Tagen ohne Abzug.",
+      20,
+      footerY
+    );
+    doc.text(
+      "Bankverbindung: IBAN DE00 0000 0000 0000 0000 00 · BIC XXXXXX00",
+      20,
+      footerY + 5
+    );
+    doc.text(
+      "Es gilt die Kleinunternehmerregelung nach § 19 UStG. Es wird keine Umsatzsteuer ausgewiesen.",
+      20,
+      footerY + 10
+    );
+
+    doc.save(
+      `Rechnung_${invoiceNumber}_${record.nachname}_${record.vorname}.pdf`
+    );
+
+    chiudiInvoiceForm();
+
+    chiudiInvoiceForm();
+  }
+
+  function chiudiInvoiceForm() {
+    document.getElementById("invoiceForm").style.display = "none";
+  }
+</script>
   </body>
 </html>
