@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -53,35 +54,8 @@
     color: #ffffff;
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.4);
     min-height: 72px;
-    position: relative; /* aggiungi se non c'è già */
-    overflow: hidden;   /* per tagliare l'effetto ai bordi arrotondati */
-  }
-
-  .top-bar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -60%;
-    width: 40%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      rgba(255, 255, 255, 0.0) 0%,
-      rgba(255, 255, 255, 0.35) 50%,
-      rgba(255, 255, 255, 0.0) 100%
-    );
-    transform: skewX(-20deg);
-    pointer-events: none;
-    opacity: 0;
-    animation: topbar-sheen 52s infinite;
-  }
-
-@keyframes topbar-sheen {
-  0% { opacity: 0; left: -60%; }
-  8% { opacity: 0.8; left: 110%; }
-  12% { opacity: 0; left: 110%; }
-  100% { opacity: 0; left: 110%; }
-}
+    position: relative;
+    overflow: hidden;
   }
 
   .top-bar-left {
@@ -139,6 +113,45 @@
     border-radius: 999px;
     background-color: rgba(255, 255, 255, 0.18);
     font-size: 11px;
+  }
+
+  /* Riflesso di luce sulla top bar */
+  .top-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.0) 0%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0.0) 100%
+    );
+    transform: skewX(-20deg);
+    pointer-events: none;
+    opacity: 0;
+    animation: topbar-sheen 30s infinite;
+  }
+
+  @keyframes topbar-sheen {
+    0% {
+      opacity: 0;
+      left: -60%;
+    }
+    8% {
+      opacity: 0.8;
+      left: 110%;
+    }
+    12% {
+      opacity: 0;
+      left: 110%;
+    }
+    100% {
+      opacity: 0;
+      left: 110%;
+    }
   }
 
   @media (max-width: 640px) {
@@ -428,7 +441,9 @@
     color: var(--text-muted);
     font-size: 11px;
     text-align: center;
-    margin-top: 16px;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
   }
 
   /* Course picker styling */
@@ -565,6 +580,46 @@
     font-size: 11px;
     color: var(--text-muted);
     margin-top: 2px;
+  }
+
+  /* Toast notifiche */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%) translateY(30px);
+    background: #111827;
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.2s ease;
+    z-index: 2000;
+  }
+
+  .toast-visible {
+    opacity: 0.96;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+
+  .toast-success {
+    background-color: #16a34a;
+  }
+
+  .toast-error {
+    background-color: #b91c1c;
+  }
+
+  @media (max-width: 540px) {
+    .toast {
+      bottom: 14px;
+      font-size: 12px;
+      padding: 7px 12px;
+    }
   }
 
   /* MOBILE extra */
@@ -942,15 +997,13 @@
       />
     </div>
   </div>
-
 </section>
 
           <div class="footer-text">
             Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version 1.0<br />
-            Dance Hub Dancers • © 2026 • All Rights Reserved
+            Dance Hub Dancers • © 2026 Enzo Notari • All Rights Reserved
           </div>
 
-<!-- EDIT MODAL -->
 <div id="editForm" class="edit-form">
   <h3>Tänzer*innen bearbeiten</h3>
   <input type="hidden" id="editId" />
@@ -999,8 +1052,7 @@
     <button class="primary-btn" onclick="salvaModifiche()">Speichern</button>
     <button class="secondary-btn" onclick="chiudiEditForm()">Abbrechen</button>
   </div>
-</div>
-
+  </div>
 <!-- INVOICE MODAL -->
 <div id="invoiceForm" class="edit-form">
   <h3>Rechnung für <span id="invoiceName"></span> erstellen</h3>
@@ -1011,8 +1063,8 @@
       <input type="date" class="probeDate" />
       <select class="probeService">
         <option value="0">Probe Solo (€25,00)</option>
-        <option value="1">Probe kleine Gruppe (€15,00)</option>
-        <option value="2">Probe grosse Gruppe (€10,00)</option>
+        <option value="1">Probe Kleine Gruppe (€15,00)</option>
+        <option value="2">Probe Grosse Gruppe (€10,00)</option>
         <option value="extra">Extra Probe</option>
       </select>
       <input
@@ -1039,29 +1091,13 @@
   </div>
 </div>
 
-<!-- COURSE PICKER MODAL -->
-<div
-  id="coursePickerModal"
-  class="edit-form"
-  style="max-width: 900px; width: 98%;"
->
-  <h3>Kurse auswählen</h3>
-  <div id="coursePickerList" class="course-picker-grid">
-    <!-- per JS -->
-  </div>
-  <div class="edit-form-actions">
-    <button class="secondary-btn" type="button" onclick="closeCoursePicker()">
-      Abbrechen
-    </button>
-    <button class="primary-btn" type="button" onclick="confirmCoursePicker()">
-      Übernehmen
-    </button>
-  </div>
-</div>
-
-
-        </main>
+       </main>
       </div>
+    </div>
+
+    <!-- Toast globale -->
+    <div id="saveToast" class="toast">
+      ✅ Daten wurden gespeichert.
     </div>
 
 <script>
@@ -1136,6 +1172,22 @@
       body: JSON.stringify(appData)
     });
     if (!res.ok) throw new Error("Fehler beim Speichern der Daten in JSONBin");
+  }
+
+  function showSaveToast(message, type) {
+    const toast = document.getElementById("saveToast");
+    if (!toast) return;
+    toast.textContent = message || "Daten wurden gespeichert.";
+    toast.classList.remove("toast-success", "toast-error");
+    if (type === "error") {
+      toast.classList.add("toast-error");
+    } else {
+      toast.classList.add("toast-success");
+    }
+    toast.classList.add("toast-visible");
+    setTimeout(() => {
+      toast.classList.remove("toast-visible");
+    }, 2500);
   }
 
   function showSection(section) {
@@ -1313,6 +1365,7 @@
     .catch((error) => {
       console.error(error);
       alert("Fehler beim Laden der Daten aus JSONBin.");
+      showSaveToast("Fehler beim Laden der Daten.", "error");
     });
 
   async function aggiungiRecord() {
@@ -1338,9 +1391,11 @@
       mostraTuttiRecord();
       updateDashboardStats();
       showSection("search");
+      showSaveToast("Neue Tänzer*in gespeichert.", "success");
     } catch (e) {
       console.error(e);
       alert("Fehler beim Speichern der Daten in JSONBin.");
+      showSaveToast("Fehler beim Speichern.", "error");
     }
   }
 
@@ -1431,9 +1486,11 @@
       mostraTuttiRecord();
       updateDashboardStats();
       chiudiEditForm();
+      showSaveToast("Änderungen gespeichert.", "success");
     } catch (e) {
       console.error(e);
       alert("Fehler beim Speichern der Daten in JSONBin.");
+      showSaveToast("Fehler beim Speichern.", "error");
     }
   }
 
@@ -1446,9 +1503,11 @@
       await saveDataToJsonBin();
       mostraTuttiRecord();
       updateDashboardStats();
+      showSaveToast("Eintrag gelöscht und gespeichert.", "success");
     } catch (e) {
       console.error(e);
       alert("Fehler beim Speichern der Daten in JSONBin.");
+      showSaveToast("Fehler beim Speichern.", "error");
     }
   }
 
@@ -1564,9 +1623,11 @@
         mostraTuttiRecord();
         updateDashboardStats();
         alert("Backup erfolgreich geladen.");
+        showSaveToast("Backup erfolgreich gespeichert.", "success");
       } catch (e) {
         console.error(e);
         alert("Fehler beim Speichern der Daten in JSONBin.");
+        showSaveToast("Fehler beim Speichern.", "error");
       }
     };
 
@@ -1583,10 +1644,12 @@
       .then(() => {
         alert("Rechnungscounter wurde zurückgesetzt.");
         updateDashboardStats();
+        showSaveToast("Rechnungscounter zurückgesetzt.", "success");
       })
       .catch((e) => {
         console.error(e);
         alert("Fehler beim Zurücksetzen des Counters.");
+        showSaveToast("Fehler beim Speichern.", "error");
       });
   }
 
@@ -1647,9 +1710,11 @@
     try {
       await saveDataToJsonBin();
       updateDashboardStats();
+      showSaveToast("Rechnungsstatus aktualisiert.", "success");
     } catch (e) {
       console.error(e);
       alert("Fehler beim Speichern des Rechnungsstatus.");
+      showSaveToast("Fehler beim Speichern.", "error");
     }
   }
 
@@ -1679,29 +1744,29 @@
     document.body.removeChild(link);
   }
 
-  function generaRechnung(id) {
-    const record = appData.records.find((r) => r.id === id);
-    if (!record) return;
+ function generaRechnung(id) {
+  const record = appData.records.find((r) => r.id === id);
+  if (!record) return;
 
-    document.getElementById("invoiceId").value = record.id;
-    document.getElementById("invoiceName").textContent =
-      `${record.vorname} ${record.nachname}`;
-    document.getElementById("invoiceForm").style.display = "block";
+  document.getElementById("invoiceId").value = record.id;
+  document.getElementById("invoiceName").textContent =
+    `${record.vorname} ${record.nachname}`;
+  document.getElementById("invoiceForm").style.display = "block";
 
-    const probeRows = document.querySelectorAll(".probeRow");
-    probeRows.forEach((row) => {
-      const select = row.querySelector(".probeService");
-      const priceInput = row.querySelector(".probePrice");
-      select.addEventListener("change", handleServiceChange);
-      if (select.value === "extra") {
-        priceInput.style.display = "inline-block";
-        priceInput.disabled = false;
-      } else {
-        priceInput.style.display = "none";
-        priceInput.disabled = true;
-      }
-    });
-  }
+  const probeRows = document.querySelectorAll(".probeRow");
+  probeRows.forEach((row) => {
+    const select = row.querySelector(".probeService");
+    const priceInput = row.querySelector(".probePrice");
+    select.addEventListener("change", handleServiceChange);
+    if (select.value === "extra") {
+      priceInput.style.display = "inline-block";
+      priceInput.disabled = false;
+    } else {
+      priceInput.style.display = "none";
+      priceInput.disabled = true;
+    }
+  });
+}
 
   function aggiungiProbeRow() {
     const container = document.getElementById("probenContainer");
@@ -1803,6 +1868,7 @@
     await saveDataToJsonBin();
     renderInvoiceTable(appData.invoices);
     updateDashboardStats();
+    showSaveToast("Rechnung gespeichert und PDF erstellt.", "success");
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF("p", "mm", "a4");
