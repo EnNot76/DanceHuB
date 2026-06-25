@@ -24,10 +24,13 @@
         --info-hover: #0284c7;
       }
 
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
         max-width: 1500px;
         margin: 12px auto;
         padding: 16px;
@@ -104,7 +107,9 @@
         font-size: 12px;
       }
 
-      .top-bar-date { font-weight: 500; }
+      .top-bar-date {
+        font-weight: 500;
+      }
 
       .top-bar-tag {
         padding: 2px 8px;
@@ -133,10 +138,22 @@
       }
 
       @keyframes topbar-sheen {
-        0% { opacity: 0; left: -60%; }
-        8% { opacity: 0.8; left: 110%; }
-        12% { opacity: 0; left: 110%; }
-        100% { opacity: 0; left: 110%; }
+        0% {
+          opacity: 0;
+          left: -60%;
+        }
+        8% {
+          opacity: 0.8;
+          left: 110%;
+        }
+        12% {
+          opacity: 0;
+          left: 110%;
+        }
+        100% {
+          opacity: 0;
+          left: 110%;
+        }
       }
 
       @media (max-width: 640px) {
@@ -145,11 +162,19 @@
           align-items: flex-start;
           gap: 6px;
         }
-        .top-bar-right { align-items: flex-start; }
-        .top-bar-logo-title { align-items: flex-start; }
-        .top-bar-logo { width: 70px; height: 50px; }
+        .top-bar-right {
+          align-items: flex-start;
+        }
+        .top-bar-logo-title {
+          align-items: flex-start;
+        }
+        .top-bar-logo {
+          width: 70px;
+          height: 50px;
+        }
       }
 
+      /* NAV BAR ORIZZONTALE */
       .main-nav {
         margin-top: 4px;
         margin-bottom: 4px;
@@ -181,7 +206,9 @@
         transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
       }
 
-      .nav-button:hover { background-color: #eef2ff; }
+      .nav-button:hover {
+        background-color: #eef2ff;
+      }
 
       .nav-button-active {
         background-color: #e0e7ff;
@@ -196,7 +223,9 @@
           flex-wrap: nowrap;
           overflow-x: auto;
         }
-        .main-nav::-webkit-scrollbar { height: 4px; }
+        .main-nav::-webkit-scrollbar {
+          height: 4px;
+        }
         .main-nav::-webkit-scrollbar-thumb {
           background-color: #cbd5f5;
           border-radius: 999px;
@@ -214,7 +243,10 @@
         align-items: flex-start;
       }
 
-      .main-content { flex: 1; min-width: 0; }
+      .main-content {
+        flex: 1;
+        min-width: 0;
+      }
 
       h2 {
         font-size: 20px;
@@ -222,7 +254,10 @@
         letter-spacing: 0.01em;
       }
 
-      h3 { font-size: 18px; margin-top: 0; }
+      h3 {
+        font-size: 18px;
+        margin-top: 0;
+      }
 
       h4 {
         font-size: 15px;
@@ -249,10 +284,15 @@
       }
 
       @media (max-width: 640px) {
-        .form-grid { grid-template-columns: 1fr; gap: 6px; }
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
       }
 
-      input, select, textarea {
+      input,
+      select,
+      textarea {
         width: 100%;
         margin: 0;
         padding: 6px 8px;
@@ -263,7 +303,9 @@
       }
 
       input::placeholder,
-      textarea::placeholder { color: #9ca3af; }
+      textarea::placeholder {
+        color: #9ca3af;
+      }
 
       input:focus,
       select:focus,
@@ -281,7 +323,9 @@
         flex-wrap: wrap;
       }
 
-      .search-row input[type="text"] { flex: 1 1 220px; }
+      .search-row input[type="text"] {
+        flex: 1 1 220px;
+      }
 
       button,
       label.secondary-btn {
@@ -311,15 +355,45 @@
         box-shadow: 0 4px 10px rgba(125, 60, 255, 0.35);
       }
 
-      .primary-btn:hover { background-color: var(--primary-hover); }
-      .edit-btn { background-color: var(--info); color: #ffffff; }
-      .edit-btn:hover { background-color: var(--info-hover); }
-      .delete-btn { background-color: var(--danger); color: #ffffff; }
-      .delete-btn:hover { background-color: var(--danger-hover); }
-      .invoice-btn { background-color: var(--success); color: #ffffff; }
-      .invoice-btn:hover { background-color: var(--success-hover); }
-      .secondary-btn { background-color: #e5e7eb; color: #374151; }
-      .secondary-btn:hover { background-color: #d1d5db; }
+      .primary-btn:hover {
+        background-color: var(--primary-hover);
+      }
+
+      .edit-btn {
+        background-color: var(--info);
+        color: #ffffff;
+      }
+
+      .edit-btn:hover {
+        background-color: var(--info-hover);
+      }
+
+      .delete-btn {
+        background-color: var(--danger);
+        color: #ffffff;
+      }
+
+      .delete-btn:hover {
+        background-color: var(--danger-hover);
+      }
+
+      .invoice-btn {
+        background-color: var(--success);
+        color: #ffffff;
+      }
+
+      .invoice-btn:hover {
+        background-color: var(--success-hover);
+      }
+
+      .secondary-btn {
+        background-color: #e5e7eb;
+        color: #374151;
+      }
+
+      .secondary-btn:hover {
+        background-color: #d1d5db;
+      }
 
       .danger-outline-btn {
         background-color: #fef2f2;
@@ -327,7 +401,9 @@
         border: 1px solid #fecaca;
       }
 
-      .danger-outline-btn:hover { background-color: #fee2e2; }
+      .danger-outline-btn:hover {
+        background-color: #fee2e2;
+      }
 
       .table-container {
         width: 100%;
@@ -343,7 +419,8 @@
         font-size: 13px;
       }
 
-      th, td {
+      th,
+      td {
         border: 1px solid #e5e7eb;
         padding: 6px 8px;
         text-align: left;
@@ -358,8 +435,50 @@
         font-weight: 600;
       }
 
-      tbody tr:nth-child(even) { background-color: #f9fafb; }
-      tbody tr:hover { background-color: var(--primary-soft); }
+      tbody tr:nth-child(even) {
+        background-color: #f9fafb;
+      }
+
+      tbody tr:hover {
+        background-color: var(--primary-soft);
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 12%;
+      }
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 12%;
+      }
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 8%;
+      }
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 18%;
+      }
+      th:nth-child(5),
+      td:nth-child(5) {
+        width: 12%;
+      }
+      th:nth-child(6),
+      td:nth-child(6) {
+        width: 26%;
+      }
+      th:nth-child(7),
+      td:nth-child(7) {
+        width: 8%;
+      }
+      th:nth-child(8),
+      td:nth-child(8) {
+        width: 12%;
+      }
+      th:nth-child(9),
+      td:nth-child(9) {
+        width: 16%;
+      }
 
       .edit-form {
         position: fixed;
@@ -373,8 +492,8 @@
         z-index: 1000;
         border-radius: 14px;
         box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
-        max-width: 520px;
-        width: calc(100% - 24px);
+        max-width: 560px; /* più largo */
+        width: 100%;
         max-height: 90vh;
         overflow-y: auto;
       }
@@ -419,7 +538,8 @@
         border-radius: 10px;
         border: 1px solid #e5e7eb;
         background-color: #f9fafb;
-        transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+        transition: background-color 0.15s, border-color 0.15s,
+          box-shadow 0.15s;
         cursor: pointer;
       }
 
@@ -447,10 +567,15 @@
         word-break: break-word;
       }
 
-      .course-code { font-weight: 600; }
+      .course-code {
+        font-weight: 600;
+      }
 
       @media (max-width: 640px) {
-        .course-picker-grid { grid-template-columns: 1fr; max-height: 320px; }
+        .course-picker-grid {
+          grid-template-columns: 1fr;
+          max-height: 320px;
+        }
       }
 
       .home-layout {
@@ -461,7 +586,9 @@
       }
 
       @media (max-width: 768px) {
-        .home-layout { grid-template-columns: 1fr; }
+        .home-layout {
+          grid-template-columns: 1fr;
+        }
       }
 
       .home-grid {
@@ -485,7 +612,9 @@
         color: #ffffff;
       }
 
-      .home-tile-main:hover { background-color: var(--primary-hover); }
+      .home-tile-main:hover {
+        background-color: var(--primary-hover);
+      }
 
       .home-tile-danger {
         background-color: #fef2f2;
@@ -493,7 +622,9 @@
         border: 1px solid #fecaca;
       }
 
-      .home-tile-danger:hover { background-color: #fee2e2; }
+      .home-tile-danger:hover {
+        background-color: #fee2e2;
+      }
 
       .stats-grid {
         display: grid;
@@ -543,7 +674,8 @@
         box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.2s ease;
+        transition: opacity 0.4s ease, transform 0.4s ease,
+          background-color 0.2s ease;
         z-index: 2000;
       }
 
@@ -553,28 +685,35 @@
         pointer-events: auto;
       }
 
-      .toast-success { background-color: #16a34a; }
-      .toast-error { background-color: #b91c1c; }
-
-      .probeRow {
-        display: grid;
-        grid-template-columns: 1fr 1.4fr 1fr;
-        gap: 8px;
-        align-items: start;
-        margin-bottom: 8px;
+      .toast-success {
+        background-color: #16a34a;
       }
 
-      @media (max-width: 640px) {
-        .probeRow { grid-template-columns: 1fr; }
+      .toast-error {
+        background-color: #b91c1c;
       }
 
       @media (max-width: 540px) {
-        body { margin: 0; padding: 8px; max-width: 100%; }
+        .toast {
+          bottom: 14px;
+          font-size: 12px;
+          padding: 7px 12px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        body {
+          margin: 0;
+          padding: 8px;
+          max-width: 100%;
+        }
+
         .top-bar {
           border-radius: 0;
           margin: 0 0 6px;
           padding: 10px 12px;
         }
+
         .form-container,
         .search-container,
         .csv-container {
@@ -582,13 +721,91 @@
           border-radius: 10px;
           margin-bottom: 10px;
         }
-        h2 { font-size: 17px; margin-bottom: 8px; }
-        .form-grid { grid-template-columns: 1fr; gap: 6px; }
-        input, select, textarea {
+
+        h2 {
+          font-size: 17px;
+          margin-bottom: 8px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+
+        input,
+        select,
+        textarea {
           padding: 7px 8px;
           font-size: 14px;
         }
-        .table-container { overflow-x: auto; border-radius: 0; box-shadow: none; }
+
+        .table-container {
+          overflow-x: visible;
+          border-radius: 0;
+          box-shadow: none;
+        }
+        table,
+        thead {
+          display: none;
+        }
+
+        #tableBody {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        #tableBody tr {
+          display: block;
+          border-radius: 10px;
+          border: 1px solid #e5e7eb;
+          background: #ffffff;
+          padding: 8px 10px;
+        }
+
+        #tableBody td {
+          display: block;
+          border: none;
+          padding: 2px 0;
+          white-space: normal;
+        }
+
+        #tableBody td:nth-child(1)::before {
+          content: "Vorname: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(2)::before {
+          content: "Nachname: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(3)::before {
+          content: "Geschlecht: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(4)::before {
+          content: "E-Mail: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(5)::before {
+          content: "Telefon: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(6)::before {
+          content: "Adresse: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(7)::before {
+          content: "PLZ: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(8)::before {
+          content: "Stadt: ";
+          font-weight: 600;
+        }
+
+        #tableBody td:nth-child(9) {
+          margin-top: 6px;
+        }
       }
     </style>
   </head>
@@ -597,10 +814,16 @@
       <div class="top-bar">
         <div class="top-bar-left">
           <div class="top-bar-logo-title">
-            <img src="logo.png" alt="Dance HUB Munich Logo" class="top-bar-logo" />
+            <img
+              src="logo.png"
+              alt="Dance HUB Munich Logo"
+              class="top-bar-logo"
+            />
             <div class="top-bar-texts">
               <div class="top-bar-title">Dance HUB Munich</div>
-              <div class="top-bar-subtitle">Dance-Management &amp; Beleg-Erstellung</div>
+              <div class="top-bar-subtitle">
+                Dance-Management &amp; Beleg-Erstellung
+              </div>
             </div>
           </div>
         </div>
@@ -610,57 +833,158 @@
         </div>
       </div>
 
+      <!-- NAV BAR ORIZZONTALE -->
       <nav class="main-nav">
-        <button class="nav-button nav-button-active" type="button" data-section="home" onclick="showSection('home')">🏠 Start</button>
-        <button class="nav-button" type="button" data-section="search" onclick="showSection('search')">🔍 Tänzer*innen</button>
-        <button class="nav-button" type="button" data-section="create" onclick="showSection('create')">✚ Neue Tänzer*in</button>
-        <button class="nav-button" type="button" data-section="invoices" onclick="showSection('invoices')">📄 Rechnungsarchiv</button>
-        <button class="nav-button" type="button" data-section="csv" onclick="showSection('csv')">💾 Lokales Backup</button>
-        <button class="nav-button" type="button" onclick="resetInvoiceCounter()" title="Nur für Test-Phase zurücksetzen">⚠️ Reset RG-Nummer</button>
+        <button
+          class="nav-button nav-button-active"
+          type="button"
+          data-section="home"
+          onclick="showSection('home')"
+        >
+          🏠 Start
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="search"
+          onclick="showSection('search')"
+        >
+          🔍 Tänzer*innen
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="create"
+          onclick="showSection('create')"
+        >
+          ✚ Neue Tänzer*in
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="invoices"
+          onclick="showSection('invoices')"
+        >
+          📄 Rechnungsarchiv
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="csv"
+          onclick="showSection('csv')"
+        >
+          💾 Lokales Backup
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          onclick="resetInvoiceCounter()"
+          title="Nur für Test-Phase zurücksetzen"
+        >
+          ⚠️ Reset RG-Nummer
+        </button>
       </nav>
 
       <div class="layout">
         <main class="main-content">
+          <!-- HOME -->
           <section id="section-home">
             <div class="form-container">
               <div class="home-layout">
                 <div>
                   <h2>Willkommen im Dance HUB Dashboard</h2>
-                  <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 8px;">Kurzer Überblick über deine aktuelle Datenlage.</p>
+                  <p
+                    style="
+                      font-size: 13px;
+                      color: var(--text-muted);
+                      margin-top: 0;
+                      margin-bottom: 8px;
+                    "
+                  >
+                    Kurzer Überblick über deine aktuelle Datenlage.
+                  </p>
+
                   <div class="stats-grid">
                     <div class="stats-card">
                       <div class="stats-label">Tänzer*innen gesamt</div>
                       <div class="stats-value" id="statsTotalDancers">–</div>
                       <div class="stats-sub">Alle Einträge im System</div>
                     </div>
+
                     <div class="stats-card">
                       <div class="stats-label">Rechnungen dieses Jahr</div>
                       <div class="stats-value" id="statsInvoicesYear">–</div>
-                      <div class="stats-sub">Erstellte Rechnungen im laufenden Jahr</div>
+                      <div class="stats-sub">
+                        Erstellte Rechnungen im laufenden Jahr
+                      </div>
                     </div>
+
                     <div class="stats-card">
                       <div class="stats-label">Offene Rechnungen</div>
                       <div class="stats-value" id="statsInvoicesOpen">–</div>
-                      <div class="stats-sub">Noch nicht als bezahlt markiert</div>
+                      <div class="stats-sub">
+                        Noch nicht als bezahlt markiert
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 <div>
-                  <h3 style="margin-bottom: 6px;">Schnellzugriff</h3>
-                  <p style="font-size: 12px; color: var(--text-muted); margin-top: 0; margin-bottom: 8px;">Häufige Aktionen direkt erreichbar.</p>
+                  <h3 style="margin-bottom: 6px">Schnellzugriff</h3>
+                  <p
+                    style="
+                      font-size: 12px;
+                      color: var(--text-muted);
+                      margin-top: 0;
+                      margin-bottom: 8px;
+                    "
+                  >
+                    Häufige Aktionen direkt erreichbar.
+                  </p>
+
                   <div class="home-grid">
-                    <button class="primary-btn home-tile home-tile-main" onclick="showSection('search')">🔍 Tänzer*innen verwalten</button>
-                    <button class="secondary-btn home-tile" onclick="showSection('create')">✚ Neue Tänzer*in anlegen</button>
-                    <button class="secondary-btn home-tile" onclick="showSection('invoices')">📄 Rechnungsarchiv öffnen</button>
-                    <button class="secondary-btn home-tile" onclick="showSection('csv')">💾 Lokales Backup (CSV)</button>
-                    <button class="home-tile home-tile-danger" onclick="resetInvoiceCounter()">⚠️ Reset RG-Nummer (nur Test-Phase)</button>
+                    <button
+                      class="primary-btn home-tile home-tile-main"
+                      onclick="showSection('search')"
+                    >
+                      🔍 Tänzer*innen verwalten
+                    </button>
+
+                    <button
+                      class="secondary-btn home-tile"
+                      onclick="showSection('create')"
+                    >
+                      ✚ Neue Tänzer*in anlegen
+                    </button>
+
+                    <button
+                      class="secondary-btn home-tile"
+                      onclick="showSection('invoices')"
+                    >
+                      📄 Rechnungsarchiv öffnen
+                    </button>
+
+                    <button
+                      class="secondary-btn home-tile"
+                      onclick="showSection('csv')"
+                    >
+                      💾 Lokales Backup (CSV)
+                    </button>
+
+                    <button
+                      class="home-tile home-tile-danger"
+                      onclick="resetInvoiceCounter()"
+                    >
+                      ⚠️ Reset RG-Nummer (nur Test-Phase)
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section id="section-create" style="display:none;">
+          <!-- CREATE -->
+          <section id="section-create" style="display: none">
             <div class="form-container">
               <h2>Neue Tänzer*innen hinzufügen</h2>
               <div class="form-grid">
@@ -677,23 +1001,111 @@
                 <input type="text" id="indirizzo" placeholder="Adresse" />
                 <input type="text" id="cap" placeholder="PLZ" />
                 <input type="text" id="citta" placeholder="Stadt" />
-                <label for="coursesSummary" style="grid-column: 1 / -1; font-size: 13px; color: var(--text-muted);">Zugeordnete Kurse:</label>
-                <input type="text" id="coursesSummary" readonly placeholder="Keine Kurse ausgewählt" style="grid-column: 1 / -1; background-color: #f9fafb; cursor: pointer;" onclick="openCoursePicker('create')" />
-                <button type="button" class="secondary-btn" style="grid-column: 1 / -1; justify-content: center;" onclick="openCoursePicker('create')">Kurse auswählen</button>
-                <textarea id="notiz" placeholder="Interne Notiz (nur intern, nicht auf Beleg)" rows="2" style="grid-column: 1 / -1; resize: vertical;"></textarea>
+
+                <label
+                  style="
+                    grid-column: 1 / -1;
+                    font-size: 13px;
+                    color: var(--text-muted);
+                  "
+                >
+                  Vertragsdaten:
+                </label>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+                    margin-top: 4px;
+                  "
+                >
+                  <span
+                    style="font-size: 12px; color: var(--text-muted)"
+                  >
+                    Geburtsdatum Tänzer*in
+                  </span>
+                  <input type="date" id="geburtstag" />
+                </div>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+                    margin-top: 4px;
+                  "
+                >
+                  <span
+                    style="font-size: 12px; color: var(--text-muted)"
+                  >
+                    Beitrittsdatum (Vertragsbeginn)
+                  </span>
+                  <input type="date" id="beitrittsdatum" />
+                </div>
+
+                <label
+                  for="coursesSummary"
+                  style="
+                    grid-column: 1 / -1;
+                    font-size: 13px;
+                    color: var(--text-muted);
+                  "
+                >
+                  Zugeordnete Kurse:
+                </label>
+
+                <input
+                  type="text"
+                  id="coursesSummary"
+                  readonly
+                  placeholder="Keine Kurse ausgewählt"
+                  style="
+                    grid-column: 1 / -1;
+                    background-color: #f9fafb;
+                    cursor: pointer;
+                  "
+                  onclick="openCoursePicker('create')"
+                />
+
+                <button
+                  type="button"
+                  class="secondary-btn"
+                  style="grid-column: 1 / -1; justify-content: center"
+                  onclick="openCoursePicker('create')"
+                >
+                  Kurse auswählen
+                </button>
+
+                <textarea
+                  id="notiz"
+                  placeholder="Interne Notiz (nur intern, nicht auf Beleg)"
+                  rows="2"
+                  style="grid-column: 1 / -1; resize: vertical"
+                ></textarea>
               </div>
-              <button class="primary-btn" onclick="aggiungiRecord()">Hinzufügen</button>
+              <button class="primary-btn" onclick="aggiungiRecord()">
+                Hinzufügen
+              </button>
             </div>
           </section>
 
-          <section id="section-search" style="display:none;">
+          <!-- SEARCH -->
+          <section id="section-search" style="display: none">
             <div class="search-container">
               <h2>Tänzer*innen suchen</h2>
               <div class="search-row">
-                <input type="text" id="searchTerm" placeholder="In allen Feldern suchen..." />
-                <button class="secondary-btn" onclick="cercaRecord()">Suchen</button>
+                <input
+                  type="text"
+                  id="searchTerm"
+                  placeholder="In allen Feldern suchen..."
+                />
+                <button class="secondary-btn" onclick="cercaRecord()">
+                  Suchen
+                </button>
               </div>
             </div>
+
             <div class="table-container">
               <table id="dataTable">
                 <thead>
@@ -715,20 +1127,33 @@
             </div>
           </section>
 
-          <section id="section-invoices" style="display:none;">
+          <!-- INVOICES -->
+          <section id="section-invoices" style="display: none">
             <div class="search-container">
               <h2>Rechnungsarchiv</h2>
               <div class="search-row">
-                <input type="text" id="invoiceSearchTerm" placeholder="Nach Rechnungsempfänger suchen..." />
+                <input
+                  type="text"
+                  id="invoiceSearchTerm"
+                  placeholder="Nach Rechnungsempfänger suchen..."
+                />
                 <select id="invoicePaidFilter">
                   <option value="all">Alle</option>
                   <option value="paid">Bezahlt</option>
                   <option value="unpaid">Offen</option>
                 </select>
-                <button class="secondary-btn" onclick="filterInvoices()">Filtern</button>
-                <button class="secondary-btn" onclick="downloadInvoicesCSV()">Rechnung-Liste CSV</button>
+                <button class="secondary-btn" onclick="filterInvoices()">
+                  Filtern
+                </button>
+                <button
+                  class="secondary-btn"
+                  onclick="downloadInvoicesCSV()"
+                >
+                  Rechnung-Liste CSV
+                </button>
               </div>
             </div>
+
             <div class="table-container">
               <table>
                 <thead>
@@ -745,113 +1170,404 @@
             </div>
           </section>
 
-          <section id="section-csv" style="display:none;">
+          <!-- CSV -->
+          <section id="section-csv" style="display: none">
             <div class="csv-container">
               <h2>CSV-Backup</h2>
-              <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 10px;">Erstelle eine Sicherungsdatei oder spiele ein vorhandenes Backup ein.</p>
-              <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-                <button class="secondary-btn" onclick="downloadCSV()">Backup-Datei herunterladen</button>
-                <label for="csvUpload" class="secondary-btn" style="cursor: pointer;">Backup-Datei hochladen</label>
-                <input type="file" id="csvUpload" accept=".csv" onchange="uploadCSV()" style="display: none;" />
+              <p
+                style="
+                  font-size: 13px;
+                  color: var(--text-muted);
+                  margin-top: 0;
+                  margin-bottom: 10px;
+                "
+              >
+                Erstelle eine Sicherungsdatei oder spiele ein vorhandenes
+                Backup ein.
+              </p>
+
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 8px;
+                  align-items: center;
+                "
+              >
+                <button class="secondary-btn" onclick="downloadCSV()">
+                  Backup-Datei herunterladen
+                </button>
+
+                <label
+                  for="csvUpload"
+                  class="secondary-btn"
+                  style="cursor: pointer"
+                >
+                  Backup-Datei hochladen
+                </label>
+                <input
+                  type="file"
+                  id="csvUpload"
+                  accept=".csv"
+                  onchange="uploadCSV()"
+                  style="display: none"
+                />
               </div>
             </div>
           </section>
 
           <div class="footer-text">
-            Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version 1.0<br />
+            Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version
+            1.0<br />
             Dance Hub Dancers • © 2026 Enzo Notari • All Rights Reserved
           </div>
 
+          <!-- EDIT FORM -->
           <div id="editForm" class="edit-form">
             <h3>Tänzer*innen bearbeiten</h3>
             <input type="hidden" id="editId" />
-            <input type="text" id="editNome" placeholder="Vorname" />
-            <input type="text" id="editCognome" placeholder="Nachname" />
+            <input type="text" id="editNome" placeholder="Vorname" /><br />
+            <input
+              type="text"
+              id="editCognome"
+              placeholder="Nachname"
+            /><br />
             <select id="editGeschlecht">
               <option value="">Geschlecht wählen</option>
               <option value="männlich">männlich</option>
               <option value="weiblich">weiblich</option>
               <option value="divers">divers</option>
             </select>
-            <input type="email" id="editEmail" placeholder="E-Mail" />
-            <input type="tel" id="editTelefono" placeholder="Telefon" />
-            <input type="text" id="editIndirizzo" placeholder="Adresse" />
-            <input type="text" id="editCap" placeholder="PLZ" />
-            <input type="text" id="editCitta" placeholder="Stadt" />
-            <label for="editCoursesSummary" style="font-size: 12px; color: var(--text-muted);">Zugeordnete Kurse:</label>
-            <input type="text" id="editCoursesSummary" readonly placeholder="Keine Kurse ausgewählt" style="width: 100%; background-color: #f9fafb; cursor: pointer; margin-bottom: 6px;" onclick="openCoursePicker('edit')" />
-            <button type="button" class="secondary-btn" style="margin-bottom: 8px;" onclick="openCoursePicker('edit')">Kurse auswählen</button>
-            <textarea id="editNotiz" placeholder="Interne Notiz (nur intern)" rows="3" style="width: 100%; resize: vertical; margin-top: 4px;"></textarea>
+            <br />
+            <input type="email" id="editEmail" placeholder="E-Mail" /><br />
+            <input
+              type="tel"
+              id="editTelefono"
+              placeholder="Telefon"
+            /><br />
+            <input
+              type="text"
+              id="editIndirizzo"
+              placeholder="Adresse"
+            /><br />
+            <input type="text" id="editCap" placeholder="PLZ" /><br />
+            <input type="text" id="editCitta" placeholder="Stadt" /><br />
+
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 4px;
+              "
+            >
+              <span
+                style="font-size: 12px; color: var(--text-muted)"
+              >
+                Geburtsdatum der Tänzer*in
+              </span>
+              <input type="date" id="editGeburtstag" />
+            </div>
+
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 4px;
+              "
+            >
+              <span
+                style="font-size: 12px; color: var(--text-muted)"
+              >
+                Beitrittsdatum (Vertragsbeginn)
+              </span>
+              <input type="date" id="editBeitrittsdatum" />
+            </div>
+
+            <!-- Austritt + Mitgliedsstatus (nur Edit) -->
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 4px;
+              "
+            >
+              <span
+                style="font-size: 12px; color: var(--text-muted)"
+              >
+                Austrittsdatum (Vertragsende)
+              </span>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <input
+                  type="date"
+                  id="editAustrittsdatum"
+                  style="flex: 0 0 180px"
+                />
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    font-size: 12px;
+                  "
+                >
+                  <input type="checkbox" id="editAktivMitglied" />
+                  <span id="editAktivMitgliedLabelText">
+                    Aktives Mitglied (kein Austrittsdatum)
+                  </span>
+                </label>
+              </div>
+            </div>
+            <br />
+
+            <label
+              for="editCoursesSummary"
+              style="font-size: 12px; color: var(--text-muted)"
+            >
+              Zugeordnete Kurse:
+            </label>
+            <br />
+            <input
+              type="text"
+              id="editCoursesSummary"
+              readonly
+              placeholder="Keine Kurse ausgewählt"
+              style="
+                width: 100%;
+                background-color: #f9fafb;
+                cursor: pointer;
+                margin-bottom: 6px;
+              "
+              onclick="openCoursePicker('edit')"
+            /><br />
+            <button
+              type="button"
+              class="secondary-btn"
+              style="margin-bottom: 8px"
+              onclick="openCoursePicker('edit')"
+            >
+              Kurse auswählen
+            </button>
+            <br />
+
+            <textarea
+              id="editNotiz"
+              placeholder="Interne Notiz (nur intern)"
+              rows="3"
+              style="width: 100%; resize: vertical; margin-top: 4px"
+            ></textarea
+            ><br />
+
             <div class="edit-form-actions">
-              <button class="primary-btn" onclick="salvaModifiche()">Speichern</button>
-              <button class="secondary-btn" onclick="chiudiEditForm()">Abbrechen</button>
+              <button class="primary-btn" onclick="salvaModifiche()">
+                Speichern
+              </button>
+              <button class="secondary-btn" onclick="chiudiEditForm()">
+                Abbrechen
+              </button>
             </div>
           </div>
 
+          <!-- INVOICE MODAL -->
           <div id="invoiceForm" class="edit-form">
-            <h3>Rechnung für <span id="invoiceName"></span> erstellen</h3>
+            <h3>
+              Rechnung für <span id="invoiceName"></span> erstellen
+            </h3>
             <input type="hidden" id="invoiceId" />
-            <div id="probenContainer"></div>
+            <div id="probenContainer">
+              <h4>Proben hinzufügen</h4>
+              <div class="probeRow">
+                <input type="date" class="probeDate" />
+                <select class="probeService">
+                  <option value="0">Probe Solo (€25,00)</option>
+                  <option value="1">
+                    Probe Kleine Gruppe (€15,00)
+                  </option>
+                  <option value="2">
+                    Probe Grosse Gruppe (€10,00)
+                  </option>
+                  <option value="extra">Extra Probe</option>
+                </select>
+                <input
+                  type="number"
+                  class="probePrice"
+                  placeholder="Preis (€)"
+                  min="0"
+                  step="0.01"
+                  style="display: none"
+                  disabled
+                />
+              </div>
+            </div>
             <div class="edit-form-actions">
-              <button class="secondary-btn" onclick="aggiungiProbeRow()">Weitere Probe</button>
-              <button class="primary-btn" onclick="confermaRechnung()">Bestätigen</button>
-              <button class="secondary-btn" onclick="chiudiInvoiceForm()">Abbrechen</button>
+              <button
+                class="secondary-btn"
+                onclick="aggiungiProbeRow()"
+              >
+                Weitere Probe
+              </button>
+              <button
+                class="primary-btn"
+                onclick="confermaRechnung()"
+              >
+                Bestätigen
+              </button>
+              <button
+                class="secondary-btn"
+                onclick="chiudiInvoiceForm()"
+              >
+                Abbrechen
+              </button>
             </div>
           </div>
 
+          <!-- COURSE PICKER MODAL -->
           <div id="coursePickerModal" class="edit-form">
             <h3>Kurse auswählen</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 0; margin-bottom: 8px;">Wähle einen oder mehrere Kurse für diese Tänzerin / diesen Tänzer aus.</p>
+
+            <p
+              style="
+                font-size: 12px;
+                color: var(--text-muted);
+                margin-top: 0;
+                margin-bottom: 8px;
+              "
+            >
+              Wähle einen oder mehrere Kurse für diese Tänzerin / diesen
+              Tänzer aus.
+            </p>
+
             <div id="coursePickerList" class="course-picker-grid"></div>
+
             <div class="edit-form-actions">
-              <button type="button" class="primary-btn" onclick="confirmCoursePicker()">Übernehmen</button>
-              <button type="button" class="secondary-btn" onclick="closeCoursePicker()">Abbrechen</button>
+              <button
+                type="button"
+                class="primary-btn"
+                onclick="confirmCoursePicker()"
+              >
+                Übernehmen
+              </button>
+              <button
+                type="button"
+                class="secondary-btn"
+                onclick="closeCoursePicker()"
+              >
+                Abbrechen
+              </button>
             </div>
           </div>
         </main>
       </div>
     </div>
 
-    <div id="saveToast" class="toast">✅ Daten wurden gespeichert.</div>
+    <div id="saveToast" class="toast">
+      ✅ Daten wurden gespeichert.
+    </div>
 
     <script>
-      const JSONBIN_API_KEY = "$2a$10$Ptz6A3DYRVCx6xos.DtVCOj/GJTNXPZiOfRIKu/NGF7L.AniURKMm";
+      const JSONBIN_API_KEY =
+        "$2a$10$Ptz6A3DYRVCx6xos.DtVCOj/GJTNXPZiOfRIKu/NGF7L.AniURKMm";
       const JSONBIN_BIN_ID = "699c588743b1c97be996993d";
       const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
       const COURSES = [
-        { id: "1A", label: "1A – Ballett 1A Kinder (Do 16:25–17:25 Saal 2)" },
-        { id: "1B", label: "1B – Ballett 1B Kinder (Do 17:30–18:45 Saal 2)" },
-        { id: "1C", label: "1C – Ballett 1C Kinder (Sa 17:30–18:45 Saal 1)" },
-        { id: "B2/3_DI", label: "B2/3 – Ballett 2/3 (Di 16:30–17:00 Saal 2)" },
-        { id: "B2/3_MO", label: "B2/3 – Ballett 2/3 (Mo 17:00–18:30 Saal 1)" },
+        {
+          id: "1A",
+          label: "1A – Ballett 1A Kinder (Do 16:25–17:25 Saal 2)"
+        },
+        {
+          id: "1B",
+          label: "1B – Ballett 1B Kinder (Do 17:30–18:45 Saal 2)"
+        },
+        {
+          id: "1C",
+          label: "1C – Ballett 1C Kinder (Sa 17:30–18:45 Saal 1)"
+        },
+        {
+          id: "B2/3_DI",
+          label: "B2/3 – Ballett 2/3 (Di 16:30–17:00 Saal 2)"
+        },
+        {
+          id: "B2/3_MO",
+          label: "B2/3 – Ballett 2/3 (Mo 17:00–18:30 Saal 1)"
+        },
         { id: "B2/3F", label: "B2/3 – Förderklasse (Di 17:00–18:30 Saal 2)" },
         { id: "C1", label: "C1 – Choreografie 1 (Di 19:00–20:00 Saal 1)" },
         { id: "C2", label: "C2 – Choreografie 2 (Di 18:00–19:00 Saal 1)" },
-        { id: "CHF", label: "CHF – Charakter Förderklasse (Fr 16:45–17:30 Saal 1)" },
+        {
+          id: "CHF",
+          label: "CHF – Charakter Förderklasse (Fr 16:45–17:30 Saal 1)"
+        },
         { id: "CO", label: "CO – Company/Ensemble (Mi 19:30–20:30 Saal 1)" },
         { id: "GK", label: "GK – Boys (Mi 18:00–19:00 Saal 2)" },
         { id: "JZ1", label: "Jazz 1 (Mi 16:30–18:00 Saal 1)" },
-        { id: "K1", label: "K1 – Ballett Erwachsene (Do 20:00–21:30 Saal 2)" },
+        {
+          id: "K1",
+          label: "K1 – Ballett Erwachsene (Do 20:00–21:30 Saal 2)"
+        },
         { id: "K2", label: "K2 – Ballett 2 (Sa 19:45–21:15 Saal 1)" },
-        { id: "K2/3", label: "K2/3 – Ballett 2/3 Erwachsene (Mo 19:45–21:15 Saal 1)" },
+        {
+          id: "K2/3",
+          label: "K2/3 – Ballett 2/3 Erwachsene (Mo 19:45–21:15 Saal 1)"
+        },
         { id: "KA_FR", label: "KA – Ausbildung Jugend (Fr 15:15–16:45 Saal 1)" },
-        { id: "KA_MI", label: "KA – Klassische Ausbildung (Mi 18:00–19:30 Saal 1)" },
-        { id: "PBT1_DI", label: "PBT1 – Progressing Ballet Technique 1 (Di 15:30–16:30 Saal 2)" },
-        { id: "PBT1_MO", label: "PBT1 – Progressing Ballet Technique 1 (Mo 16:30–17:00 Saal 1)" },
-        { id: "PBT2", label: "PBT2 – Prog. Ballet Technique 2 (Sa 18:45–19:45 Saal 1)" },
-        { id: "PBT3", label: "PBT3 – Prog. Ballet Technique 3 (Fr 14:15–15:15 Saal 1)" },
-        { id: "TECH", label: "TECH – Technik / Sprünge / Turns (Sa 10:00–11:30 Saal 1)" },
+        {
+          id: "KA_MI",
+          label: "KA – Klassische Ausbildung (Mi 18:00–19:30 Saal 1)"
+        },
+        {
+          id: "PBT1_DI",
+          label:
+            "PBT1 – Progressing Ballet Technique 1 (Di 15:30–16:30 Saal 2)"
+        },
+        {
+          id: "PBT1_MO",
+          label:
+            "PBT1 – Progressing Ballet Technique 1 (Mo 16:30–17:00 Saal 1)"
+        },
+        {
+          id: "PBT2",
+          label:
+            "PBT2 – Prog. Ballet Technique 2 (Sa 18:45–19:45 Saal 1)"
+        },
+        {
+          id: "PBT3",
+          label:
+            "PBT3 – Prog. Ballet Technique 3 (Fr 14:15–15:15 Saal 1)"
+        },
+        {
+          id: "TECH",
+          label: "TECH – Technik / Sprünge / Turns (Sa 10:00–11:30 Saal 1)"
+        },
         { id: "TF2", label: "TF2 – Tanztheater 2 (Sa 16:00–17:30 Saal 1)" },
         { id: "TT1", label: "TT1 – Tanztheater 1 (Mo 15:30–16:30 Saal 1)" },
         { id: "TT2", label: "TT2 – Tanztheater 2 (Mi 15:30–16:30 Saal 1)" },
         { id: "TT3", label: "TT3 – Tanztheater 3 (Do 18:45–19:15 Saal 2)" },
-        { id: "TT4_DI", label: "TT4 – Tanztheater 4 (Di 20:00–21:30 Saal 1)" },
-        { id: "TT4_FR", label: "TT4 – Tanztheater 4 (Fr 20:15–21:45 Saal 1)" },
+        {
+          id: "TT4_DI",
+          label: "TT4 – Tanztheater 4 (Di 20:00–21:30 Saal 1)"
+        },
+        {
+          id: "TT4_FR",
+          label: "TT4 – Tanztheater 4 (Fr 20:15–21:45 Saal 1)"
+        },
         { id: "VS/TF", label: "VS/TF – Minis (Do 15:20–16:20 Saal 2)" }
       ];
 
-      let appData = { records: [], invoiceCounter: {}, invoices: [] };
+      let appData = {
+        records: [],
+        invoiceCounter: {},
+        invoices: []
+      };
+
       let selectedCoursesCreate = [];
       let selectedCoursesEdit = [];
       let currentCoursePickerMode = "create";
@@ -860,9 +1576,14 @@
         const res = await fetch(JSONBIN_URL + "/latest", {
           headers: { "X-Master-Key": JSONBIN_API_KEY }
         });
-        if (!res.ok) throw new Error("Fehler beim Laden der Daten aus JSONBin");
+        if (!res.ok)
+          throw new Error("Fehler beim Laden der Daten aus JSONBin");
         const json = await res.json();
-        appData = json.record || { records: [], invoiceCounter: {}, invoices: [] };
+        appData = json.record || {
+          records: [],
+          invoiceCounter: {},
+          invoices: []
+        };
         if (!appData.records) appData.records = [];
         if (!appData.invoiceCounter) appData.invoiceCounter = {};
         if (!appData.invoices) appData.invoices = [];
@@ -877,16 +1598,8 @@
           },
           body: JSON.stringify(appData)
         });
-        if (!res.ok) throw new Error("Fehler beim Speichern der Daten in JSONBin");
-      }
-
-      function escapeHtml(value) {
-        return String(value ?? "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/\"/g, "&quot;")
-          .replace(/'/g, "&#39;");
+        if (!res.ok)
+          throw new Error("Fehler beim Speichern der Daten in JSONBin");
       }
 
       function showSaveToast(message, type) {
@@ -894,22 +1607,45 @@
         if (!toast) return;
         toast.textContent = message || "Daten wurden gespeichert.";
         toast.classList.remove("toast-success", "toast-error");
-        toast.classList.add(type === "error" ? "toast-error" : "toast-success");
+        if (type === "error") {
+          toast.classList.add("toast-error");
+        } else {
+          toast.classList.add("toast-success");
+        }
         toast.classList.add("toast-visible");
-        setTimeout(() => toast.classList.remove("toast-visible"), 2500);
+        setTimeout(() => {
+          toast.classList.remove("toast-visible");
+        }, 2500);
       }
 
       function showSection(section) {
-        const ids = ["home", "create", "search", "invoices", "csv"];
-        ids.forEach((id) => {
-          const el = document.getElementById(`section-${id}`);
-          if (el) el.style.display = id === section ? "" : "none";
-        });
+        const homeSec = document.getElementById("section-home");
+        const createSec = document.getElementById("section-create");
+        const searchSec = document.getElementById("section-search");
+        const invoicesSec = document.getElementById("section-invoices");
+        const csvSec = document.getElementById("section-csv");
 
-        if (section === "invoices") renderInvoiceTable(appData.invoices);
+        homeSec.style.display = "none";
+        createSec.style.display = "none";
+        searchSec.style.display = "none";
+        invoicesSec.style.display = "none";
+        csvSec.style.display = "none";
 
-        document.querySelectorAll(".main-nav .nav-button").forEach((btn) => btn.classList.remove("nav-button-active"));
-        const active = document.querySelector(`.main-nav .nav-button[data-section="${section}"]`);
+        if (section === "home") homeSec.style.display = "";
+        else if (section === "create") createSec.style.display = "";
+        else if (section === "search") searchSec.style.display = "";
+        else if (section === "invoices") {
+          invoicesSec.style.display = "";
+          renderInvoiceTable(appData.invoices);
+        } else if (section === "csv") csvSec.style.display = "";
+
+        const navButtons = document.querySelectorAll(".main-nav .nav-button");
+        navButtons.forEach((btn) =>
+          btn.classList.remove("nav-button-active")
+        );
+        const active = document.querySelector(
+          `.main-nav .nav-button[data-section="${section}"]`
+        );
         if (active) active.classList.add("nav-button-active");
       }
 
@@ -917,8 +1653,9 @@
         const pickerContainer = document.getElementById("coursePickerList");
         if (!pickerContainer) return;
         pickerContainer.innerHTML = "";
-        const sorted = [...COURSES].sort((a, b) => a.id.localeCompare(b.id, "de-DE"));
-
+        const sorted = [...COURSES].sort((a, b) =>
+          a.id.localeCompare(b.id, "de-DE")
+        );
         sorted.forEach((course) => {
           const card = document.createElement("div");
           card.className = "course-picker-item";
@@ -939,10 +1676,12 @@
           codeSpan.textContent = course.id;
 
           const descSpan = document.createElement("span");
-          descSpan.textContent = " – " + course.label.replace(/^.*?–\s*/, "");
+          descSpan.textContent =
+            " – " + course.label.replace(/^.*?–\s*/, "");
 
           textWrap.appendChild(codeSpan);
           textWrap.appendChild(descSpan);
+
           label.appendChild(cb);
           label.appendChild(textWrap);
           card.appendChild(label);
@@ -954,9 +1693,20 @@
         currentCoursePickerMode = mode === "edit" ? "edit" : "create";
         const modal = document.getElementById("coursePickerModal");
         if (!modal) return;
-        const ids = currentCoursePickerMode === "edit" ? selectedCoursesEdit : selectedCoursesCreate;
+
+        const checkboxes = modal.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach((cb) => (cb.checked = false));
+
+        const ids =
+          currentCoursePickerMode === "edit"
+            ? selectedCoursesEdit
+            : selectedCoursesCreate;
+
         const set = new Set(ids || []);
-        modal.querySelectorAll("input[type='checkbox']").forEach((cb) => { cb.checked = set.has(cb.value); });
+        checkboxes.forEach((cb) => {
+          cb.checked = set.has(cb.value);
+        });
+
         modal.style.display = "block";
       }
 
@@ -966,28 +1716,43 @@
       }
 
       function mapCourseIdsToShortLabels(ids) {
-        return (ids || []).map((id) => {
-          const c = COURSES.find((x) => x.id === id);
-          if (!c) return id;
-          const match = c.label.match(/\(([^)]+)\)/);
-          const timePart = match ? match[1].replace(/ Saal.*$/, "") : "";
-          return timePart ? `${c.id} (${timePart})` : c.id;
-        }).join(", ");
+        return ids
+          .map((id) => {
+            const c = COURSES.find((x) => x.id === id);
+            if (!c) return id;
+            const match = c.label.match(/\(([^)]+)\)/);
+            const timePart = match
+              ? match[1].replace(/ Saal.*$/, "")
+              : "";
+            return timePart ? `${c.id} (${timePart})` : c.id;
+          })
+          .join(", ");
       }
 
       function confirmCoursePicker() {
         const modal = document.getElementById("coursePickerModal");
         if (!modal) return;
-        const checked = Array.from(modal.querySelectorAll("input[type='checkbox']:checked")).map((cb) => cb.value);
+
+        const checked = Array.from(
+          modal.querySelectorAll("input[type='checkbox']:checked")
+        ).map((cb) => cb.value);
 
         if (currentCoursePickerMode === "edit") {
           selectedCoursesEdit = checked;
           const summary = document.getElementById("editCoursesSummary");
-          if (summary) summary.value = checked.length ? mapCourseIdsToShortLabels(checked) : "Keine Kurse ausgewählt";
+          if (summary) {
+            summary.value = checked.length
+              ? mapCourseIdsToShortLabels(checked)
+              : "Keine Kurse ausgewählt";
+          }
         } else {
           selectedCoursesCreate = checked;
           const summary = document.getElementById("coursesSummary");
-          if (summary) summary.value = checked.length ? mapCourseIdsToShortLabels(checked) : "Keine Kurse ausgewählt";
+          if (summary) {
+            summary.value = checked.length
+              ? mapCourseIdsToShortLabels(checked)
+              : "Keine Kurse ausgewählt";
+          }
         }
 
         closeCoursePicker();
@@ -1008,17 +1773,70 @@
 
       function updateDashboardStats() {
         const totalDancers = (appData.records || []).length;
-        const invoices = appData.invoices || [];
-        const currentYear = new Date().getFullYear().toString();
-        const invoicesThisYear = invoices.filter((inv) => String(inv.invoiceNumber || "").startsWith(currentYear + "-")).length;
-        const openInvoices = invoices.filter((inv) => !inv.paid).length;
-
         const elDancers = document.getElementById("statsTotalDancers");
-        const elInvYear = document.getElementById("statsInvoicesYear");
-        const elInvOpen = document.getElementById("statsInvoicesOpen");
         if (elDancers) elDancers.textContent = String(totalDancers);
+
+        const currentYear = new Date().getFullYear().toString();
+        const invoices = appData.invoices || [];
+        const invoicesThisYear = invoices.filter((inv) =>
+          String(inv.invoiceNumber || "").startsWith(currentYear + "-")
+        ).length;
+        const elInvYear = document.getElementById("statsInvoicesYear");
         if (elInvYear) elInvYear.textContent = String(invoicesThisYear);
+
+        const openInvoices = invoices.filter((inv) => !inv.paid).length;
+        const elInvOpen = document.getElementById("statsInvoicesOpen");
         if (elInvOpen) elInvOpen.textContent = String(openInvoices);
+      }
+
+      showSection("home");
+
+      loadDataFromJsonBin()
+        .then(() => {
+          populateCoursesSelect();
+          mostraTuttiRecord();
+          renderInvoiceTable(appData.invoices);
+          updateDashboardStats();
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Fehler beim Laden der Daten aus JSONBin.");
+          showSaveToast("Fehler beim Laden der Daten.", "error");
+        });
+
+      async function aggiungiRecord() {
+        const nuovoId =
+          (appData.records[appData.records.length - 1]?.id || 0) + 1;
+        const nuovo = {
+          id: nuovoId,
+          vorname: document.getElementById("nome").value,
+          nachname: document.getElementById("cognome").value,
+          geschlecht: document.getElementById("geschlecht").value,
+          email: document.getElementById("email").value,
+          telefon: document.getElementById("telefono").value,
+          adresse: document.getElementById("indirizzo").value,
+          plz: document.getElementById("cap").value,
+          stadt: document.getElementById("citta").value,
+          geburtstag: document.getElementById("geburtstag").value || "",
+          beitrittsdatum: document.getElementById("beitrittsdatum").value || "",
+//          austrittsdatum: document.getElementById("austrittsdatum").value || "",
+          aktivMitglied: true, // nuovo sempre attivo
+          notiz: document.getElementById("notiz").value || "",
+          courses: [...selectedCoursesCreate]
+        };
+
+        appData.records.push(nuovo);
+        try {
+          await saveDataToJsonBin();
+          mostraTuttiRecord();
+          updateDashboardStats();
+          pulisciForm();
+          showSaveToast("Eintrag hinzugefügt und gespeichert.", "success");
+        } catch (e) {
+          console.error(e);
+          alert("Fehler beim Speichern der Daten in JSONBin.");
+          showSaveToast("Fehler beim Speichern.", "error");
+        }
       }
 
       function pulisciForm() {
@@ -1030,63 +1848,50 @@
         document.getElementById("indirizzo").value = "";
         document.getElementById("cap").value = "";
         document.getElementById("citta").value = "";
+
         const notizEl = document.getElementById("notiz");
+        const gebEl = document.getElementById("geburtstag");
+        const beiEl = document.getElementById("beitrittsdatum");
+
         if (notizEl) notizEl.value = "";
+        if (gebEl) gebEl.value = "";
+        if (beiEl) beiEl.value = "";
+        // if (ausEl) ausEl.value = "";
+
         selectedCoursesCreate = [];
         const summary = document.getElementById("coursesSummary");
         if (summary) summary.value = "";
       }
 
-      async function aggiungiRecord() {
-        const nextId = Math.max(0, ...appData.records.map((r) => Number(r.id) || 0)) + 1;
-        const nuovo = {
-          id: nextId,
-          vorname: document.getElementById("nome").value.trim(),
-          nachname: document.getElementById("cognome").value.trim(),
-          geschlecht: document.getElementById("geschlecht").value,
-          email: document.getElementById("email").value.trim(),
-          telefon: document.getElementById("telefono").value.trim(),
-          adresse: document.getElementById("indirizzo").value.trim(),
-          plz: document.getElementById("cap").value.trim(),
-          stadt: document.getElementById("citta").value.trim(),
-          notiz: document.getElementById("notiz").value || "",
-          courses: [...selectedCoursesCreate]
-        };
-
-        appData.records.push(nuovo);
-
-        try {
-          await saveDataToJsonBin();
-          pulisciForm();
-          mostraTuttiRecord();
-          updateDashboardStats();
-          showSection("search");
-          showSaveToast("Neue Tänzer*in gespeichert.", "success");
-        } catch (e) {
-          console.error(e);
-          alert("Fehler beim Speichern der Daten in JSONBin.");
-          showSaveToast("Fehler beim Speichern.", "error");
-        }
+      function mostraTuttiRecord() {
+        visualizzaRecord(appData.records);
       }
 
       function visualizzaRecord(list) {
         const tbody = document.getElementById("tableBody");
         tbody.innerHTML = "";
-        (list || []).forEach((record) => {
+        list.forEach((record) => {
           const row = document.createElement("tr");
-          const courseLabel = record.courses && record.courses.length ? mapCourseIdsToShortLabels(record.courses) : "";
+          const courseLabel =
+            record.courses && record.courses.length
+              ? mapCourseIdsToShortLabels(record.courses)
+              : "";
           row.innerHTML = `
-            <td>${escapeHtml(record.vorname)}</td>
-            <td>${escapeHtml(record.nachname)}</td>
-            <td>${escapeHtml(record.geschlecht)}</td>
-            <td>${escapeHtml(record.email)}</td>
-            <td>${escapeHtml(record.telefon)}</td>
-            <td>${escapeHtml(record.adresse)}</td>
-            <td>${escapeHtml(record.plz)}</td>
-            <td>${escapeHtml(record.stadt)}</td>
-            <td title="${escapeHtml(courseLabel)}">${escapeHtml(courseLabel)}</td>
+            <td>${record.vorname || ""}</td>
+            <td>${record.nachname || ""}</td>
+            <td>${record.geschlecht || ""}</td>
+            <td>${record.email || ""}</td>
+            <td>${record.telefon || ""}</td>
+            <td>${record.adresse || ""}</td>
+            <td>${record.plz || ""}</td>
+            <td>${record.stadt || ""}</td>
+            <td>${courseLabel}</td>
             <td>
-              <button class="edit-btn" onclick="modificaRecord(${record.id})" title="Bearbeiten">✎</button>
+              <button class="edit-btn"
+                      onclick="modificaRecord(${record.id})"
+                      title="${(record.notiz || "").replace(/"/g, '\\"')}">
+                ✎
+              </button>
               <button class="delete-btn" onclick="eliminaRecord(${record.id})" title="Eintrag entfernen">✖</button>
               <button class="invoice-btn" onclick="generaRechnung(${record.id})" title="Beleg erstellen">€</button>
             </td>
@@ -1095,27 +1900,92 @@
         });
       }
 
-      function mostraTuttiRecord() {
-        const sorted = [...appData.records].sort((a, b) => String(a.nachname || "").localeCompare(String(b.nachname || ""), "de-DE"));
-        visualizzaRecord(sorted);
+      function cercaRecord() {
+        const searchTerm = document
+          .getElementById("searchTerm")
+          .value.toLowerCase();
+        const filtered = appData.records.filter((record) => {
+          return (
+            (record.vorname || "").toLowerCase().includes(searchTerm) ||
+            (record.nachname || "").toLowerCase().includes(searchTerm) ||
+            (record.geschlecht || "").toLowerCase().includes(searchTerm) ||
+            (record.email || "").toLowerCase().includes(searchTerm) ||
+            (record.telefon || "").toLowerCase().includes(searchTerm) ||
+            (record.adresse || "").toLowerCase().includes(searchTerm) ||
+            (record.plz || "").toLowerCase().includes(searchTerm) ||
+            (record.stadt || "").toLowerCase().includes(searchTerm) ||
+            (record.notiz || "").toLowerCase().includes(searchTerm)
+          );
+        });
+        visualizzaRecord(filtered);
+      }
+
+      function initEditAktivMitgliedUI(record) {
+        const ausEdit = document.getElementById("editAustrittsdatum");
+        const chkEdit = document.getElementById("editAktivMitglied");
+        const lblEdit = document.getElementById("editAktivMitgliedLabelText");
+        if (!ausEdit || !chkEdit || !lblEdit) return;
+
+        chkEdit.checked = !!record.aktivMitglied;
+
+        if (chkEdit.checked) {
+          ausEdit.disabled = true;
+          ausEdit.value = record.austrittsdatum || "";
+          lblEdit.textContent = "Aktives Mitglied (kein Austrittsdatum)";
+        } else {
+          ausEdit.disabled = false;
+          ausEdit.value = record.austrittsdatum || "";
+          lblEdit.textContent = "Inaktives Mitglied (Austrittsdatum setzen)";
+        }
+
+        chkEdit.addEventListener("change", () => {
+          if (chkEdit.checked) {
+            ausEdit.disabled = true;
+            lblEdit.textContent = "Aktives Mitglied (kein Austrittsdatum)";
+          } else {
+            ausEdit.disabled = false;
+            lblEdit.textContent = "Inaktives Mitglied (Austrittsdatum setzen)";
+          }
+        });
       }
 
       function modificaRecord(id) {
         const record = appData.records.find((r) => r.id === id);
         if (!record) return;
+
         document.getElementById("editId").value = record.id;
-        document.getElementById("editNome").value = record.vorname || "";
-        document.getElementById("editCognome").value = record.nachname || "";
-        document.getElementById("editGeschlecht").value = record.geschlecht || "";
-        document.getElementById("editEmail").value = record.email || "";
-        document.getElementById("editTelefono").value = record.telefon || "";
-        document.getElementById("editIndirizzo").value = record.adresse || "";
-        document.getElementById("editCap").value = record.plz || "";
-        document.getElementById("editCitta").value = record.stadt || "";
+        document.getElementById("editNome").value = record.vorname;
+        document.getElementById("editCognome").value = record.nachname;
+        document.getElementById("editGeschlecht").value =
+          record.geschlecht || "";
+        document.getElementById("editEmail").value = record.email;
+        document.getElementById("editTelefono").value = record.telefon;
+        document.getElementById("editIndirizzo").value = record.adresse;
+        document.getElementById("editCap").value = record.plz;
+        document.getElementById("editCitta").value = record.stadt;
+
+        document.getElementById("editGeburtstag").value =
+          record.geburtstag || "";
+        document.getElementById("editBeitrittsdatum").value =
+          record.beitrittsdatum || "";
+        document.getElementById("editAustrittsdatum").value =
+          record.austrittsdatum || "";
+        document.getElementById("editAktivMitglied").checked =
+          !!record.aktivMitglied;
+
         document.getElementById("editNotiz").value = record.notiz || "";
+
         selectedCoursesEdit = [...(record.courses || [])];
         const editSummary = document.getElementById("editCoursesSummary");
-        if (editSummary) editSummary.value = selectedCoursesEdit.length ? mapCourseIdsToShortLabels(selectedCoursesEdit) : "Keine Kurse ausgewählt";
+        if (editSummary) {
+          editSummary.value =
+            record.courses && record.courses.length
+              ? mapCourseIdsToShortLabels(record.courses)
+              : "Keine Kurse ausgewählt";
+        }
+
+        initEditAktivMitgliedUI(record);
+
         document.getElementById("editForm").style.display = "block";
       }
 
@@ -1124,14 +1994,38 @@
         const record = appData.records.find((r) => r.id === id);
         if (!record) return;
 
-        record.vorname = document.getElementById("editNome").value.trim();
-        record.nachname = document.getElementById("editCognome").value.trim();
-        record.geschlecht = document.getElementById("editGeschlecht").value;
-        record.email = document.getElementById("editEmail").value.trim();
-        record.telefon = document.getElementById("editTelefono").value.trim();
-        record.adresse = document.getElementById("editIndirizzo").value.trim();
+        record.vorname = document
+          .getElementById("editNome")
+          .value.trim();
+        record.nachname = document
+          .getElementById("editCognome")
+          .value.trim();
+        record.geschlecht = document.getElementById(
+          "editGeschlecht"
+        ).value;
+        record.email = document
+          .getElementById("editEmail")
+          .value.trim();
+        record.telefon = document
+          .getElementById("editTelefono")
+          .value.trim();
+        record.adresse = document
+          .getElementById("editIndirizzo")
+          .value.trim();
         record.plz = document.getElementById("editCap").value.trim();
-        record.stadt = document.getElementById("editCitta").value.trim();
+        record.stadt = document
+          .getElementById("editCitta")
+          .value.trim();
+
+        record.geburtstag =
+          document.getElementById("editGeburtstag").value || "";
+        record.beitrittsdatum =
+          document.getElementById("editBeitrittsdatum").value || "";
+        record.austrittsdatum =
+          document.getElementById("editAustrittsdatum").value || "";
+        record.aktivMitglied =
+          document.getElementById("editAktivMitglied").checked || false;
+
         record.notiz = document.getElementById("editNotiz").value;
         record.courses = [...selectedCoursesEdit];
 
@@ -1148,8 +2042,18 @@
         }
       }
 
+      function chiudiEditForm() {
+        document.getElementById("editForm").style.display = "none";
+      }
+
       async function eliminaRecord(id) {
-        if (!confirm("Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?")) return;
+        if (
+          !confirm(
+            "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?"
+          )
+        ) {
+          return;
+        }
         appData.records = appData.records.filter((r) => r.id !== id);
         try {
           await saveDataToJsonBin();
@@ -1163,27 +2067,131 @@
         }
       }
 
-      function chiudiEditForm() {
-        document.getElementById("editForm").style.display = "none";
+      function renderInvoiceTable(list) {
+        const tbody = document.getElementById("invoiceTableBody");
+        tbody.innerHTML = "";
+        list.forEach((inv, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${inv.invoiceNumber || ""}</td>
+            <td>${inv.date || ""}</td>
+            <td>${inv.recipient || ""}</td>
+            <td>${inv.amount != null ? inv.amount.toFixed(2) + " €" : ""}</td>
+            <td style="text-align:center;">
+              <input
+                type="checkbox"
+                ${inv.paid ? "checked" : ""}
+                onchange="toggleInvoicePaid(${index})"
+              />
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
       }
 
-      function cercaRecord() {
-        const searchTerm = document.getElementById("searchTerm").value.toLowerCase();
-        const filtered = appData.records.filter((record) => Object.values(record).join(" ").toLowerCase().includes(searchTerm));
-        visualizzaRecord(filtered);
+      async function toggleInvoicePaid(index) {
+        const inv = appData.invoices[index];
+        if (!inv) return;
+
+        // flip dello stato
+        inv.paid = !inv.paid;
+
+        try {
+          await saveDataToJsonBin();
+          // ricarica tabella e dashboard
+          renderInvoiceTable(appData.invoices);
+          updateDashboardStats();
+          showSaveToast("Rechnungsstatus aktualisiert.", "success");
+        } catch (e) {
+          console.error(e);
+          alert("Fehler beim Speichern der Daten in JSONBin.");
+          showSaveToast("Fehler beim Speichern.", "error");
+        }
       }
 
-      function downloadCSV() {
-        const headers = ["ID", "Vorname", "Nachname", "Geschlecht", "E-Mail", "Telefon", "Adresse", "PLZ", "Stadt", "Notiz", "Kurse"];
-        const rows = appData.records.map((record) => [record.id, record.vorname, record.nachname, record.geschlecht, record.email, record.telefon, record.adresse, record.plz, record.stadt, record.notiz || "", (record.courses || []).join("|")]);
-        const csvContent = "data:text/csv;charset=utf-8," + [headers.join(";"), ...rows.map((r) => r.join(";"))].join("\n");
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.href = encodedUri;
-        link.download = "dancehub_taenzer_backup_" + new Date().toISOString().slice(0, 10) + ".csv";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+      function filterInvoices() {
+        const term = document
+          .getElementById("invoiceSearchTerm")
+          .value.toLowerCase();
+        const filterPaid = document.getElementById(
+          "invoicePaidFilter"
+        ).value;
+        let list = appData.invoices || [];
+        if (term) {
+          list = list.filter((inv) =>
+            String(inv.recipient || "")
+              .toLowerCase()
+              .includes(term)
+          );
+        }
+        if (filterPaid === "paid") {
+          list = list.filter((inv) => inv.paid);
+        } else if (filterPaid === "unpaid") {
+          list = list.filter((inv) => !inv.paid);
+        }
+        renderInvoiceTable(list);
+      }
+
+      async function downloadCSV() {
+        const headers = [
+          "ID",
+          "Vorname",
+          "Nachname",
+          "Geschlecht",
+          "E-Mail",
+          "Telefon",
+          "Adresse",
+          "PLZ",
+          "Stadt",
+          "Geburtsdatum",
+          "Beitrittsdatum",
+          "Austrittsdatum",
+          "AktivesMitglied",
+          "Notiz",
+          "Kurse"
+        ];
+
+        const rows = appData.records.map((record) => [
+          record.id,
+          record.vorname,
+          record.nachname,
+          record.geschlecht,
+          record.email,
+          record.telefon,
+          record.adresse,
+          record.plz,
+          record.stadt,
+          record.geburtstag || "",
+          record.beitrittsdatum || "",
+          record.austrittsdatum || "",
+          record.aktivMitglied ? "Ja" : "Nein",
+          record.notiz || "",
+          (record.courses || []).join("|")
+        ]);
+
+        let csvContent = headers.join(",") + "\n";
+        rows.forEach((row) => {
+          csvContent +=
+            row
+              .map((field) => {
+                if (field == null) return "";
+                const s = String(field).replace(/"/g, '""');
+                return `"${s}"`;
+              })
+              .join(",") + "\n";
+        });
+
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;"
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "dancehub_backup.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
       }
 
       function uploadCSV() {
@@ -1192,126 +2200,107 @@
         if (!file) return;
 
         const reader = new FileReader();
-        reader.onload = async function (e) {
+        reader.onload = async (e) => {
           const text = e.target.result;
-          const lines = text.split("\n").filter((l) => l.trim() !== "");
-          const [headerLine, ...dataLines] = lines;
-          const headers = headerLine.split(";");
+          const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
+          const headers = lines[0]
+            .split(",")
+            .map((h) => h.replace(/"/g, "").trim());
 
-          const records = dataLines.map((line) => {
-            const cols = line.split(";");
-            const byName = (name) => cols[headers.indexOf(name)] || "";
+          const byName = (name, row) => {
+            const idx = headers.indexOf(name);
+            if (idx === -1) return "";
+            const raw = row[idx] || "";
+            return raw.replace(/^"|"$/g, "").replace(/""/g, '"');
+          };
+
+          const newRecords = lines.slice(1).map((line) => {
+            const cols =
+              line.match(/("([^"]|"")*"|[^,]*)/g) || [];
             return {
-              id: parseInt(byName("ID"), 10),
-              vorname: byName("Vorname"),
-              nachname: byName("Nachname"),
-              geschlecht: byName("Geschlecht"),
-              email: byName("E-Mail"),
-              telefon: byName("Telefon"),
-              adresse: byName("Adresse"),
-              plz: byName("PLZ"),
-              stadt: byName("Stadt"),
-              notiz: byName("Notiz"),
-              courses: byName("Kurse") ? byName("Kurse").split("|").filter(Boolean) : []
+              id: parseInt(byName("ID", cols), 10),
+              vorname: byName("Vorname", cols),
+              nachname: byName("Nachname", cols),
+              geschlecht: byName("Geschlecht", cols),
+              email: byName("E-Mail", cols),
+              telefon: byName("Telefon", cols),
+              adresse: byName("Adresse", cols),
+              plz: byName("PLZ", cols),
+              stadt: byName("Stadt", cols),
+              geburtstag: byName("Geburtsdatum", cols),
+              beitrittsdatum: byName("Beitrittsdatum", cols),
+              austrittsdatum: byName("Austrittsdatum", cols),
+              aktivMitglied: byName("AktivesMitglied", cols) === "Ja",
+              notiz: byName("Notiz", cols),
+              courses: byName("Kurse", cols)
+                ? byName("Kurse", cols)
+                    .split("|")
+                    .filter(Boolean)
+                : []
             };
-          }).filter((r) => !Number.isNaN(r.id));
+          });
 
-          appData.records = records;
-
+          appData.records = newRecords;
           try {
             await saveDataToJsonBin();
             mostraTuttiRecord();
             updateDashboardStats();
-            alert("Backup erfolgreich geladen.");
-            showSaveToast("Backup erfolgreich gespeichert.", "success");
+            showSaveToast(
+              "CSV-Backup importiert und gespeichert.",
+              "success"
+            );
           } catch (e) {
             console.error(e);
             alert("Fehler beim Speichern der Daten in JSONBin.");
             showSaveToast("Fehler beim Speichern.", "error");
           }
         };
-
-        reader.readAsText(file, "UTF-8");
+        reader.readAsText(file);
       }
 
       function resetInvoiceCounter() {
-        if (!confirm("Möchten Sie den Rechnungscounter wirklich zurücksetzen?")) return;
-        const currentYear = new Date().getFullYear().toString();
-        appData.invoiceCounter[currentYear] = 0;
-        saveDataToJsonBin()
-          .then(() => {
-            alert("Rechnungscounter wurde zurückgesetzt.");
-            updateDashboardStats();
-            showSaveToast("Rechnungscounter zurückgesetzt.", "success");
-          })
-          .catch((e) => {
-            console.error(e);
-            alert("Fehler beim Zurücksetzen des Counters.");
-            showSaveToast("Fehler beim Speichern.", "error");
-          });
+        if (
+          !confirm(
+            "Achtung! Diese Aktion setzt den Rechnungszähler zurück. Fortfahren?"
+          )
+        ) {
+          return;
+        }
+        appData.invoiceCounter = {};
+        showSaveToast("Rechnungszähler zurückgesetzt (lokal).", "success");
       }
 
-      function renderInvoiceTable(list) {
-        const tbody = document.getElementById("invoiceTableBody");
-        if (!tbody) return;
-        tbody.innerHTML = "";
+      async function resetAllInvoicesSecret() {
+        if (!confirm("Achtung! Alle Rechnungen im Archiv werden gelöscht. Fortfahren?")) {
+          return;
+        }
 
-        const sorted = [...(list || [])].sort((a, b) => String(a.invoiceNumber).localeCompare(String(b.invoiceNumber), "de-DE"));
-        sorted.forEach((inv) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${escapeHtml(inv.invoiceNumber)}</td>
-            <td>${escapeHtml(inv.date)}</td>
-            <td>${escapeHtml(inv.recipientName)}</td>
-            <td>${inv.amount != null ? Number(inv.amount).toFixed(2) + " €" : ""}</td>
-            <td><input type="checkbox" ${inv.paid ? "checked" : ""} onclick="toggleInvoicePaid('${escapeHtml(inv.invoiceNumber)}', this.checked)" /></td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
+        // Archiv und Zähler leeren
+        appData.invoices = [];
+        appData.invoiceCounter = {};
 
-      function filterInvoices() {
-        const term = (document.getElementById("invoiceSearchTerm").value || "").toLowerCase();
-        const paidFilter = document.getElementById("invoicePaidFilter").value;
-        let list = appData.invoices || [];
-
-        if (term) list = list.filter((inv) => String(inv.recipientName || "").toLowerCase().includes(term));
-        if (paidFilter === "paid") list = list.filter((inv) => inv.paid);
-        else if (paidFilter === "unpaid") list = list.filter((inv) => !inv.paid);
-
-        renderInvoiceTable(list);
-      }
-
-      async function toggleInvoicePaid(invoiceNumber, checked) {
-        const inv = (appData.invoices || []).find((i) => i.invoiceNumber === invoiceNumber);
-        if (!inv) return;
-        inv.paid = checked;
         try {
           await saveDataToJsonBin();
+          renderInvoiceTable(appData.invoices);
           updateDashboardStats();
-          showSaveToast("Rechnungsstatus aktualisiert.", "success");
+          showSaveToast("Alle Test-Rechnungen wurden gelöscht.", "success");
         } catch (e) {
           console.error(e);
-          alert("Fehler beim Speichern des Rechnungsstatus.");
+          alert("Fehler beim Speichern der Daten in JSONBin.");
           showSaveToast("Fehler beim Speichern.", "error");
         }
       }
 
-      function downloadInvoicesCSV() {
-        const headers = ["Rechnungsnummer", "Datum", "Empfänger", "Betrag", "Bezahlt"];
-        const rows = (appData.invoices || []).map((inv) => [inv.invoiceNumber || "", inv.date || "", inv.recipientName || "", inv.amount != null ? Number(inv.amount).toFixed(2) : "", inv.paid ? "Ja" : "Nein"]);
-        const csvContent = "data:text/csv;charset=utf-8," + [headers.join(";"), ...rows.map((r) => r.join(";"))].join("\n");
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.href = encodedUri;
-        link.download = "dancehub_rechnungen_" + new Date().toISOString().slice(0, 10) + ".csv";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      async function generaRechnung(id) {
+        const record = appData.records.find((r) => r.id === id);
+        if (!record) return;
 
-      function buildInitialProbeRows() {
-        return `
+        document.getElementById("invoiceId").value = record.id;
+        document.getElementById("invoiceName").textContent =
+          record.vorname + " " + record.nachname;
+
+        const container = document.getElementById("probenContainer");
+        container.innerHTML = `
           <h4>Proben hinzufügen</h4>
           <div class="probeRow">
             <input type="date" class="probeDate" />
@@ -1321,43 +2310,47 @@
               <option value="2">Probe Grosse Gruppe (€10,00)</option>
               <option value="extra">Extra Probe</option>
             </select>
-            <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
+            <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display:none;" disabled />
           </div>
         `;
-      }
 
-      function bindProbeRow(row) {
-        const select = row.querySelector(".probeService");
-        if (select) select.addEventListener("change", handleServiceChange);
-      }
+        // >>> aggancia i listener alla prima riga
+        const firstRow = container.querySelector(".probeRow");
+        if (firstRow) attachProbeRowListeners(firstRow);
 
-      function resetInvoiceForm() {
-        const invoiceId = document.getElementById("invoiceId");
-        const invoiceName = document.getElementById("invoiceName");
-        const container = document.getElementById("probenContainer");
-        if (invoiceId) invoiceId.value = "";
-        if (invoiceName) invoiceName.textContent = "";
-        if (container) {
-          container.innerHTML = buildInitialProbeRows();
-          const firstRow = container.querySelector(".probeRow");
-          if (firstRow) bindProbeRow(firstRow);
-        }
-      }
-
-      function generaRechnung(id) {
-        const record = appData.records.find((r) => r.id === id);
-        if (!record) return;
-        resetInvoiceForm();
-        document.getElementById("invoiceId").value = record.id;
-        document.getElementById("invoiceName").textContent = `${record.vorname} ${record.nachname}`;
         document.getElementById("invoiceForm").style.display = "block";
+      }
+
+      function chiudiInvoiceForm() {
+        document.getElementById("invoiceForm").style.display = "none";
+      }
+
+      function attachProbeRowListeners(row) {
+        const serviceEl = row.querySelector(".probeService");
+        const priceEl = row.querySelector(".probePrice");
+        if (!serviceEl || !priceEl) return;
+
+        function updatePriceVisibility() {
+          if (serviceEl.value === "extra") {
+            priceEl.style.display = "";
+            priceEl.disabled = false;
+          } else {
+            priceEl.style.display = "none";
+            priceEl.disabled = true;
+            priceEl.value = "";
+          }
+        }
+
+        serviceEl.addEventListener("change", updatePriceVisibility);
+        // Initial state when row is created
+        updatePriceVisibility();
       }
 
       function aggiungiProbeRow() {
         const container = document.getElementById("probenContainer");
-        const newRow = document.createElement("div");
-        newRow.className = "probeRow";
-        newRow.innerHTML = `
+        const row = document.createElement("div");
+        row.className = "probeRow";
+        row.innerHTML = `
           <input type="date" class="probeDate" />
           <select class="probeService">
             <option value="0">Probe Solo (€25,00)</option>
@@ -1365,208 +2358,264 @@
             <option value="2">Probe Grosse Gruppe (€10,00)</option>
             <option value="extra">Extra Probe</option>
           </select>
-          <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display: none;" disabled />
+          <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display:none;" disabled />
         `;
-        bindProbeRow(newRow);
-        container.appendChild(newRow);
-      }
+        container.appendChild(row);
 
-      function handleServiceChange(event) {
-        const select = event.target;
-        const row = select.closest(".probeRow");
-        const priceInput = row.querySelector(".probePrice");
-        if (select.value === "extra") {
-          priceInput.style.display = "inline-block";
-          priceInput.disabled = false;
-        } else {
-          priceInput.style.display = "none";
-          priceInput.disabled = true;
-          priceInput.value = "";
-        }
-      }
-
-      async function getInvoiceNumber() {
-        const currentYear = new Date().getFullYear().toString();
-        if (!appData.invoiceCounter[currentYear]) appData.invoiceCounter[currentYear] = 0;
-        appData.invoiceCounter[currentYear] += 1;
-        await saveDataToJsonBin();
-        const counter = appData.invoiceCounter[currentYear];
-        return `${currentYear}-${String(counter).padStart(3, "0")}`;
+        // >>> listener sulla nuova riga
+        attachProbeRowListeners(row);
       }
 
       async function confermaRechnung() {
-        const probeRows = document.querySelectorAll(".probeRow");
-        const dienstenListe = [];
-        let gesamt = 0;
-        let confirmationText = "Folgende Daten werden in die Rechnung aufgenommen:\n\n";
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF("p", "mm", "a4");
 
-        probeRows.forEach((row) => {
-          const date = row.querySelector(".probeDate").value;
-          const serviceIndex = row.querySelector(".probeService").value;
-          let beschreibung, preis;
-
-          if (serviceIndex === "extra") {
-            beschreibung = "Extra";
-            preis = parseFloat(row.querySelector(".probePrice").value) || 0;
-          } else {
-            const diensten = [
-              { beschreibung: "Probe Solo", preis: 25.0 },
-              { beschreibung: "Probe Kleine Gruppe", preis: 15.0 },
-              { beschreibung: "Probe Grosse Gruppe", preis: 10.0 }
-            ];
-            const index = parseInt(serviceIndex, 10);
-            beschreibung = diensten[index].beschreibung;
-            preis = diensten[index].preis;
-          }
-
-          dienstenListe.push({ date, beschreibung, preis });
-          gesamt += preis;
-          confirmationText += `${date || "ohne Datum"}: ${beschreibung} - €${preis.toFixed(2)}\n`;
-        });
-
-        if (!dienstenListe.length) {
-          alert("Bitte mindestens eine Probe hinzufügen.");
-          return;
-        }
-
-        confirmationText += `\nGesamt: €${gesamt.toFixed(2)}\n\nBestätigen?`;
-        if (!confirm(confirmationText)) return;
-
-        const invoiceId = parseInt(document.getElementById("invoiceId").value, 10);
-        const record = appData.records.find((r) => r.id === invoiceId);
+        const id = parseInt(document.getElementById("invoiceId").value, 10);
+        const record = appData.records.find((r) => r.id === id);
         if (!record) return;
 
-        const invoiceNumber = await getInvoiceNumber();
-        const today = new Date().toISOString().slice(0, 10);
+        const today = new Date();
+        const year = today.getFullYear();
+        const counter = (appData.invoiceCounter[year] || 0) + 1;
+        appData.invoiceCounter[year] = counter;
+        const invoiceNumber = `${year}-${String(counter).padStart(4, "0")}`;
 
-        if (!appData.invoices) appData.invoices = [];
+        const probenRows = Array.from(
+          document.querySelectorAll("#probenContainer .probeRow")
+        );
+
+        const proben = probenRows.map((row) => {
+          const dateEl = row.querySelector(".probeDate");
+          const serviceEl = row.querySelector(".probeService");
+          const priceEl = row.querySelector(".probePrice");
+          const type = serviceEl.value;
+          let price = 0;
+          if (type === "0") price = 25;
+          else if (type === "1") price = 15;
+          else if (type === "2") price = 10;
+          else if (type === "extra") {
+            const raw = priceEl.value || "";
+            const normalized = raw.replace(",", ".");
+            price = parseFloat(normalized) || 0;
+          }
+
+          const dateIso = dateEl.value || ""; // yyyy-mm-dd
+          let dateDisplay = "";
+          if (dateIso && dateIso.includes("-")) {
+            const [y, m, d] = dateIso.split("-");
+            const dd = d.padStart(2, "0");
+            const mm = m.padStart(2, "0");
+            dateDisplay = `${dd}.${mm}.${y}`; // 04.06.2026
+          }
+
+          const desc =
+            type === "0"
+              ? "Probe Solo"
+              : type === "1"
+              ? "Probe Kleine Gruppe"
+              : type === "2"
+              ? "Probe Grosse Gruppe"
+              : "Extra Probe";
+
+          return {
+            date: dateDisplay,
+            type,
+            desc,
+            price
+          };
+        });
+
+        let gesamt = proben.reduce((sum, p) => sum + p.price, 0);
+
+        // ---------- RIEPILOGO PRIMA DEL PDF ----------
+        const recipientLine = `${record.vorname} ${record.nachname}`;
+        const positionsLines = proben
+          .map((p) => {
+            const datePart = p.date ? ` am ${p.date}` : "";
+            const pricePart = p.price.toFixed(2) + " €";
+            return `• ${p.desc}${datePart} – ${pricePart}`;
+          })
+          .join("\n");
+
+        const summaryText =
+          "Rechnung prüfen:\n\n" +
+          `Empfänger: ${recipientLine}\n` +
+          `Rechnungsnummer: ${invoiceNumber}\n\n` +
+          "Positionen:\n" +
+          positionsLines +
+          "\n\n" +
+          `Gesamtbetrag: ${gesamt.toFixed(2)} €\n\n` +
+          "Ist diese Rechnung korrekt?";
+
+        const ok = confirm(summaryText);
+        if (!ok) {
+          // Abbrechen: kein PDF, keine Speicherung
+          return;
+        }
+        // ---------- SOLO SE CONFERMI: PDF + SPEICHERN ----------
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("Dance HUB Munich", 15, 20);
+
+        doc.setFontSize(11);
+        doc.setFont("helvetica", "normal");
+        doc.text("Rechnung", 150, 20);
+
+        doc.setFontSize(10);
+        doc.text("Dance HUB Munich", 15, 28);
+        doc.text("Tanzstudio & Company", 15, 33);
+        doc.text("Musterstraße 123", 15, 38);
+        doc.text("81234 München", 15, 43);
+
+        doc.text("Rechnungsempfänger:", 15, 53);
+        doc.setFont("helvetica", "bold");
+        doc.text(`${record.vorname} ${record.nachname}`, 15, 58);
+        doc.setFont("helvetica", "normal");
+        if (record.adresse) doc.text(record.adresse, 15, 63);
+        const cityLine =
+          (record.plz || "") + " " + (record.stadt || "");
+        doc.text(cityLine.trim(), 15, 68);
+
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "bold");
+        doc.text("Rechnungsnummer:", 120, 53);
+        doc.setFont("helvetica", "normal");
+        doc.text(invoiceNumber, 120, 58);
+
+        doc.setFont("helvetica", "bold");
+        doc.text("Rechnungsdatum:", 120, 63);
+        doc.setFont("helvetica", "normal");
+        const dateStr = today.toLocaleDateString("de-DE");
+        doc.text(dateStr, 120, 68);
+
+        const tableData = proben.map((p, index) => [
+          String(index + 1),
+          p.date || "",
+          p.desc,
+          p.price.toFixed(2) + " €"
+        ]);
+
+        doc.autoTable({
+          head: [["Pos.", "Datum", "Leistung", "Betrag (€)"]],
+          body: tableData,
+          startY: 80,
+          styles: {
+            fontSize: 9,
+            cellPadding: 2,
+            overflow: "linebreak"
+          },
+  columnStyles: {
+    0: { cellWidth: 12 },
+    1: { cellWidth: 30 },
+    2: { cellWidth: 80 },
+    3: { cellWidth: 25, halign: "right" }
+  },
+          headStyles: {
+            fillColor: [125, 60, 255],
+            textColor: 255,
+            fontStyle: "bold"
+          },
+          margin: { left: 15, right: 10 }
+        });
+
+        const afterTableY = doc.lastAutoTable.finalY + 8;
+        const labelX = 130;
+        const valueX = 190;
+        let sumY = afterTableY + 6;
+
+        doc.setFont("helvetica", "normal");
+        doc.text("Zwischensumme:", labelX, sumY);
+        doc.text(gesamt.toFixed(2) + " €", valueX, sumY, {
+          align: "right"
+        });
+
+        sumY += 8;
+
+        doc.setFont("helvetica", "bold");
+        doc.text("Rechnungsbetrag:", labelX, sumY);
+        doc.text(gesamt.toFixed(2) + " €", valueX, sumY, {
+          align: "right"
+        });
+
+        let footerY = sumY + 15;
+        doc.setFontSize(8);
+        doc.setFont("helvetica", "normal");
+        doc.text(
+          "Hinweis: Rechnung im Rahmen der Kleinunternehmerregelung (§ 19 UStG).",
+          15,
+          footerY
+        );
+        footerY += 5;
+        doc.text(
+          "Es wird keine Umsatzsteuer ausgewiesen.",
+          15,
+          footerY
+        );
+
+        const fileName = `Rechnung_${invoiceNumber}.pdf`;
+        doc.save(fileName);
+
         appData.invoices.push({
           invoiceNumber,
-          date: today,
-          recipientId: record.id,
-          recipientName: `${record.vorname} ${record.nachname}`,
+          date: dateStr,
+          recipient: record.vorname + " " + record.nachname,
           amount: gesamt,
           paid: false
         });
 
-        await saveDataToJsonBin();
-        renderInvoiceTable(appData.invoices);
-        updateDashboardStats();
-        showSaveToast("Rechnung gespeichert und PDF erstellt.", "success");
-
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF("p", "mm", "a4");
-
-        doc.setFontSize(10);
-        doc.text("Dance HUB Munich", 20, 20);
-        doc.text("Musterstraße 1", 20, 25);
-        doc.text("81234 München", 20, 30);
-        doc.text("Tel.: 089 / 123456", 20, 35);
-        doc.text("E-Mail: info@dancehub-munich.de", 20, 40);
-
-        const empY = 55;
-        doc.text(`${record.vorname} ${record.nachname}`, 20, empY);
-        if (record.adresse) doc.text(record.adresse, 20, empY + 5);
-        let lineY = empY + 10;
-        if (record.plz || record.stadt) {
-          doc.text(`${record.plz || ""} ${record.stadt || ""}`.trim(), 20, lineY);
-          lineY += 5;
-        }
-
-        const headerY = lineY + 10;
-        doc.setFontSize(12);
-        doc.setFont(undefined, "bold");
-        doc.text("Rechnung", 20, headerY);
-
-        doc.setFontSize(10);
-        doc.setFont(undefined, "normal");
-        const kopfY = headerY + 8;
-        doc.text(`Rechnungsnummer: ${invoiceNumber}`, 20, kopfY);
-        doc.text(`Rechnungsdatum: ${today}`, 20, kopfY + 5);
-        doc.text(`Kunde: ${record.vorname} ${record.nachname}`, 20, kopfY + 10);
-
-        const tableStartY = kopfY + 18;
-        const tableColumn = ["Datum", "Leistung", "Menge", "Einzelpreis (€)", "Betrag (€)"];
-        const tableRows = dienstenListe.map((item) => [item.date || "", item.beschreibung, "1", item.preis.toFixed(2), item.preis.toFixed(2)]);
-
-        doc.autoTable({
-          head: [tableColumn],
-          body: tableRows,
-          startY: tableStartY,
-          theme: "grid",
-          margin: { left: 20, right: 20 },
-          styles: {
-            fontSize: 9,
-            cellPadding: 2,
-            overflow: "linebreak",
-            valign: "middle"
-          },
-          headStyles: {
-            fillColor: [125, 60, 255],
-            textColor: [255, 255, 255],
-            fontStyle: "bold",
-            halign: "center"
-          },
-          bodyStyles: {
-            textColor: [17, 24, 39]
-          },
-          columnStyles: {
-            0: { cellWidth: 24 },
-            1: { cellWidth: 62 },
-            2: { cellWidth: 14, halign: "center" },
-            3: { cellWidth: 25, halign: "right" },
-            4: { cellWidth: 25, halign: "right" }
-          }
-        });
-
-const afterTableY = doc.lastAutoTable.finalY + 8;
-const labelX = 130;      // un po' più a sinistra
-const valueX = 190;      // allineato a destra
-let sumY = afterTableY + 6;
-
-doc.setFont(undefined, "normal");
-// doc.text("Zwischensumme:", labelX, sumY);
-// doc.text(gesamt.toFixed(2) + " €", valueX, sumY, { align: "right" });
-
-// spazio extra tra le righe per evitare overlap
-sumY += 8;
-
-doc.setFont(undefined, "bold");
-doc.text("Rechnungsbetrag:", labelX, sumY);
-doc.text(gesamt.toFixed(2) + " €", valueX, sumY, { align: "right" });
-
-        const footerY = sumY + 15;
-        doc.setFontSize(9);
-        doc.setFont(undefined, "normal");
-        doc.text("Bitte überweisen Sie den Rechnungsbetrag innerhalb von 14 Tagen ohne Abzug.", 20, footerY);
-        doc.text("Bankverbindung: IBAN DE00 0000 0000 0000 0000 00 · BIC XXXXXX00", 20, footerY + 5);
-        doc.text("Es gilt die Kleinunternehmerregelung nach § 19 UStG. Es wird keine Umsatzsteuer ausgewiesen.", 20, footerY + 10);
-
-        doc.save(`Rechnung_${invoiceNumber}_${record.nachname}_${record.vorname}.pdf`);
-        chiudiInvoiceForm();
-      }
-
-      function chiudiInvoiceForm() {
-        const form = document.getElementById("invoiceForm");
-        if (form) form.style.display = "none";
-        resetInvoiceForm();
-      }
-
-      showSection("home");
-      populateCoursesSelect();
-      resetInvoiceForm();
-
-      loadDataFromJsonBin()
-        .then(() => {
-          mostraTuttiRecord();
+        try {
+          await saveDataToJsonBin();
           renderInvoiceTable(appData.invoices);
           updateDashboardStats();
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Fehler beim Laden der Daten aus JSONBin.");
-          showSaveToast("Fehler beim Laden der Daten.", "error");
+          chiudiInvoiceForm();
+          showSaveToast("Rechnung erstellt und gespeichert.", "success");
+        } catch (e) {
+          console.error(e);
+          alert("Fehler beim Speichern der Daten in JSONBin.");
+          showSaveToast("Fehler beim Speichern.", "error");
+        }
+      }
+      async function downloadInvoicesCSV() {
+        const headers = [
+          "Rechnungsnummer",
+          "Datum",
+          "Empfänger",
+          "Betrag",
+          "Bezahlt"
+        ];
+        const rows = (appData.invoices || []).map((inv) => [
+          inv.invoiceNumber || "",
+          inv.date || "",
+          inv.recipient || "",
+          inv.amount != null ? inv.amount.toFixed(2) : "",
+          inv.paid ? "Ja" : "Nein"
+        ]);
+
+        let csvContent = headers.join(",") + "\n";
+        rows.forEach((row) => {
+          csvContent +=
+            row
+              .map((field) => {
+                if (field == null) return "";
+                const s = String(field).replace(/"/g, '""');
+                return `"${s}"`;
+              })
+              .join(",") + "\n";
         });
+
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;"
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "rechnungen.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
     </script>
   </body>
 </html>
