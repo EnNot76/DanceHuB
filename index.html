@@ -497,83 +497,137 @@
       }
 
       .table-container {
-        width: 100%;
-        overflow-x: auto;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      }
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #ffffff;
-        font-size: 13px;
-      }
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  font-size: 13px;
+  line-height: 1.35;
+}
 
-      th,
-      td {
-        border: 1px solid #e5e7eb;
-        padding: 6px 8px;
-        text-align: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: linear-gradient(135deg, #7d3cff, #6d28d9);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  padding: 10px 12px;
+  text-align: left;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+}
 
-      th {
-        background-color: var(--primary);
-        color: #ffffff;
-        font-weight: 600;
-      }
+thead th:last-child {
+  border-right: none;
+}
 
-      tbody tr:nth-child(even) {
-        background-color: #f9fafb;
-      }
+tbody td {
+  padding: 10px 12px;
+  vertical-align: top;
+  border-bottom: 1px solid #eef2f7;
+  color: var(--text-main);
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
+}
 
-      tbody tr:hover {
-        background-color: var(--primary-soft);
-      }
+tbody tr:last-child td {
+  border-bottom: none;
+}
 
-      th:nth-child(1),
-      td:nth-child(1) {
-        width: 12%;
-      }
-      th:nth-child(2),
-      td:nth-child(2) {
-        width: 12%;
-      }
-      th:nth-child(3),
-      td:nth-child(3) {
-        width: 8%;
-      }
-      th:nth-child(4),
-      td:nth-child(4) {
-        width: 18%;
-      }
-      th:nth-child(5),
-      td:nth-child(5) {
-        width: 12%;
-      }
-      th:nth-child(6),
-      td:nth-child(6) {
-        width: 26%;
-      }
-      th:nth-child(7),
-      td:nth-child(7) {
-        width: 8%;
-      }
-      th:nth-child(8),
-      td:nth-child(8) {
-        width: 12%;
-      }
-      th:nth-child(9),
-      td:nth-child(9) {
-        width: 16%;
-      }
-      th:nth-child(10),
-      td:nth-child(10) {
-        width: 14%;
-      }
+tbody tr:nth-child(even) {
+  background-color: #fcfcfd;
+}
+
+tbody tr:hover {
+  background-color: #f5f3ff;
+}
+
+tbody td:nth-child(1),
+tbody td:nth-child(2) {
+  font-weight: 600;
+  color: #111827;
+}
+
+tbody td:nth-child(4),
+tbody td:nth-child(6),
+tbody td:nth-child(9) {
+  color: #374151;
+}
+
+tbody td:nth-child(5),
+tbody td:nth-child(7),
+tbody td:nth-child(8) {
+  white-space: nowrap;
+}
+
+tbody td:nth-child(9) {
+  min-width: 320px;
+  max-width: 420px;
+  line-height: 1.45;
+}
+
+tbody td:nth-child(10) {
+  min-width: 170px;
+  vertical-align: middle;
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.table-actions button {
+  padding: 5px 10px;
+  font-size: 12px;
+  min-height: 30px;
+  box-shadow: none;
+}
+
+.edit-btn,
+.delete-btn,
+.invoice-btn {
+  border-radius: 999px;
+}
+
+.edit-btn {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.edit-btn:hover {
+  background-color: #bae6fd;
+}
+
+.delete-btn {
+  background-color: #ffe4e6;
+  color: #be123c;
+}
+
+.delete-btn:hover {
+  background-color: #fecdd3;
+}
+
+.invoice-btn {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.invoice-btn:hover {
+  background-color: #bbf7d0;
+}
 
       .edit-form {
         position: fixed;
@@ -1699,21 +1753,41 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
       let currentCoursePickerMode = "create";
 
       async function loadDataFromJsonBin() {
-        const res = await fetch(JSONBIN_URL + "/latest", {
-          headers: { "X-Master-Key": JSONBIN_API_KEY }
-        });
-        if (!res.ok)
-          throw new Error("Fehler beim Laden der Daten aus JSONBin");
-        const json = await res.json();
-        appData = json.record || {
-          records: [],
-          invoiceCounter: {},
-          invoices: []
-        };
-        if (!appData.records) appData.records = [];
-        if (!appData.invoiceCounter) appData.invoiceCounter = {};
-        if (!appData.invoices) appData.invoices = [];
-      }
+  try {
+    const res = await fetch(JSONBIN_URL + "/latest", {
+      headers: { "X-Master-Key": JSONBIN_API_KEY }
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(
+        `JSONBin load failed: ${res.status} ${res.statusText} - ${errorText}`
+      );
+    }
+
+    const json = await res.json();
+    appData = json.record || {
+      records: [],
+      invoiceCounter: {},
+      invoices: []
+    };
+  } catch (error) {
+    console.error("JSONBin unavailable, local test mode active:", error);
+
+    appData = {
+      records: [],
+      invoiceCounter: {},
+      invoices: []
+    };
+
+    showSaveToast("JSONBin nicht erreichbar – lokaler Testmodus aktiv.", "error");
+  }
+
+  if (!appData.records) appData.records = [];
+  if (!appData.invoiceCounter) appData.invoiceCounter = {};
+  if (!appData.invoices) appData.invoices = [];
+}
+
 
 function chiudiEditForm() {
   const form = document.getElementById("editForm");
@@ -1868,6 +1942,55 @@ async function saveDataToJsonBin() {
           .join(", ");
       }
 
+function visualizzaRecord(records) {
+  const tableBody = document.getElementById("tableBody");
+  if (!tableBody) return;
+
+  tableBody.innerHTML = "";
+
+  const list = Array.isArray(records) ? records : [];
+
+  if (!list.length) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="10" style="text-align:center; color: var(--text-muted); padding: 14px;">
+          Keine Tänzer*innen gefunden.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  list.forEach((record) => {
+    const tr = document.createElement("tr");
+
+    const coursesText =
+      record.courses && record.courses.length
+        ? mapCourseIdsToShortLabels(record.courses)
+        : "-";
+
+tr.innerHTML = `
+  <td>${record.vorname || ""}</td>
+  <td>${record.nachname || ""}</td>
+  <td>${record.geschlecht || ""}</td>
+  <td>${record.email || ""}</td>
+  <td>${record.telefon || ""}</td>
+  <td>${record.adresse || ""}</td>
+  <td>${record.plz || ""}</td>
+  <td>${record.stadt || ""}</td>
+  <td>${coursesText}</td>
+  <td>
+    <div class="table-actions">
+      <button class="edit-btn" onclick="modificaRecord(${record.id})">✏️</button>
+      <button class="delete-btn" onclick="eliminaRecord(${record.id})">🗑️</button>
+      <button class="invoice-btn" onclick="generaRechnung(${record.id})">📄</button>
+    </div>
+  </td>
+`;
+    tableBody.appendChild(tr);
+  });
+}
+
       function confirmCoursePicker() {
         const modal = document.getElementById("coursePickerModal");
         if (!modal) return;
@@ -1939,8 +2062,7 @@ loadDataFromJsonBin()
   })
   .catch(error => {
     console.error(error);
-    alert('Fehler beim Laden der Daten aus JSONBin.');
-    showSaveToast('Fehler beim Laden der Daten.', 'error');
+    showSaveToast("Initialisierung fehlgeschlagen.", "error");
   });
 
 async function aggiungiRecord() {
