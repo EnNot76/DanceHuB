@@ -1,0 +1,2818 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dance HUB Munich WebApp - Dance-Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <style>
+      :root {
+        --bg-page: #f5f5f7;
+        --bg-card: #ffffff;
+        --border-subtle: #e5e7eb;
+        --text-main: #111827;
+        --text-muted: #6b7280;
+        --primary: #7d3cff;
+        --primary-hover: #6b21ff;
+        --primary-soft: #eef2ff;
+        --danger: #e11d48;
+        --danger-hover: #be123c;
+        --success: #16a34a;
+        --success-hover: #15803d;
+        --info: #0ea5e9;
+        --info-hover: #0284c7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 1500px;
+        margin: 12px auto;
+        padding: 16px;
+        background: var(--bg-page);
+        min-height: 100vh;
+        color: var(--text-main);
+      }
+
+      .app-shell {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #7d3cff, #4f46e5);
+        color: #ffffff;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.4);
+        min-height: 72px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .top-bar-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .top-bar-logo-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .top-bar-logo {
+        width: 90px;
+        height: 65px;
+        border-radius: 18px;
+        object-fit: cover;
+        box-shadow: 0 0 0 3px #ffffff, 0 8px 18px rgba(15, 23, 42, 0.45);
+        background-color: rgba(255, 255, 255, 0.18);
+      }
+
+      .top-bar-texts {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .top-bar-title {
+        font-size: 19px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .top-bar-subtitle {
+        font-size: 12px;
+        opacity: 0.9;
+        max-width: 260px;
+      }
+
+      .top-bar-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        font-size: 12px;
+      }
+
+      .top-bar-date {
+        font-weight: 500;
+      }
+
+      .top-bar-tag {
+        padding: 2px 8px;
+        border-radius: 999px;
+        background-color: rgba(255, 255, 255, 0.18);
+        font-size: 11px;
+      }
+
+      .top-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.35) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: skewX(-20deg);
+        pointer-events: none;
+        opacity: 0;
+        animation: topbar-sheen 30s infinite;
+      }
+
+      @keyframes topbar-sheen {
+        0% {
+          opacity: 0;
+          left: -60%;
+        }
+        8% {
+          opacity: 0.8;
+          left: 110%;
+        }
+        12% {
+          opacity: 0;
+          left: 110%;
+        }
+        100% {
+          opacity: 0;
+          left: 110%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .top-bar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
+        .top-bar-right {
+          align-items: flex-start;
+        }
+        .top-bar-logo-title {
+          align-items: flex-start;
+        }
+        .top-bar-logo {
+          width: 70px;
+          height: 50px;
+        }
+      }
+
+.birthday-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.birthday-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background-color: #f9fafb;
+}
+
+.birthday-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.birthday-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.birthday-date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.birthday-badge {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background-color: var(--primary-soft);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.birthday-empty {
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.home-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 2.1fr);
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.home-left-column,
+.home-right-column {
+  min-width: 0;
+}
+
+.birthday-panel {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+      /* NAV BAR ORIZZONTALE */
+      .main-nav {
+        margin-top: 4px;
+        margin-bottom: 4px;
+        background: #ffffff;
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+        border: 1px solid var(--border-subtle);
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+
+      .nav-button {
+        flex: 1 1 120px;
+        border: none;
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: transparent;
+        color: #111827;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        white-space: nowrap;
+        transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+      }
+
+      .nav-button:hover {
+        background-color: #eef2ff;
+      }
+
+      .nav-button-active {
+        background-color: #e0e7ff;
+        color: #111827;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+      }
+
+      @media (max-width: 540px) {
+        .main-nav {
+          border-radius: 12px;
+          padding: 4px 6px;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+        }
+        .main-nav::-webkit-scrollbar {
+          height: 4px;
+        }
+        .main-nav::-webkit-scrollbar-thumb {
+          background-color: #cbd5f5;
+          border-radius: 999px;
+        }
+        .nav-button {
+          flex: 0 0 auto;
+          font-size: 12px;
+          padding: 5px 8px;
+        }
+      }
+
+      .layout {
+        margin-top: 4px;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .main-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin: 0 0 12px;
+        letter-spacing: 0.01em;
+      }
+
+      h3 {
+        font-size: 18px;
+        margin-top: 0;
+      }
+
+      h4 {
+        font-size: 15px;
+        margin: 0 0 8px;
+        color: var(--text-muted);
+      }
+
+      .form-container,
+      .search-container,
+      .csv-container {
+        margin-bottom: 16px;
+        background: var(--bg-card);
+        padding: 16px 18px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        border: 1px solid var(--border-subtle);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 12px;
+        margin-bottom: 10px;
+      }
+
+
+
+      @media (max-width: 640px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        margin: 0;
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        font-size: 14px;
+        transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #9ca3af;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 1px rgba(125, 60, 255, 0.2);
+        background-color: #ffffff;
+      }
+
+      .search-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .search-row input[type="text"] {
+        flex: 1 1 220px;
+      }
+
+      button,
+      label.secondary-btn {
+        padding: 6px 12px;
+        margin: 2px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        transition: background-color 0.2s, transform 0.08s, box-shadow 0.15s;
+      }
+
+      button:active,
+      label.secondary-btn:active {
+        transform: translateY(1px);
+        box-shadow: none;
+      }
+
+      .primary-btn {
+        background-color: var(--primary);
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(125, 60, 255, 0.35);
+      }
+
+      .primary-btn:hover {
+        background-color: var(--primary-hover);
+      }
+
+      .edit-btn {
+        background-color: var(--info);
+        color: #ffffff;
+      }
+
+      .edit-btn:hover {
+        background-color: var(--info-hover);
+      }
+
+      .delete-btn {
+        background-color: var(--danger);
+        color: #ffffff;
+      }
+
+      .delete-btn:hover {
+        background-color: var(--danger-hover);
+      }
+
+      .invoice-btn {
+        background-color: var(--success);
+        color: #ffffff;
+      }
+
+      .invoice-btn:hover {
+        background-color: var(--success-hover);
+      }
+
+      .secondary-btn {
+        background-color: #e5e7eb;
+        color: #374151;
+      }
+
+      .secondary-btn:hover {
+        background-color: #d1d5db;
+      }
+
+      .danger-outline-btn {
+        background-color: #fef2f2;
+        color: var(--danger);
+        border: 1px solid #fecaca;
+      }
+
+      .danger-outline-btn:hover {
+        background-color: #fee2e2;
+      }
+
+      .table-container {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #ffffff;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        border: 1px solid #e5e7eb;
+        padding: 6px 8px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      th {
+        background-color: var(--primary);
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f9fafb;
+      }
+
+      tbody tr:hover {
+        background-color: var(--primary-soft);
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 12%;
+      }
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 12%;
+      }
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 8%;
+      }
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 18%;
+      }
+      th:nth-child(5),
+      td:nth-child(5) {
+        width: 12%;
+      }
+      th:nth-child(6),
+      td:nth-child(6) {
+        width: 26%;
+      }
+      th:nth-child(7),
+      td:nth-child(7) {
+        width: 8%;
+      }
+      th:nth-child(8),
+      td:nth-child(8) {
+        width: 12%;
+      }
+      th:nth-child(9),
+      td:nth-child(9) {
+        width: 16%;
+      }
+
+      .edit-form {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.98);
+        padding: 20px 22px;
+        border: 1px solid var(--border-subtle);
+        display: none;
+        z-index: 1000;
+        border-radius: 14px;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
+        max-width: 560px; /* più largo */
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .edit-form input,
+      .edit-form select,
+      .edit-form textarea {
+        margin-bottom: 8px;
+      }
+
+      .edit-form-actions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .footer-text {
+        color: var(--text-muted);
+        font-size: 11px;
+        text-align: center;
+        margin-top: 12px;
+        padding-top: 8px;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .course-picker-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 16px;
+        margin-top: 8px;
+        margin-bottom: 12px;
+        max-height: 380px;
+        overflow-y: auto;
+        font-size: 14px;
+      }
+
+      .course-picker-item {
+        display: block;
+        padding: 6px 8px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        background-color: #f9fafb;
+        transition: background-color 0.15s, border-color 0.15s,
+          box-shadow 0.15s;
+        cursor: pointer;
+      }
+
+      .course-picker-item:hover {
+        background-color: #eef2ff;
+        border-color: #c7d2fe;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+      }
+
+      .course-picker-label {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .course-picker-checkbox {
+        margin-top: 2px;
+        flex: 0 0 18px;
+      }
+
+      .course-picker-text {
+        flex: 1 1 auto;
+        line-height: 1.35;
+        word-break: break-word;
+      }
+
+      .course-code {
+        font-weight: 600;
+      }
+
+      @media (max-width: 640px) {
+        .course-picker-grid {
+          grid-template-columns: 1fr;
+          max-height: 320px;
+        }
+      }
+
+      .home-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin-top: 10px;
+      }
+
+      .home-tile {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 14px 16px;
+        border-radius: 14px;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+      }
+
+      .home-tile-main {
+        background-color: var(--primary);
+        color: #ffffff;
+      }
+
+      .home-tile-main:hover {
+        background-color: var(--primary-hover);
+      }
+
+      .home-tile-danger {
+        background-color: #fef2f2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
+
+      .home-tile-danger:hover {
+        background-color: #fee2e2;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        margin-top: 6px;
+      }
+
+      .stats-card {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background-color: #ffffff;
+        border: 1px solid var(--border-subtle);
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+      }
+
+      .stats-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      .stats-value {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .stats-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%) translateY(30px);
+        background: #111827;
+        color: #ffffff;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease,
+          background-color 0.2s ease;
+        z-index: 2000;
+      }
+
+      .toast-visible {
+        opacity: 0.96;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+      }
+
+      .toast-success {
+        background-color: #16a34a;
+      }
+
+      .toast-error {
+        background-color: #b91c1c;
+      }
+
+      @media (max-width: 540px) {
+        .toast {
+          bottom: 14px;
+          font-size: 12px;
+          padding: 7px 12px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        body {
+          margin: 0;
+          padding: 8px;
+          max-width: 100%;
+        }
+
+        .top-bar {
+          border-radius: 0;
+          margin: 0 0 6px;
+          padding: 10px 12px;
+        }
+
+        .form-container,
+        .search-container,
+        .csv-container {
+          padding: 12px 10px;
+          border-radius: 10px;
+          margin-bottom: 10px;
+        }
+
+        h2 {
+          font-size: 17px;
+          margin-bottom: 8px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+          padding: 7px 8px;
+          font-size: 14px;
+        }
+
+        .table-container {
+          overflow-x: visible;
+          border-radius: 0;
+          box-shadow: none;
+        }
+        table,
+        thead {
+          display: none;
+        }
+
+        #tableBody {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        #tableBody tr {
+          display: block;
+          border-radius: 10px;
+          border: 1px solid #e5e7eb;
+          background: #ffffff;
+          padding: 8px 10px;
+        }
+
+        #tableBody td {
+          display: block;
+          border: none;
+          padding: 2px 0;
+          white-space: normal;
+        }
+
+        #tableBody td:nth-child(1)::before {
+          content: "Vorname: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(2)::before {
+          content: "Nachname: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(3)::before {
+          content: "Geschlecht: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(4)::before {
+          content: "E-Mail: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(5)::before {
+          content: "Telefon: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(6)::before {
+          content: "Adresse: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(7)::before {
+          content: "PLZ: ";
+          font-weight: 600;
+        }
+        #tableBody td:nth-child(8)::before {
+          content: "Stadt: ";
+          font-weight: 600;
+        }
+
+        #tableBody td:nth-child(9) {
+          margin-top: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <div class="top-bar-logo-title">
+            <img
+              src="logo.png"
+              alt="Dance HUB Munich Logo"
+              class="top-bar-logo"
+            />
+            <div class="top-bar-texts">
+              <div class="top-bar-title">Dance HUB Munich</div>
+              <div class="top-bar-subtitle">
+                Dance-Management &amp; Beleg-Erstellung
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <div class="top-bar-date" id="topBarDate"></div>
+          <div class="top-bar-tag">WebApp Dashboard</div>
+        </div>
+      </div>
+
+      <!-- NAV BAR ORIZZONTALE -->
+      <nav class="main-nav">
+        <button
+          class="nav-button nav-button-active"
+          type="button"
+          data-section="home"
+          onclick="showSection('home')"
+        >
+          🏠 Start
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="search"
+          onclick="showSection('search')"
+        >
+          🔍 Tänzer*innen
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="create"
+          onclick="showSection('create')"
+        >
+          ✚ Neue Tänzer*in
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="invoices"
+          onclick="showSection('invoices')"
+        >
+          📄 Rechnungsarchiv
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          data-section="csv"
+          onclick="showSection('csv')"
+        >
+          💾 Lokales Backup
+        </button>
+        <button
+          class="nav-button"
+          type="button"
+          onclick="resetInvoiceCounter()"
+          title="Nur für Test-Phase zurücksetzen"
+        >
+          ⚠️ Reset RG-Nummer
+        </button>
+      </nav>
+
+      <div class="layout">
+        <main class="main-content">
+<!-- HOME -->
+<section id="section-home">
+  <div class="form-container">
+    <div class="home-layout">
+      <div class="home-left-column">
+        <div class="form-container birthday-panel">
+          <h3 style="margin-bottom: 6px">Geburtstage aktiver Mitglieder</h3>
+          <p
+            style="
+              font-size: 12px;
+              color: var(--text-muted);
+              margin-top: 0;
+              margin-bottom: 8px;
+            "
+          >
+            Nur aktive Mitglieder im laufenden Kalenderjahr.
+          </p>
+          <div id="birthdayList" class="birthday-list"></div>
+        </div>
+      </div>
+
+      <div class="home-right-column">
+        <div>
+          <h2>Willkommen im Dance HUB Dashboard</h2>
+          <p
+            style="
+              font-size: 13px;
+              color: var(--text-muted);
+              margin-top: 0;
+              margin-bottom: 8px;
+            "
+          >
+            Kurzer Überblick über deine aktuelle Datenlage.
+          </p>
+
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-label">Tänzer*innen gesamt</div>
+              <div class="stats-value" id="statsTotalDancers">–</div>
+              <div class="stats-sub">Alle Einträge im System</div>
+            </div>
+
+            <div class="stats-card">
+              <div class="stats-label">Rechnungen dieses Jahr</div>
+              <div class="stats-value" id="statsInvoicesYear">–</div>
+              <div class="stats-sub">
+                Erstellte Rechnungen im laufenden Jahr
+              </div>
+            </div>
+
+            <div class="stats-card">
+              <div class="stats-label">Offene Rechnungen</div>
+              <div class="stats-value" id="statsInvoicesOpen">–</div>
+              <div class="stats-sub">
+                Noch nicht als bezahlt markiert
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px">
+          <h3 style="margin-bottom: 6px">Schnellzugriff</h3>
+          <p
+            style="
+              font-size: 12px;
+              color: var(--text-muted);
+              margin-top: 0;
+              margin-bottom: 8px;
+            "
+          >
+            Häufige Aktionen direkt erreichbar.
+          </p>
+
+          <div class="home-grid">
+            <button
+              class="primary-btn home-tile home-tile-main"
+              onclick="showSection('search')"
+            >
+              🔍 Tänzer*innen verwalten
+            </button>
+
+            <button
+              class="secondary-btn home-tile"
+              onclick="showSection('create')"
+            >
+              ✚ Neue Tänzer*in anlegen
+            </button>
+
+            <button
+              class="secondary-btn home-tile"
+              onclick="showSection('invoices')"
+            >
+              📄 Rechnungsarchiv öffnen
+            </button>
+
+            <button
+              class="secondary-btn home-tile"
+              onclick="showSection('csv')"
+            >
+              💾 Lokales Backup (CSV)
+            </button>
+
+            <button
+              class="home-tile home-tile-danger"
+              onclick="resetInvoiceCounter()"
+            >
+              ⚠️ Reset RG-Nummer (nur Test-Phase)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+          <!-- CREATE -->
+          <section id="section-create" style="display: none">
+            <div class="form-container">
+              <h2>Neue Tänzer*innen hinzufügen</h2>
+              <div class="form-grid">
+                <input type="text" id="nome" placeholder="Vorname" />
+                <input type="text" id="cognome" placeholder="Nachname" />
+                <select id="geschlecht">
+                  <option value="">Geschlecht wählen</option>
+                  <option value="männlich">männlich</option>
+                  <option value="weiblich">weiblich</option>
+                  <option value="divers">divers</option>
+                </select>
+                <input type="email" id="email" placeholder="E-Mail" />
+                <input type="tel" id="telefono" placeholder="Telefon" />
+                <input type="text" id="indirizzo" placeholder="Adresse" />
+                <input type="text" id="cap" placeholder="PLZ" />
+                <input type="text" id="citta" placeholder="Stadt" />
+
+                <label
+                  style="
+                    grid-column: 1 / -1;
+                    font-size: 13px;
+                    color: var(--text-muted);
+                  "
+                >
+                  Vertragsdaten:
+                </label>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+                    margin-top: 4px;
+                  "
+                >
+                  <span
+                    style="font-size: 12px; color: var(--text-muted)"
+                  >
+                    Geburtsdatum Tänzer*in
+                  </span>
+                  <input type="date" id="geburtstag" />
+                </div>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+                    margin-top: 4px;
+                  "
+                >
+                  <span
+                    style="font-size: 12px; color: var(--text-muted)"
+                  >
+                    Beitrittsdatum (Vertragsbeginn)
+                  </span>
+                  <input type="date" id="beitrittsdatum" />
+                </div>
+
+                <label
+                  for="coursesSummary"
+                  style="
+                    grid-column: 1 / -1;
+                    font-size: 13px;
+                    color: var(--text-muted);
+                  "
+                >
+                  Zugeordnete Kurse:
+                </label>
+
+                <input
+                  type="text"
+                  id="coursesSummary"
+                  readonly
+                  placeholder="Keine Kurse ausgewählt"
+                  style="
+                    grid-column: 1 / -1;
+                    background-color: #f9fafb;
+                    cursor: pointer;
+                  "
+                  onclick="openCoursePicker('create')"
+                />
+
+                <button
+                  type="button"
+                  class="secondary-btn"
+                  style="grid-column: 1 / -1; justify-content: center"
+                  onclick="openCoursePicker('create')"
+                >
+                  Kurse auswählen
+                </button>
+
+                <textarea
+                  id="notiz"
+                  placeholder="Interne Notiz (nur intern, nicht auf Beleg)"
+                  rows="2"
+                  style="grid-column: 1 / -1; resize: vertical"
+                ></textarea>
+              </div>
+              <button class="primary-btn" onclick="aggiungiRecord()">
+                Hinzufügen
+              </button>
+            </div>
+          </section>
+
+<!-- SEARCH -->
+<section id="section-search" style="display: none">
+  <div class="search-container">
+    <h2>Tänzer*innen suchen</h2>
+    <div class="search-row">
+<input
+  type="text"
+  id="searchTerm"
+  placeholder="In allen Feldern suchen..."
+  oninput="applyMemberFilters()"
+/>
+      <label
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          color: var(--text-main);
+          background: #f9fafb;
+          border: 1px solid var(--border-subtle);
+          border-radius: 999px;
+          padding: 6px 10px;
+          margin: 2px;
+          cursor: pointer;
+          white-space: nowrap;
+        "
+      >
+        <input
+          type="checkbox"
+          id="showInactiveToggle"
+          onchange="applyMemberFilters()"
+          style="width: auto; margin: 0"
+        />
+        <span>Auch inaktive anzeigen</span>
+      </label>
+      <button class="secondary-btn" onclick="applyMemberFilters()">
+        Suchen
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Vorname</th>
+          <th>Nachname</th>
+          <th>Geschlecht</th>
+          <th>E-Mail</th>
+          <th>Telefon</th>
+          <th>Adresse</th>
+          <th>PLZ</th>
+          <th>Stadt</th>
+          <th>Kurse</th>
+          <th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+          <!-- INVOICES -->
+          <section id="section-invoices" style="display: none">
+            <div class="search-container">
+              <h2>Rechnungsarchiv</h2>
+              <div class="search-row">
+                <input
+                  type="text"
+                  id="invoiceSearchTerm"
+                  placeholder="Nach Rechnungsempfänger suchen..."
+                />
+                <select id="invoicePaidFilter">
+                  <option value="all">Alle</option>
+                  <option value="paid">Bezahlt</option>
+                  <option value="unpaid">Offen</option>
+                </select>
+                <button class="secondary-btn" onclick="filterInvoices()">
+                  Filtern
+                </button>
+                <button
+                  class="secondary-btn"
+                  onclick="downloadInvoicesCSV()"
+                >
+                  Rechnung-Liste CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rechnungsnr.</th>
+                    <th>Datum</th>
+                    <th>Empfänger</th>
+                    <th>Betrag</th>
+                    <th>Bezahlt</th>
+                  </tr>
+                </thead>
+                <tbody id="invoiceTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- CSV -->
+          <section id="section-csv" style="display: none">
+            <div class="csv-container">
+              <h2>CSV-Backup</h2>
+              <p
+                style="
+                  font-size: 13px;
+                  color: var(--text-muted);
+                  margin-top: 0;
+                  margin-bottom: 10px;
+                "
+              >
+                Erstelle eine Sicherungsdatei oder spiele ein vorhandenes
+                Backup ein.
+              </p>
+
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 8px;
+                  align-items: center;
+                "
+              >
+                <button class="secondary-btn" onclick="downloadCSV()">
+                  Backup-Datei herunterladen
+                </button>
+
+                <label
+                  for="csvUpload"
+                  class="secondary-btn"
+                  style="cursor: pointer"
+                >
+                  Backup-Datei hochladen
+                </label>
+                <input
+                  type="file"
+                  id="csvUpload"
+                  accept=".csv"
+                  onchange="uploadCSV()"
+                  style="display: none"
+                />
+              </div>
+            </div>
+          </section>
+
+          <div class="footer-text">
+            Concept &amp; Code: Christoph Heisen &amp; Enzo Notari · Version
+            1.0<br />
+            Dance Hub Dancers • © 2026 Enzo Notari • All Rights Reserved
+          </div>
+
+          <!-- EDIT FORM -->
+          <div id="editForm" class="edit-form">
+            <h3>Tänzer*innen bearbeiten</h3>
+            <input type="hidden" id="editId" />
+            <input type="text" id="editNome" placeholder="Vorname" /><br />
+            <input
+              type="text"
+              id="editCognome"
+              placeholder="Nachname"
+            /><br />
+            <select id="editGeschlecht">
+              <option value="">Geschlecht wählen</option>
+              <option value="männlich">männlich</option>
+              <option value="weiblich">weiblich</option>
+              <option value="divers">divers</option>
+            </select>
+            <br />
+            <input type="email" id="editEmail" placeholder="E-Mail" /><br />
+            <input
+              type="tel"
+              id="editTelefono"
+              placeholder="Telefon"
+            /><br />
+            <input
+              type="text"
+              id="editIndirizzo"
+              placeholder="Adresse"
+            /><br />
+            <input type="text" id="editCap" placeholder="PLZ" /><br />
+            <input type="text" id="editCitta" placeholder="Stadt" /><br />
+
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 4px;
+              "
+            >
+              <span
+                style="font-size: 12px; color: var(--text-muted)"
+              >
+                Geburtsdatum der Tänzer*in
+              </span>
+              <input type="date" id="editGeburtstag" />
+            </div>
+
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 4px;
+              "
+            >
+              <span
+                style="font-size: 12px; color: var(--text-muted)"
+              >
+                Beitrittsdatum (Vertragsbeginn)
+              </span>
+              <input type="date" id="editBeitrittsdatum" />
+            </div>
+
+            <!-- Austritt + Mitgliedsstatus (nur Edit) -->
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                margin-top: 4px;
+              "
+            >
+              <span
+                style="font-size: 12px; color: var(--text-muted)"
+              >
+                Austrittsdatum (Vertragsende)
+              </span>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <input
+                  type="date"
+                  id="editAustrittsdatum"
+                  style="flex: 0 0 180px"
+                />
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    font-size: 12px;
+                  "
+                >
+                  <input type="checkbox" id="editAktivMitglied" />
+                  <span id="editAktivMitgliedLabelText">
+                    Aktives Mitglied (kein Austrittsdatum)
+                  </span>
+                </label>
+              </div>
+            </div>
+            <br />
+
+            <label
+              for="editCoursesSummary"
+              style="font-size: 12px; color: var(--text-muted)"
+            >
+              Zugeordnete Kurse:
+            </label>
+            <br />
+            <input
+              type="text"
+              id="editCoursesSummary"
+              readonly
+              placeholder="Keine Kurse ausgewählt"
+              style="
+                width: 100%;
+                background-color: #f9fafb;
+                cursor: pointer;
+                margin-bottom: 6px;
+              "
+              onclick="openCoursePicker('edit')"
+            /><br />
+            <button
+              type="button"
+              class="secondary-btn"
+              style="margin-bottom: 8px"
+              onclick="openCoursePicker('edit')"
+            >
+              Kurse auswählen
+            </button>
+            <br />
+
+            <textarea
+              id="editNotiz"
+              placeholder="Interne Notiz (nur intern)"
+              rows="3"
+              style="width: 100%; resize: vertical; margin-top: 4px"
+            ></textarea
+            ><br />
+
+            <div class="edit-form-actions">
+              <button class="primary-btn" onclick="salvaModifiche()">
+                Speichern
+              </button>
+              <button class="secondary-btn" onclick="chiudiEditForm()">
+                Abbrechen
+              </button>
+            </div>
+          </div>
+
+          <!-- INVOICE MODAL -->
+          <div id="invoiceForm" class="edit-form">
+            <h3>
+              Rechnung für <span id="invoiceName"></span> erstellen
+            </h3>
+            <input type="hidden" id="invoiceId" />
+            <div id="probenContainer">
+              <h4>Proben hinzufügen</h4>
+              <div class="probeRow">
+                <input type="date" class="probeDate" />
+                <select class="probeService">
+                  <option value="0">Probe Solo (€25,00)</option>
+                  <option value="1">
+                    Probe Kleine Gruppe (€15,00)
+                  </option>
+                  <option value="2">
+                    Probe Grosse Gruppe (€10,00)
+                  </option>
+                  <option value="extra">Extra Probe</option>
+                </select>
+                <input
+                  type="number"
+                  class="probePrice"
+                  placeholder="Preis (€)"
+                  min="0"
+                  step="0.01"
+                  style="display: none"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="edit-form-actions">
+              <button
+                class="secondary-btn"
+                onclick="aggiungiProbeRow()"
+              >
+                Weitere Probe
+              </button>
+              <button
+                class="primary-btn"
+                onclick="confermaRechnung()"
+              >
+                Bestätigen
+              </button>
+              <button
+                class="secondary-btn"
+                onclick="chiudiInvoiceForm()"
+              >
+                Abbrechen
+              </button>
+            </div>
+          </div>
+
+          <!-- COURSE PICKER MODAL -->
+          <div id="coursePickerModal" class="edit-form">
+            <h3>Kurse auswählen</h3>
+
+            <p
+              style="
+                font-size: 12px;
+                color: var(--text-muted);
+                margin-top: 0;
+                margin-bottom: 8px;
+              "
+            >
+              Wähle einen oder mehrere Kurse für diese Tänzerin / diesen
+              Tänzer aus.
+            </p>
+
+            <div id="coursePickerList" class="course-picker-grid"></div>
+
+            <div class="edit-form-actions">
+              <button
+                type="button"
+                class="primary-btn"
+                onclick="confirmCoursePicker()"
+              >
+                Übernehmen
+              </button>
+              <button
+                type="button"
+                class="secondary-btn"
+                onclick="closeCoursePicker()"
+              >
+                Abbrechen
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="saveToast" class="toast">
+      ✅ Daten wurden gespeichert.
+    </div>
+
+    <script>
+      const JSONBIN_API_KEY =
+        "$2a$10$Ptz6A3DYRVCx6xos.DtVCOj/GJTNXPZiOfRIKu/NGF7L.AniURKMm";
+      const JSONBIN_BIN_ID = "699c588743b1c97be996993d";
+      const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+
+      const COURSES = [
+        {
+          id: "1A",
+          label: "1A – Ballett 1A Kinder (Do 16:25–17:25 Saal 2)"
+        },
+        {
+          id: "1B",
+          label: "1B – Ballett 1B Kinder (Do 17:30–18:45 Saal 2)"
+        },
+        {
+          id: "1C",
+          label: "1C – Ballett 1C Kinder (Sa 17:30–18:45 Saal 1)"
+        },
+        {
+          id: "B2/3_DI",
+          label: "B2/3 – Ballett 2/3 (Di 16:30–17:00 Saal 2)"
+        },
+        {
+          id: "B2/3_MO",
+          label: "B2/3 – Ballett 2/3 (Mo 17:00–18:30 Saal 1)"
+        },
+        { id: "B2/3F", label: "B2/3 – Förderklasse (Di 17:00–18:30 Saal 2)" },
+        { id: "C1", label: "C1 – Choreografie 1 (Di 19:00–20:00 Saal 1)" },
+        { id: "C2", label: "C2 – Choreografie 2 (Di 18:00–19:00 Saal 1)" },
+        {
+          id: "CHF",
+          label: "CHF – Charakter Förderklasse (Fr 16:45–17:30 Saal 1)"
+        },
+        { id: "CO", label: "CO – Company/Ensemble (Mi 19:30–20:30 Saal 1)" },
+        { id: "GK", label: "GK – Boys (Mi 18:00–19:00 Saal 2)" },
+        { id: "JZ1", label: "Jazz 1 (Mi 16:30–18:00 Saal 1)" },
+        {
+          id: "K1",
+          label: "K1 – Ballett Erwachsene (Do 20:00–21:30 Saal 2)"
+        },
+        { id: "K2", label: "K2 – Ballett 2 (Sa 19:45–21:15 Saal 1)" },
+        {
+          id: "K2/3",
+          label: "K2/3 – Ballett 2/3 Erwachsene (Mo 19:45–21:15 Saal 1)"
+        },
+        { id: "KA_FR", label: "KA – Ausbildung Jugend (Fr 15:15–16:45 Saal 1)" },
+        {
+          id: "KA_MI",
+          label: "KA – Klassische Ausbildung (Mi 18:00–19:30 Saal 1)"
+        },
+        {
+          id: "PBT1_DI",
+          label:
+            "PBT1 – Progressing Ballet Technique 1 (Di 15:30–16:30 Saal 2)"
+        },
+        {
+          id: "PBT1_MO",
+          label:
+            "PBT1 – Progressing Ballet Technique 1 (Mo 16:30–17:00 Saal 1)"
+        },
+        {
+          id: "PBT2",
+          label:
+            "PBT2 – Prog. Ballet Technique 2 (Sa 18:45–19:45 Saal 1)"
+        },
+        {
+          id: "PBT3",
+          label:
+            "PBT3 – Prog. Ballet Technique 3 (Fr 14:15–15:15 Saal 1)"
+        },
+        {
+          id: "TECH",
+          label: "TECH – Technik / Sprünge / Turns (Sa 10:00–11:30 Saal 1)"
+        },
+        { id: "TF2", label: "TF2 – Tanztheater 2 (Sa 16:00–17:30 Saal 1)" },
+        { id: "TT1", label: "TT1 – Tanztheater 1 (Mo 15:30–16:30 Saal 1)" },
+        { id: "TT2", label: "TT2 – Tanztheater 2 (Mi 15:30–16:30 Saal 1)" },
+        { id: "TT3", label: "TT3 – Tanztheater 3 (Do 18:45–19:15 Saal 2)" },
+        {
+          id: "TT4_DI",
+          label: "TT4 – Tanztheater 4 (Di 20:00–21:30 Saal 1)"
+        },
+        {
+          id: "TT4_FR",
+          label: "TT4 – Tanztheater 4 (Fr 20:15–21:45 Saal 1)"
+        },
+        { id: "VS/TF", label: "VS/TF – Minis (Do 15:20–16:20 Saal 2)" }
+      ];
+
+      let appData = {
+        records: [],
+        invoiceCounter: {},
+        invoices: []
+      };
+
+      let selectedCoursesCreate = [];
+      let selectedCoursesEdit = [];
+      let currentCoursePickerMode = "create";
+
+      async function loadDataFromJsonBin() {
+        const res = await fetch(JSONBIN_URL + "/latest", {
+          headers: { "X-Master-Key": JSONBIN_API_KEY }
+        });
+        if (!res.ok)
+          throw new Error("Fehler beim Laden der Daten aus JSONBin");
+        const json = await res.json();
+        appData = json.record || {
+          records: [],
+          invoiceCounter: {},
+          invoices: []
+        };
+        if (!appData.records) appData.records = [];
+        if (!appData.invoiceCounter) appData.invoiceCounter = {};
+        if (!appData.invoices) appData.invoices = [];
+      }
+
+function chiudiEditForm() {
+  const form = document.getElementById("editForm");
+  if (form) form.style.display = "none";
+
+  selectedCoursesEdit = [];
+
+  const summary = document.getElementById("editCoursesSummary");
+if (summary) summary.value = "Keine Kurse ausgewählt";
+}
+
+async function saveDataToJsonBin() {
+  const res = await fetch(JSONBIN_URL, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Master-Key": JSONBIN_API_KEY
+    },
+    body: JSON.stringify(appData)
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`JSONBin save failed: ${res.status} ${res.statusText} - ${errorText}`);
+  }
+}
+
+      function showSaveToast(message, type) {
+        const toast = document.getElementById("saveToast");
+        if (!toast) return;
+        toast.textContent = message || "Daten wurden gespeichert.";
+        toast.classList.remove("toast-success", "toast-error");
+        if (type === "error") {
+          toast.classList.add("toast-error");
+        } else {
+          toast.classList.add("toast-success");
+        }
+        toast.classList.add("toast-visible");
+        setTimeout(() => {
+          toast.classList.remove("toast-visible");
+        }, 2500);
+      }
+
+      function showSection(section) {
+        const homeSec = document.getElementById("section-home");
+        const createSec = document.getElementById("section-create");
+        const searchSec = document.getElementById("section-search");
+        const invoicesSec = document.getElementById("section-invoices");
+        const csvSec = document.getElementById("section-csv");
+
+        homeSec.style.display = "none";
+        createSec.style.display = "none";
+        searchSec.style.display = "none";
+        invoicesSec.style.display = "none";
+        csvSec.style.display = "none";
+
+        if (section === "home") homeSec.style.display = "";
+        else if (section === "create") createSec.style.display = "";
+        else if (section === "search") searchSec.style.display = "";
+        else if (section === "invoices") {
+          invoicesSec.style.display = "";
+          renderInvoiceTable(appData.invoices);
+        } else if (section === "csv") csvSec.style.display = "";
+
+        const navButtons = document.querySelectorAll(".main-nav .nav-button");
+        navButtons.forEach((btn) =>
+          btn.classList.remove("nav-button-active")
+        );
+        const active = document.querySelector(
+          `.main-nav .nav-button[data-section="${section}"]`
+        );
+        if (active) active.classList.add("nav-button-active");
+      }
+
+      function populateCoursesSelect() {
+        const pickerContainer = document.getElementById("coursePickerList");
+        if (!pickerContainer) return;
+        pickerContainer.innerHTML = "";
+        const sorted = [...COURSES].sort((a, b) =>
+          a.id.localeCompare(b.id, "de-DE")
+        );
+        sorted.forEach((course) => {
+          const card = document.createElement("div");
+          card.className = "course-picker-item";
+
+          const label = document.createElement("label");
+          label.className = "course-picker-label";
+
+          const cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.value = course.id;
+          cb.className = "course-picker-checkbox";
+
+          const textWrap = document.createElement("div");
+          textWrap.className = "course-picker-text";
+
+          const codeSpan = document.createElement("span");
+          codeSpan.className = "course-code";
+          codeSpan.textContent = course.id;
+
+          const descSpan = document.createElement("span");
+          descSpan.textContent =
+            " – " + course.label.replace(/^.*?–\s*/, "");
+
+          textWrap.appendChild(codeSpan);
+          textWrap.appendChild(descSpan);
+
+          label.appendChild(cb);
+          label.appendChild(textWrap);
+          card.appendChild(label);
+          pickerContainer.appendChild(card);
+        });
+      }
+
+      function openCoursePicker(mode) {
+        currentCoursePickerMode = mode === "edit" ? "edit" : "create";
+        const modal = document.getElementById("coursePickerModal");
+        if (!modal) return;
+
+        const checkboxes = modal.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach((cb) => (cb.checked = false));
+
+        const ids =
+          currentCoursePickerMode === "edit"
+            ? selectedCoursesEdit
+            : selectedCoursesCreate;
+
+        const set = new Set(ids || []);
+        checkboxes.forEach((cb) => {
+          cb.checked = set.has(cb.value);
+        });
+
+        modal.style.display = "block";
+      }
+
+      function closeCoursePicker() {
+        const modal = document.getElementById("coursePickerModal");
+        if (modal) modal.style.display = "none";
+      }
+
+      function mapCourseIdsToShortLabels(ids) {
+        return ids
+          .map((id) => {
+            const c = COURSES.find((x) => x.id === id);
+            if (!c) return id;
+            const match = c.label.match(/\(([^)]+)\)/);
+            const timePart = match
+              ? match[1].replace(/ Saal.*$/, "")
+              : "";
+            return timePart ? `${c.id} (${timePart})` : c.id;
+          })
+          .join(", ");
+      }
+
+      function confirmCoursePicker() {
+        const modal = document.getElementById("coursePickerModal");
+        if (!modal) return;
+
+        const checked = Array.from(
+          modal.querySelectorAll("input[type='checkbox']:checked")
+        ).map((cb) => cb.value);
+
+        if (currentCoursePickerMode === "edit") {
+          selectedCoursesEdit = checked;
+          const summary = document.getElementById("editCoursesSummary");
+          if (summary) {
+            summary.value = checked.length
+              ? mapCourseIdsToShortLabels(checked)
+              : "Keine Kurse ausgewählt";
+          }
+        } else {
+          selectedCoursesCreate = checked;
+          const summary = document.getElementById("coursesSummary");
+          if (summary) {
+            summary.value = checked.length
+              ? mapCourseIdsToShortLabels(checked)
+              : "Keine Kurse ausgewählt";
+          }
+        }
+
+        closeCoursePicker();
+      }
+
+      (function setTopBarDate() {
+        const el = document.getElementById("topBarDate");
+        if (!el) return;
+        const heute = new Date();
+        const formatter = new Intl.DateTimeFormat("de-DE", {
+          weekday: "short",
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
+        el.textContent = formatter.format(heute);
+      })();
+
+      function updateDashboardStats() {
+        const totalDancers = (appData.records || []).length;
+        const elDancers = document.getElementById("statsTotalDancers");
+        if (elDancers) elDancers.textContent = String(totalDancers);
+
+        const currentYear = new Date().getFullYear().toString();
+        const invoices = appData.invoices || [];
+        const invoicesThisYear = invoices.filter((inv) =>
+          String(inv.invoiceNumber || "").startsWith(currentYear + "-")
+        ).length;
+        const elInvYear = document.getElementById("statsInvoicesYear");
+        if (elInvYear) elInvYear.textContent = String(invoicesThisYear);
+
+        const openInvoices = invoices.filter((inv) => !inv.paid).length;
+        const elInvOpen = document.getElementById("statsInvoicesOpen");
+        if (elInvOpen) elInvOpen.textContent = String(openInvoices);
+      }
+
+showSection('home');
+loadDataFromJsonBin()
+  .then(() => {
+    populateCoursesSelect();
+    mostraTuttiRecord();
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    renderBirthdayList();
+  })
+  .catch(error => {
+    console.error(error);
+    alert('Fehler beim Laden der Daten aus JSONBin.');
+    showSaveToast('Fehler beim Laden der Daten.', 'error');
+  });
+
+async function aggiungiRecord() {
+  const nuovoId =
+    (appData.records[appData.records.length - 1]?.id || 0) + 1;
+
+  const nuovo = {
+    id: nuovoId,
+    vorname: document.getElementById("nome").value.trim(),
+    nachname: document.getElementById("cognome").value.trim(),
+    geschlecht: document.getElementById("geschlecht").value,
+    email: document.getElementById("email").value.trim(),
+    telefon: document.getElementById("telefono").value.trim(),
+    adresse: document.getElementById("indirizzo").value.trim(),
+    plz: document.getElementById("cap").value.trim(),
+    stadt: document.getElementById("citta").value.trim(),
+    geburtstag: document.getElementById("geburtstag").value || "",
+    beitrittsdatum: document.getElementById("beitrittsdatum").value || "",
+    aktivMitglied: true,
+    notiz: document.getElementById("notiz").value || "",
+    courses: [...selectedCoursesCreate]
+  };
+
+  appData.records.push(nuovo);
+
+  try {
+    await saveDataToJsonBin();
+    mostraTuttiRecord();
+    updateDashboardStats();
+    renderBirthdayList();
+    pulisciForm();
+    showSaveToast("Eintrag hinzugefügt und gespeichert.", "success");
+  } catch (e) {
+    appData.records = appData.records.filter((r) => r.id !== nuovoId);
+    mostraTuttiRecord();
+    updateDashboardStats();
+    renderBirthdayList();
+    console.error(e);
+    alert("Fehler beim Speichern der Daten in JSONBin. Der neue Eintrag wurde zurückgesetzt.");
+    showSaveToast("Fehler beim Speichern. Neuer Eintrag wurde zurückgesetzt.", "error");
+  }
+}
+
+function renderBirthdayList() {
+  const container = document.getElementById("birthdayList");
+  if (!container) return;
+
+  const records = Array.isArray(appData?.records) ? appData.records : [];
+  const currentYear = new Date().getFullYear();
+
+  const birthdays = records
+    .filter((record) => record?.aktivMitglied === true)
+    .map((record) => {
+      const rawBirthday = String(record?.geburtstag || "").trim();
+      if (!rawBirthday) return null;
+
+      const parts = rawBirthday.split("-");
+      if (parts.length !== 3) return null;
+
+      const month = Number(parts[1]);
+      const day = Number(parts[2]);
+
+      if (!Number.isInteger(month) || !Number.isInteger(day)) return null;
+      if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+
+      const birthdayThisYear = new Date(currentYear, month - 1, day);
+      if (Number.isNaN(birthdayThisYear.getTime())) return null;
+
+      const fullName =
+        `${record?.vorname || ""} ${record?.nachname || ""}`.trim() ||
+        "Ohne Namen";
+
+      return {
+        name: fullName,
+        dateObj: birthdayThisYear,
+        dateLabel: birthdayThisYear.toLocaleDateString("de-DE", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        }),
+        monthDayLabel: birthdayThisYear.toLocaleDateString("de-DE", {
+          day: "2-digit",
+          month: "short"
+        })
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.dateObj - b.dateObj);
+
+  if (!birthdays.length) {
+    container.innerHTML = `
+      <div class="birthday-empty">
+        Keine Geburtstage aktiver Mitglieder gefunden.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = birthdays
+    .map(
+      (item) => `
+      <div class="birthday-item">
+        <div class="birthday-main">
+          <div class="birthday-name">${item.name}</div>
+          <div class="birthday-date">${item.dateLabel}</div>
+        </div>
+        <div class="birthday-badge">${item.monthDayLabel}</div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+
+      function pulisciForm() {
+        document.getElementById("nome").value = "";
+        document.getElementById("cognome").value = "";
+        document.getElementById("geschlecht").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("telefono").value = "";
+        document.getElementById("indirizzo").value = "";
+        document.getElementById("cap").value = "";
+        document.getElementById("citta").value = "";
+
+        const notizEl = document.getElementById("notiz");
+        const gebEl = document.getElementById("geburtstag");
+        const beiEl = document.getElementById("beitrittsdatum");
+
+        if (notizEl) notizEl.value = "";
+        if (gebEl) gebEl.value = "";
+        if (beiEl) beiEl.value = "";
+        // if (ausEl) ausEl.value = "";
+
+        selectedCoursesCreate = [];
+        const summary = document.getElementById("coursesSummary");
+if (summary) summary.value = "Keine Kurse ausgewählt";
+      }
+
+function mostraTuttiRecord() {
+function getFilteredRecordsByMemberState(list) {
+  const records = Array.isArray(list) ? list : [];
+  const showInactive =
+    document.getElementById("showInactiveToggle")?.checked || false;
+
+  if (showInactive) return records;
+  return records.filter((record) => record?.aktivMitglied === true);
+}
+
+function mostraTuttiRecord() {
+  visualizzaRecord(getFilteredRecordsByMemberState(appData.records));
+}
+
+function applyMemberFilters() {
+  const searchInput = document.getElementById("searchTerm");
+  const searchTerm = (searchInput?.value || "").toLowerCase().trim();
+
+  let filtered = getFilteredRecordsByMemberState(appData.records);
+
+  if (searchTerm) {
+    filtered = filtered.filter((record) => {
+      return (
+        (record.vorname || "").toLowerCase().includes(searchTerm) ||
+        (record.nachname || "").toLowerCase().includes(searchTerm) ||
+        (record.geschlecht || "").toLowerCase().includes(searchTerm) ||
+        (record.email || "").toLowerCase().includes(searchTerm) ||
+        (record.telefon || "").toLowerCase().includes(searchTerm) ||
+        (record.adresse || "").toLowerCase().includes(searchTerm) ||
+        (record.plz || "").toLowerCase().includes(searchTerm) ||
+        (record.stadt || "").toLowerCase().includes(searchTerm) ||
+        (record.notiz || "").toLowerCase().includes(searchTerm)
+      );
+    });
+  }
+
+  visualizzaRecord(filtered);
+}
+
+function cercaRecord() {
+  applyMemberFilters();
+}
+        const searchTerm = document
+          .getElementById("searchTerm")
+          .value.toLowerCase();
+        const filtered = appData.records.filter((record) => {
+          return (
+            (record.vorname || "").toLowerCase().includes(searchTerm) ||
+            (record.nachname || "").toLowerCase().includes(searchTerm) ||
+            (record.geschlecht || "").toLowerCase().includes(searchTerm) ||
+            (record.email || "").toLowerCase().includes(searchTerm) ||
+            (record.telefon || "").toLowerCase().includes(searchTerm) ||
+            (record.adresse || "").toLowerCase().includes(searchTerm) ||
+            (record.plz || "").toLowerCase().includes(searchTerm) ||
+            (record.stadt || "").toLowerCase().includes(searchTerm) ||
+            (record.notiz || "").toLowerCase().includes(searchTerm)
+          );
+        });
+        visualizzaRecord(filtered);
+      }
+
+function initEditAktivMitgliedUI(record) {
+  const ausEdit = document.getElementById("editAustrittsdatum");
+  const chkEdit = document.getElementById("editAktivMitglied");
+  const lblEdit = document.getElementById("editAktivMitgliedLabelText");
+  if (!ausEdit || !chkEdit || !lblEdit) return;
+
+  const syncState = () => {
+    if (chkEdit.checked) {
+      ausEdit.disabled = true;
+      lblEdit.textContent = "Aktives Mitglied (kein Austrittsdatum)";
+    } else {
+      ausEdit.disabled = false;
+      lblEdit.textContent = "Inaktives Mitglied (Austrittsdatum setzen)";
+    }
+  };
+
+  chkEdit.checked = !!record.aktivMitglied;
+  ausEdit.value = record.austrittsdatum || "";
+  syncState();
+
+  chkEdit.onchange = syncState;
+}
+
+      function modificaRecord(id) {
+        const record = appData.records.find((r) => r.id === id);
+        if (!record) return;
+
+        document.getElementById("editId").value = record.id;
+        document.getElementById("editNome").value = record.vorname;
+        document.getElementById("editCognome").value = record.nachname;
+        document.getElementById("editGeschlecht").value =
+          record.geschlecht || "";
+        document.getElementById("editEmail").value = record.email;
+        document.getElementById("editTelefono").value = record.telefon;
+        document.getElementById("editIndirizzo").value = record.adresse;
+        document.getElementById("editCap").value = record.plz;
+        document.getElementById("editCitta").value = record.stadt;
+
+        document.getElementById("editGeburtstag").value =
+          record.geburtstag || "";
+        document.getElementById("editBeitrittsdatum").value =
+          record.beitrittsdatum || "";
+        document.getElementById("editAustrittsdatum").value =
+          record.austrittsdatum || "";
+        document.getElementById("editAktivMitglied").checked =
+          !!record.aktivMitglied;
+
+        document.getElementById("editNotiz").value = record.notiz || "";
+
+        selectedCoursesEdit = [...(record.courses || [])];
+        const editSummary = document.getElementById("editCoursesSummary");
+        if (editSummary) {
+          editSummary.value =
+            record.courses && record.courses.length
+              ? mapCourseIdsToShortLabels(record.courses)
+              : "Keine Kurse ausgewählt";
+        }
+
+        initEditAktivMitgliedUI(record);
+
+        document.getElementById("editForm").style.display = "block";
+      }
+
+async function salvaModifiche() {
+  const id = parseInt(document.getElementById("editId").value, 10);
+  const record = appData.records.find((r) => r.id === id);
+  if (!record) return;
+
+  const previousRecord = JSON.parse(JSON.stringify(record));
+
+  record.vorname = document.getElementById("editNome").value.trim();
+  record.nachname = document.getElementById("editCognome").value.trim();
+  record.geschlecht = document.getElementById("editGeschlecht").value;
+  record.email = document.getElementById("editEmail").value.trim();
+  record.telefon = document.getElementById("editTelefono").value.trim();
+  record.adresse = document.getElementById("editIndirizzo").value.trim();
+  record.plz = document.getElementById("editCap").value.trim();
+  record.stadt = document.getElementById("editCitta").value.trim();
+  record.geburtstag = document.getElementById("editGeburtstag").value || "";
+  record.beitrittsdatum =
+    document.getElementById("editBeitrittsdatum").value || "";
+  record.austrittsdatum =
+    document.getElementById("editAustrittsdatum").value || "";
+  record.aktivMitglied =
+    document.getElementById("editAktivMitglied").checked || false;
+  record.notiz = document.getElementById("editNotiz").value;
+  record.courses = [...selectedCoursesEdit];
+
+  try {
+    await saveDataToJsonBin();
+    mostraTuttiRecord();
+    updateDashboardStats();
+    renderBirthdayList();
+    chiudiEditForm();
+    showSaveToast("Eintrag aktualisiert und gespeichert.", "success");
+  } catch (e) {
+    Object.assign(record, previousRecord);
+mostraTuttiRecord();
+updateDashboardStats();
+renderBirthdayList();
+    console.error(e);
+    showSaveToast("Speichern fehlgeschlagen. Änderungen wurden nicht übernommen.", "error");
+    alert("JSONBin-Fehler beim Speichern. Die Änderungen wurden lokal zurückgesetzt.");
+  }
+}
+      function renderInvoiceTable(list) {
+        const tbody = document.getElementById("invoiceTableBody");
+        tbody.innerHTML = "";
+        list.forEach((inv, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${inv.invoiceNumber || ""}</td>
+            <td>${inv.date || ""}</td>
+            <td>${inv.recipient || ""}</td>
+            <td>${inv.amount != null ? inv.amount.toFixed(2) + " €" : ""}</td>
+            <td style="text-align:center;">
+              <input
+                type="checkbox"
+                ${inv.paid ? "checked" : ""}
+                onchange="toggleInvoicePaid(${index})"
+              />
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+
+async function toggleInvoicePaid(index) {
+  const inv = appData.invoices[index];
+  if (!inv) return;
+
+  const previousPaid = !!inv.paid;
+  inv.paid = !previousPaid;
+
+  try {
+    await saveDataToJsonBin();
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    showSaveToast("Rechnungsstatus aktualisiert.", "success");
+  } catch (e) {
+    inv.paid = previousPaid;
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    console.error(e);
+    alert("Fehler beim Speichern der Daten in JSONBin. Der Rechnungsstatus wurde zurückgesetzt.");
+    showSaveToast("Fehler beim Speichern. Rechnungsstatus wurde zurückgesetzt.", "error");
+  }
+}
+      function filterInvoices() {
+        const term = document
+          .getElementById("invoiceSearchTerm")
+          .value.toLowerCase();
+        const filterPaid = document.getElementById(
+          "invoicePaidFilter"
+        ).value;
+        let list = appData.invoices || [];
+        if (term) {
+          list = list.filter((inv) =>
+            String(inv.recipient || "")
+              .toLowerCase()
+              .includes(term)
+          );
+        }
+        if (filterPaid === "paid") {
+          list = list.filter((inv) => inv.paid);
+        } else if (filterPaid === "unpaid") {
+          list = list.filter((inv) => !inv.paid);
+        }
+        renderInvoiceTable(list);
+      }
+
+      async function downloadCSV() {
+        const headers = [
+          "ID",
+          "Vorname",
+          "Nachname",
+          "Geschlecht",
+          "E-Mail",
+          "Telefon",
+          "Adresse",
+          "PLZ",
+          "Stadt",
+          "Geburtsdatum",
+          "Beitrittsdatum",
+          "Austrittsdatum",
+          "AktivesMitglied",
+          "Notiz",
+          "Kurse"
+        ];
+
+        const rows = appData.records.map((record) => [
+          record.id,
+          record.vorname,
+          record.nachname,
+          record.geschlecht,
+          record.email,
+          record.telefon,
+          record.adresse,
+          record.plz,
+          record.stadt,
+          record.geburtstag || "",
+          record.beitrittsdatum || "",
+          record.austrittsdatum || "",
+          record.aktivMitglied ? "Ja" : "Nein",
+          record.notiz || "",
+          (record.courses || []).join("|")
+        ]);
+
+        let csvContent = headers.join(",") + "\n";
+        rows.forEach((row) => {
+          csvContent +=
+            row
+              .map((field) => {
+                if (field == null) return "";
+                const s = String(field).replace(/"/g, '""');
+                return `"${s}"`;
+              })
+              .join(",") + "\n";
+        });
+
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;"
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "dancehub_backup.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+  function uploadCSV() {
+  const fileInput = document.getElementById("csvUpload");
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = async (e) => {
+    const text = e.target.result;
+    const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
+    if (!lines.length) {
+      alert("Die CSV-Datei ist leer.");
+      showSaveToast("Leere CSV-Datei.", "error");
+      fileInput.value = "";
+      return;
+    }
+
+    const headers = lines[0]
+      .split(",")
+      .map((h) => h.replace(/"/g, "").trim());
+
+    const byName = (name, row) => {
+      const idx = headers.indexOf(name);
+      if (idx === -1) return "";
+      const raw = row[idx] || "";
+      return raw.replace(/^"|"$/g, "").replace(/""/g, '"');
+    };
+
+    const newRecords = lines.slice(1).map((line) => {
+      const cols = line.match(/("([^"]|"")*"|[^,]*)/g) || [];
+      return {
+        id: parseInt(byName("ID", cols), 10),
+        vorname: byName("Vorname", cols),
+        nachname: byName("Nachname", cols),
+        geschlecht: byName("Geschlecht", cols),
+        email: byName("E-Mail", cols),
+        telefon: byName("Telefon", cols),
+        adresse: byName("Adresse", cols),
+        plz: byName("PLZ", cols),
+        stadt: byName("Stadt", cols),
+        geburtstag: byName("Geburtsdatum", cols),
+        beitrittsdatum: byName("Beitrittsdatum", cols),
+        austrittsdatum: byName("Austrittsdatum", cols),
+        aktivMitglied: byName("AktivesMitglied", cols) === "Ja",
+        notiz: byName("Notiz", cols),
+        courses: byName("Kurse", cols)
+          ? byName("Kurse", cols).split("|").filter(Boolean)
+          : []
+      };
+    });
+
+    const previousRecords = JSON.parse(JSON.stringify(appData.records));
+    appData.records = newRecords;
+
+    try {
+      await saveDataToJsonBin();
+      mostraTuttiRecord();
+      updateDashboardStats();
+      renderBirthdayList();
+      showSaveToast("CSV-Backup importiert und gespeichert.", "success");
+    } catch (e) {
+      appData.records = previousRecords;
+      mostraTuttiRecord();
+      updateDashboardStats();
+      renderBirthdayList();
+      console.error(e);
+      alert("Fehler beim Speichern der Daten in JSONBin. Der alte Datenbestand wurde wiederhergestellt.");
+      showSaveToast("Fehler beim Speichern. Alter Datenbestand wiederhergestellt.", "error");
+    } finally {
+      fileInput.value = "";
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+      function resetInvoiceCounter() {
+        if (
+          !confirm(
+            "Achtung! Diese Aktion setzt den Rechnungszähler zurück. Fortfahren?"
+          )
+        ) {
+          return;
+        }
+        appData.invoiceCounter = {};
+        showSaveToast("Rechnungszähler zurückgesetzt (lokal).", "success");
+      }
+
+async function resetAllInvoicesSecret() {
+  if (!confirm("Achtung! Alle Rechnungen im Archiv werden gelöscht. Fortfahren?")) {
+    return;
+  }
+
+  const previousInvoicesState = JSON.parse(
+    JSON.stringify(appData.invoices || [])
+  );
+  const previousCounterState = JSON.parse(
+    JSON.stringify(appData.invoiceCounter || {})
+  );
+
+  appData.invoices = [];
+  appData.invoiceCounter = {};
+
+  try {
+    await saveDataToJsonBin();
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    showSaveToast("Alle Test-Rechnungen wurden gelöscht.", "success");
+  } catch (e) {
+    appData.invoices = previousInvoicesState;
+    appData.invoiceCounter = previousCounterState;
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    console.error(e);
+    alert(
+      "Fehler beim Speichern der Daten in JSONBin. Archiv und Zähler wurden zurückgesetzt."
+    );
+    showSaveToast(
+      "Fehler beim Speichern. Archiv und Zähler wurden zurückgesetzt.",
+      "error"
+    );
+  }
+}
+      async function generaRechnung(id) {
+        const record = appData.records.find((r) => r.id === id);
+        if (!record) return;
+
+        document.getElementById("invoiceId").value = record.id;
+        document.getElementById("invoiceName").textContent =
+          record.vorname + " " + record.nachname;
+
+        const container = document.getElementById("probenContainer");
+        container.innerHTML = `
+          <h4>Proben hinzufügen</h4>
+          <div class="probeRow">
+            <input type="date" class="probeDate" />
+            <select class="probeService">
+              <option value="0">Probe Solo (€25,00)</option>
+              <option value="1">Probe Kleine Gruppe (€15,00)</option>
+              <option value="2">Probe Grosse Gruppe (€10,00)</option>
+              <option value="extra">Extra Probe</option>
+            </select>
+            <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display:none;" disabled />
+          </div>
+        `;
+
+        // >>> aggancia i listener alla prima riga
+        const firstRow = container.querySelector(".probeRow");
+        if (firstRow) attachProbeRowListeners(firstRow);
+
+        document.getElementById("invoiceForm").style.display = "block";
+      }
+
+      function chiudiInvoiceForm() {
+        document.getElementById("invoiceForm").style.display = "none";
+      }
+
+      function attachProbeRowListeners(row) {
+        const serviceEl = row.querySelector(".probeService");
+        const priceEl = row.querySelector(".probePrice");
+        if (!serviceEl || !priceEl) return;
+
+        function updatePriceVisibility() {
+          if (serviceEl.value === "extra") {
+            priceEl.style.display = "";
+            priceEl.disabled = false;
+          } else {
+            priceEl.style.display = "none";
+            priceEl.disabled = true;
+            priceEl.value = "";
+          }
+        }
+
+        serviceEl.addEventListener("change", updatePriceVisibility);
+        // Initial state when row is created
+        updatePriceVisibility();
+      }
+
+      function aggiungiProbeRow() {
+        const container = document.getElementById("probenContainer");
+        const row = document.createElement("div");
+        row.className = "probeRow";
+        row.innerHTML = `
+          <input type="date" class="probeDate" />
+          <select class="probeService">
+            <option value="0">Probe Solo (€25,00)</option>
+            <option value="1">Probe Kleine Gruppe (€15,00)</option>
+            <option value="2">Probe Grosse Gruppe (€10,00)</option>
+            <option value="extra">Extra Probe</option>
+          </select>
+          <input type="number" class="probePrice" placeholder="Preis (€)" min="0" step="0.01" style="display:none;" disabled />
+        `;
+        container.appendChild(row);
+
+        // >>> listener sulla nuova riga
+        attachProbeRowListeners(row);
+      }
+
+async function confermaRechnung() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  const id = parseInt(document.getElementById("invoiceId").value, 10);
+  const record = appData.records.find((r) => r.id === id);
+  if (!record) return;
+
+  const today = new Date();
+  const year = today.getFullYear();
+
+  const previousCounterState = JSON.parse(
+    JSON.stringify(appData.invoiceCounter || {})
+  );
+  const previousInvoicesState = JSON.parse(
+    JSON.stringify(appData.invoices || [])
+  );
+
+  const counter = (appData.invoiceCounter[year] || 0) + 1;
+  appData.invoiceCounter[year] = counter;
+  const invoiceNumber = `${year}-${String(counter).padStart(4, "0")}`;
+
+  const probenRows = Array.from(
+    document.querySelectorAll("#probenContainer .probeRow")
+  );
+
+  const proben = probenRows.map((row) => {
+    const dateEl = row.querySelector(".probeDate");
+    const serviceEl = row.querySelector(".probeService");
+    const priceEl = row.querySelector(".probePrice");
+
+    const type = serviceEl.value;
+    let price = 0;
+
+    if (type === "0") price = 25;
+    else if (type === "1") price = 15;
+    else if (type === "2") price = 10;
+    else if (type === "extra") {
+      const raw = priceEl.value || "";
+      const normalized = raw.replace(",", ".");
+      price = parseFloat(normalized) || 0;
+    }
+
+    const dateIso = dateEl.value || "";
+    let dateDisplay = "";
+    if (dateIso && dateIso.includes("-")) {
+      const [y, m, d] = dateIso.split("-");
+      const dd = d.padStart(2, "0");
+      const mm = m.padStart(2, "0");
+      dateDisplay = `${dd}.${mm}.${y}`;
+    }
+
+    const desc =
+      type === "0"
+        ? "Probe Solo"
+        : type === "1"
+        ? "Probe Kleine Gruppe"
+        : type === "2"
+        ? "Probe Grosse Gruppe"
+        : "Extra Probe";
+
+    return {
+      date: dateDisplay,
+      type,
+      desc,
+      price
+    };
+  });
+
+  const gesamt = proben.reduce((sum, p) => sum + p.price, 0);
+
+  const recipientLine = `${record.vorname} ${record.nachname}`;
+  const positionsLines = proben
+    .map((p) => {
+      const datePart = p.date ? ` am ${p.date}` : "";
+      const pricePart = p.price.toFixed(2) + " €";
+      return `• ${p.desc}${datePart} – ${pricePart}`;
+    })
+    .join("\n");
+
+  const summaryText =
+    "Rechnung prüfen:\n\n" +
+    `Empfänger: ${recipientLine}\n` +
+    `Rechnungsnummer: ${invoiceNumber}\n\n` +
+    "Positionen:\n" +
+    positionsLines +
+    "\n\n" +
+    `Gesamtbetrag: ${gesamt.toFixed(2)} €\n\n` +
+    "Ist diese Rechnung korrekt?";
+
+  const ok = confirm(summaryText);
+  if (!ok) {
+    appData.invoiceCounter = previousCounterState;
+    return;
+  }
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.text("Dance HUB Munich", 15, 20);
+
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  doc.text("Rechnung", 150, 20);
+
+  doc.setFontSize(10);
+  doc.text("Dance HUB Munich", 15, 28);
+  doc.text("Tanzstudio & Company", 15, 33);
+  doc.text("Musterstraße 123", 15, 38);
+  doc.text("81234 München", 15, 43);
+
+  doc.text("Rechnungsempfänger:", 15, 53);
+  doc.setFont("helvetica", "bold");
+  doc.text(`${record.vorname} ${record.nachname}`, 15, 58);
+  doc.setFont("helvetica", "normal");
+  if (record.adresse) doc.text(record.adresse, 15, 63);
+
+  const cityLine = `${record.plz || ""} ${record.stadt || ""}`;
+  doc.text(cityLine.trim(), 15, 68);
+
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.text("Rechnungsnummer:", 120, 53);
+  doc.setFont("helvetica", "normal");
+  doc.text(invoiceNumber, 120, 58);
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Rechnungsdatum:", 120, 63);
+  doc.setFont("helvetica", "normal");
+  const dateStr = today.toLocaleDateString("de-DE");
+  doc.text(dateStr, 120, 68);
+
+  const tableData = proben.map((p, index) => [
+    String(index + 1),
+    p.date || "",
+    p.desc,
+    p.price.toFixed(2) + " €"
+  ]);
+
+  doc.autoTable({
+    head: [["Pos.", "Datum", "Leistung", "Betrag (€)"]],
+    body: tableData,
+    startY: 80,
+    styles: {
+      fontSize: 9,
+      cellPadding: 2,
+      overflow: "linebreak"
+    },
+    columnStyles: {
+      0: { cellWidth: 12 },
+      1: { cellWidth: 30 },
+      2: { cellWidth: 80 },
+      3: { cellWidth: 25, halign: "right" }
+    },
+    headStyles: {
+      fillColor: [125, 60, 255],
+      textColor: 255,
+      fontStyle: "bold"
+    },
+    margin: { left: 15, right: 10 }
+  });
+
+  const afterTableY = doc.lastAutoTable.finalY + 8;
+  const labelX = 130;
+  const valueX = 190;
+  let sumY = afterTableY + 6;
+
+  doc.setFont("helvetica", "normal");
+  doc.text("Zwischensumme:", labelX, sumY);
+  doc.text(gesamt.toFixed(2) + " €", valueX, sumY, { align: "right" });
+
+  sumY += 8;
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Rechnungsbetrag:", labelX, sumY);
+  doc.text(gesamt.toFixed(2) + " €", valueX, sumY, { align: "right" });
+
+  let footerY = sumY + 15;
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text(
+    "Hinweis: Rechnung im Rahmen der Kleinunternehmerregelung (§ 19 UStG).",
+    15,
+    footerY
+  );
+  footerY += 5;
+  doc.text("Es wird keine Umsatzsteuer ausgewiesen.", 15, footerY);
+
+  appData.invoices.push({
+    invoiceNumber,
+    date: dateStr,
+    recipient: `${record.vorname} ${record.nachname}`,
+    amount: gesamt,
+    paid: false
+  });
+
+  try {
+    await saveDataToJsonBin();
+
+    const fileName = `Rechnung_${invoiceNumber}.pdf`;
+    doc.save(fileName);
+
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    chiudiInvoiceForm();
+    showSaveToast("Rechnung erstellt und gespeichert.", "success");
+  } catch (e) {
+    appData.invoiceCounter = previousCounterState;
+    appData.invoices = previousInvoicesState;
+    renderInvoiceTable(appData.invoices);
+    updateDashboardStats();
+    console.error(e);
+    alert(
+      "Fehler beim Speichern der Daten in JSONBin. Rechnung und Zähler wurden zurückgesetzt."
+    );
+    showSaveToast(
+      "Fehler beim Speichern. Rechnung wurde zurückgesetzt.",
+      "error"
+    );
+  }
+}
+
+      async function downloadInvoicesCSV() {
+        const headers = [
+          "Rechnungsnummer",
+          "Datum",
+          "Empfänger",
+          "Betrag",
+          "Bezahlt"
+        ];
+        const rows = (appData.invoices || []).map((inv) => [
+          inv.invoiceNumber || "",
+          inv.date || "",
+          inv.recipient || "",
+          inv.amount != null ? inv.amount.toFixed(2) : "",
+          inv.paid ? "Ja" : "Nein"
+        ]);
+
+        let csvContent = headers.join(",") + "\n";
+        rows.forEach((row) => {
+          csvContent +=
+            row
+              .map((field) => {
+                if (field == null) return "";
+                const s = String(field).replace(/"/g, '""');
+                return `"${s}"`;
+              })
+              .join(",") + "\n";
+        });
+
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;"
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "rechnungen.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
+</html>
