@@ -590,10 +590,55 @@ tbody td:nth-child(10) {
 }
 
 .table-actions button {
-  padding: 5px 10px;
-  font-size: 12px;
-  min-height: 30px;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
   box-shadow: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  display: none;
+}
+
+.modal-backdrop.visible {
+  display: block;
+}
+
+@media (max-width: 540px) {
+  .table-actions button {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  #tableBody td:nth-child(9)::before {
+    content: "Kurse: ";
+    font-weight: 600;
+  }
+
+  #tableBody td:nth-child(10)::before {
+    content: "Aktionen: ";
+    font-weight: 600;
+  }
+
+  .edit-form {
+    width: calc(100% - 16px);
+    max-width: none;
+    max-height: 88vh;
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
 }
 
 .edit-btn,
@@ -1129,7 +1174,7 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
               class="home-tile home-tile-danger"
               onclick="resetInvoiceCounter()"
             >
-              ⚠️ Reset RG-Nummer (nur Test-Phase)
+              ⚠️ Reset Rechnung (Test-Phase)
             </button>
           </div>
         </div>
@@ -1788,15 +1833,66 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
   if (!appData.invoices) appData.invoices = [];
 }
 
+function getNextRecordId() {
+  const ids = (appData.records || [])
+    .map((r) => Number(r?.id))
+    .filter((id) => Number.isInteger(id) && id >= 0);
+
+  return (ids.length ? Math.max(...ids) : 0) + 1;
+}
+
+function isValidMonthDayForYear(year, month, day) {
+  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) return false;
+  if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+
+  const testDate = new Date(year, month - 1, day);
+  return (
+    !Number.isNaN(testDate.getTime()) &&
+    testDate.getFullYear() === year &&
+    testDate.getMonth() === month - 1 &&
+    testDate.getDate() === day
+  );
+}
+
+function openModal(modalId, focusSelector) {
+  const modal = document.getElementById(modalId);
+  const backdrop = document.getElementById("modalBackdrop");
+  if (!modal || !backdrop) return;
+
+  backdrop.classList.add("visible");
+  modal.style.display = "block";
+
+  const focusEl = focusSelector ? modal.querySelector(focusSelector) : null;
+  if (focusEl) setTimeout(() => focusEl.focus(), 0);
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  const backdrop = document.getElementById("modalBackdrop");
+  if (modal) modal.style.display = "none";
+
+  const anyOpenModal = Array.from(document.querySelectorAll(".edit-form"))
+    .some((el) => el.style.display === "block");
+
+  if (backdrop && !anyOpenModal) {
+    backdrop.classList.remove("visible");
+  }
+}
+
 
 function chiudiEditForm() {
-  const form = document.getElementById("editForm");
-  if (form) form.style.display = "none";
-
+  closeModal("editForm");
   selectedCoursesEdit = [];
-
   const summary = document.getElementById("editCoursesSummary");
-if (summary) summary.value = "Keine Kurse ausgewählt";
+  if (summary) summary.value = "Keine Kurse ausgewählt";
+}
+
+function closeCoursePicker() {
+  closeModal("coursePickerModal");
+}
+
+function chiudiInvoiceForm() {
+  closeModal("invoiceForm");
 }
 
 async function saveDataToJsonBin() {
@@ -1920,12 +2016,7 @@ async function saveDataToJsonBin() {
           cb.checked = set.has(cb.value);
         });
 
-        modal.style.display = "block";
-      }
-
-      function closeCoursePicker() {
-        const modal = document.getElementById("coursePickerModal");
-        if (modal) modal.style.display = "none";
+openModal("coursePickerModal");
       }
 
       function mapCourseIdsToShortLabels(ids) {
@@ -1947,50 +2038,76 @@ function visualizzaRecord(records) {
   if (!tableBody) return;
 
   tableBody.innerHTML = "";
-
   const list = Array.isArray(records) ? records : [];
 
   if (!list.length) {
-    tableBody.innerHTML = `
-      <tr>
-        <td colspan="10" style="text-align:center; color: var(--text-muted); padding: 14px;">
-          Keine Tänzer*innen gefunden.
-        </td>
-      </tr>
-    `;
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 10;
+    td.style.textAlign = "center";
+    td.style.color = "var(--text-muted)";
+    td.style.padding = "14px";
+    td.textContent = "Keine Tänzer*innen gefunden.";
+    tr.appendChild(td);
+    tableBody.appendChild(tr);
     return;
   }
 
   list.forEach((record) => {
     const tr = document.createElement("tr");
+    const values = [
+      record.vorname || "",
+      record.nachname || "",
+      record.geschlecht || "",
+      record.email || "",
+      record.telefon || "",
+      record.adresse || "",
+      record.plz || "",
+      record.stadt || "",
+      record.courses && record.courses.length ? mapCourseIdsToShortLabels(record.courses) : "-"
+    ];
 
-    const coursesText =
-      record.courses && record.courses.length
-        ? mapCourseIdsToShortLabels(record.courses)
-        : "-";
+    values.forEach((value) => {
+      const td = document.createElement("td");
+      td.textContent = value;
+      tr.appendChild(td);
+    });
 
-tr.innerHTML = `
-  <td>${record.vorname || ""}</td>
-  <td>${record.nachname || ""}</td>
-  <td>${record.geschlecht || ""}</td>
-  <td>${record.email || ""}</td>
-  <td>${record.telefon || ""}</td>
-  <td>${record.adresse || ""}</td>
-  <td>${record.plz || ""}</td>
-  <td>${record.stadt || ""}</td>
-  <td>${coursesText}</td>
-  <td>
-    <div class="table-actions">
-      <button class="edit-btn" onclick="modificaRecord(${record.id})">✏️</button>
-      <button class="delete-btn" onclick="eliminaRecord(${record.id})">🗑️</button>
-      <button class="invoice-btn" onclick="generaRechnung(${record.id})">📄</button>
-    </div>
-  </td>
-`;
+    const actionTd = document.createElement("td");
+    const actions = document.createElement("div");
+    actions.className = "table-actions";
+
+    const editBtn = document.createElement("button");
+    editBtn.className = "edit-btn";
+    editBtn.type = "button";
+    editBtn.title = "Bearbeiten";
+    editBtn.setAttribute("aria-label", "Bearbeiten");
+    editBtn.textContent = "✏️";
+    editBtn.addEventListener("click", () => modificaRecord(record.id));
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-btn";
+    deleteBtn.type = "button";
+    deleteBtn.title = "Löschen";
+    deleteBtn.setAttribute("aria-label", "Löschen");
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.addEventListener("click", () => eliminaRecord(record.id));
+
+    const invoiceBtn = document.createElement("button");
+    invoiceBtn.className = "invoice-btn";
+    invoiceBtn.type = "button";
+    invoiceBtn.title = "Rechnung erstellen";
+    invoiceBtn.setAttribute("aria-label", "Rechnung erstellen");
+    invoiceBtn.textContent = "📄";
+    invoiceBtn.addEventListener("click", () => generaRechnung(record.id));
+
+    actions.append(editBtn, deleteBtn, invoiceBtn);
+    actionTd.appendChild(actions);
+    tr.appendChild(actionTd);
+
     tableBody.appendChild(tr);
   });
 }
-
       function confirmCoursePicker() {
         const modal = document.getElementById("coursePickerModal");
         if (!modal) return;
@@ -2066,8 +2183,7 @@ loadDataFromJsonBin()
   });
 
 async function aggiungiRecord() {
-  const nuovoId =
-    (appData.records[appData.records.length - 1]?.id || 0) + 1;
+  const nuovoId = getNextRecordId();
 
   const nuovo = {
     id: nuovoId,
@@ -2110,10 +2226,10 @@ function renderBirthdayList() {
   const container = document.getElementById("birthdayList");
   if (!container) return;
 
+  container.innerHTML = "";
   const records = Array.isArray(appData?.records) ? appData.records : [];
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
   const currentYear = today.getFullYear();
 
   const birthdays = records
@@ -2127,20 +2243,11 @@ function renderBirthdayList() {
 
       const month = Number(parts[1]);
       const day = Number(parts[2]);
-
-      if (!Number.isInteger(month) || !Number.isInteger(day)) return null;
-      if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+      if (!isValidMonthDayForYear(currentYear, month, day)) return null;
 
       const birthdayThisYear = new Date(currentYear, month - 1, day);
-      if (Number.isNaN(birthdayThisYear.getTime())) return null;
-
-      const fullName =
-        `${record?.vorname || ""} ${record?.nachname || ""}`.trim() ||
-        "Ohne Namen";
-
-      const diffDays = Math.floor(
-        (birthdayThisYear.getTime() - today.getTime()) / 86400000
-      );
+      const fullName = `${record?.vorname || ""} ${record?.nachname || ""}`.trim() || "Ohne Namen";
+      const diffDays = Math.floor((birthdayThisYear.getTime() - today.getTime()) / 86400000);
 
       let badgeLabel = birthdayThisYear.toLocaleDateString("de-DE", {
         day: "2-digit",
@@ -2163,7 +2270,6 @@ function renderBirthdayList() {
 
       return {
         name: fullName,
-        dateObj: birthdayThisYear,
         dateLabel: birthdayThisYear.toLocaleDateString("de-DE", {
           day: "2-digit",
           month: "2-digit",
@@ -2183,29 +2289,36 @@ function renderBirthdayList() {
     });
 
   if (!birthdays.length) {
-    container.innerHTML = `
-      <div class="birthday-empty">
-        Keine Geburtstage aktiver Mitglieder gefunden.
-      </div>
-    `;
+    const empty = document.createElement("div");
+    empty.className = "birthday-empty";
+    empty.textContent = "Keine Geburtstage aktiver Mitglieder gefunden.";
+    container.appendChild(empty);
     return;
   }
 
-  container.innerHTML = birthdays
-    .map(
-      (item) => `
-      <div class="birthday-item ${item.itemClass || ""}">
-        <div class="birthday-main">
-          <div class="birthday-name">${item.name}</div>
-          <div class="birthday-date">${item.dateLabel}</div>
-        </div>
-        <div class="birthday-badge ${item.badgeClass || ""}">
-          ${item.badgeLabel}
-        </div>
-      </div>
-    `
-    )
-    .join("");
+  birthdays.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = `birthday-item ${item.itemClass || ""}`.trim();
+
+    const main = document.createElement("div");
+    main.className = "birthday-main";
+
+    const name = document.createElement("div");
+    name.className = "birthday-name";
+    name.textContent = item.name;
+
+    const date = document.createElement("div");
+    date.className = "birthday-date";
+    date.textContent = item.dateLabel;
+
+    const badge = document.createElement("div");
+    badge.className = `birthday-badge ${item.badgeClass || ""}`.trim();
+    badge.textContent = item.badgeLabel;
+
+    main.append(name, date);
+    row.append(main, badge);
+    container.appendChild(row);
+  });
 }
 
       function pulisciForm() {
@@ -2253,17 +2366,18 @@ function applyMemberFilters() {
 
   if (searchTerm) {
     filtered = filtered.filter((record) => {
-      return (
-        (record.vorname || "").toLowerCase().includes(searchTerm) ||
-        (record.nachname || "").toLowerCase().includes(searchTerm) ||
-        (record.geschlecht || "").toLowerCase().includes(searchTerm) ||
-        (record.email || "").toLowerCase().includes(searchTerm) ||
-        (record.telefon || "").toLowerCase().includes(searchTerm) ||
-        (record.adresse || "").toLowerCase().includes(searchTerm) ||
-        (record.plz || "").toLowerCase().includes(searchTerm) ||
-        (record.stadt || "").toLowerCase().includes(searchTerm) ||
-        (record.notiz || "").toLowerCase().includes(searchTerm)
-      );
+return (
+  (record.vorname || "").toLowerCase().includes(searchTerm) ||
+  (record.nachname || "").toLowerCase().includes(searchTerm) ||
+  (record.geschlecht || "").toLowerCase().includes(searchTerm) ||
+  (record.email || "").toLowerCase().includes(searchTerm) ||
+  (record.telefon || "").toLowerCase().includes(searchTerm) ||
+  (record.adresse || "").toLowerCase().includes(searchTerm) ||
+  (record.plz || "").toLowerCase().includes(searchTerm) ||
+  (record.stadt || "").toLowerCase().includes(searchTerm) ||
+  (record.notiz || "").toLowerCase().includes(searchTerm) ||
+  (record.courses || []).join(" ").toLowerCase().includes(searchTerm)
+);
     });
   }
 
@@ -2335,7 +2449,7 @@ function initEditAktivMitgliedUI(record) {
 
         initEditAktivMitgliedUI(record);
 
-        document.getElementById("editForm").style.display = "block";
+openModal("editForm", "#editNome");
       }
 
 async function salvaModifiche() {
@@ -2380,27 +2494,29 @@ renderBirthdayList();
     alert("JSONBin-Fehler beim Speichern. Die Änderungen wurden lokal zurückgesetzt.");
   }
 }
-      function renderInvoiceTable(list) {
-        const tbody = document.getElementById("invoiceTableBody");
-        tbody.innerHTML = "";
-        list.forEach((inv, index) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${inv.invoiceNumber || ""}</td>
-            <td>${inv.date || ""}</td>
-            <td>${inv.recipient || ""}</td>
-            <td>${inv.amount != null ? inv.amount.toFixed(2) + " €" : ""}</td>
-            <td style="text-align:center;">
-              <input
-                type="checkbox"
-                ${inv.paid ? "checked" : ""}
-                onchange="toggleInvoicePaid(${index})"
-              />
-            </td>
-          `;
-          tbody.appendChild(row);
-        });
-      }
+function renderInvoiceTable(list) {
+  const tbody = document.getElementById("invoiceTableBody");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+  list.forEach((inv, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${inv.invoiceNumber || ""}</td>
+      <td>${inv.date || ""}</td>
+      <td>${inv.recipient || ""}</td>
+      <td>${inv.amount != null ? inv.amount.toFixed(2) + " €" : ""}</td>
+      <td style="text-align:center;">
+        <input
+          type="checkbox"
+          ${inv.paid ? "checked" : ""}
+          onchange="toggleInvoicePaid(${index})"
+        />
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
 
 async function toggleInvoicePaid(index) {
   const inv = appData.invoices[index];
@@ -2536,28 +2652,49 @@ async function toggleInvoicePaid(index) {
       return raw.replace(/^"|"$/g, "").replace(/""/g, '"');
     };
 
-    const newRecords = lines.slice(1).map((line) => {
-      const cols = line.match(/("([^"]|"")*"|[^,]*)/g) || [];
-      return {
-        id: parseInt(byName("ID", cols), 10),
-        vorname: byName("Vorname", cols),
-        nachname: byName("Nachname", cols),
-        geschlecht: byName("Geschlecht", cols),
-        email: byName("E-Mail", cols),
-        telefon: byName("Telefon", cols),
-        adresse: byName("Adresse", cols),
-        plz: byName("PLZ", cols),
-        stadt: byName("Stadt", cols),
-        geburtstag: byName("Geburtsdatum", cols),
-        beitrittsdatum: byName("Beitrittsdatum", cols),
-        austrittsdatum: byName("Austrittsdatum", cols),
-        aktivMitglied: byName("AktivesMitglied", cols) === "Ja",
-        notiz: byName("Notiz", cols),
-        courses: byName("Kurse", cols)
-          ? byName("Kurse", cols).split("|").filter(Boolean)
-          : []
-      };
-    });
+ const parsedRecords = lines.slice(1).map((line) => {
+  const cols = line.match(/("(?:[^"]|"")*"|[^,]*)/g) || [];
+
+  return {
+    id: parseInt(byName("ID", cols), 10),
+    vorname: byName("Vorname", cols).trim(),
+    nachname: byName("Nachname", cols).trim(),
+    geschlecht: byName("Geschlecht", cols).trim(),
+    email: byName("E-Mail", cols).trim(),
+    telefon: byName("Telefon", cols).trim(),
+    adresse: byName("Adresse", cols).trim(),
+    plz: byName("PLZ", cols).trim(),
+    stadt: byName("Stadt", cols).trim(),
+    geburtstag: byName("Geburtsdatum", cols).trim(),
+    beitrittsdatum: byName("Beitrittsdatum", cols).trim(),
+    austrittsdatum: byName("Austrittsdatum", cols).trim(),
+aktivMitglied: ["ja", "true", "1"].includes(byName("AktivesMitglied", cols).trim().toLowerCase()),
+    notiz: byName("Notiz", cols),
+    courses: byName("Kurse", cols)
+      ? byName("Kurse", cols).split("|").map((x) => x.trim()).filter(Boolean)
+      : []
+  };
+});
+
+const validRecords = parsedRecords.filter((record) => Number.isInteger(record.id));
+
+if (!validRecords.length && parsedRecords.length) {
+  alert("Die CSV enthält keine gültigen Datensätze mit numerischer ID.");
+  showSaveToast("CSV-Import fehlgeschlagen: ungültige IDs.", "error");
+  fileInput.value = "";
+  return;
+}
+
+const deduped = [];
+const seenIds = new Set();
+
+for (const record of validRecords) {
+  if (seenIds.has(record.id)) continue;
+  seenIds.add(record.id);
+  deduped.push(record);
+}
+
+const newRecords = deduped;
 
     const previousRecords = JSON.parse(JSON.stringify(appData.records));
     appData.records = newRecords;
@@ -2658,11 +2795,7 @@ async function resetAllInvoicesSecret() {
         const firstRow = container.querySelector(".probeRow");
         if (firstRow) attachProbeRowListeners(firstRow);
 
-        document.getElementById("invoiceForm").style.display = "block";
-      }
-
-      function chiudiInvoiceForm() {
-        document.getElementById("invoiceForm").style.display = "none";
+openModal("invoiceForm", ".probeDate");
       }
 
       function attachProbeRowListeners(row) {
@@ -2968,5 +3101,6 @@ async function confermaRechnung() {
         URL.revokeObjectURL(url);
       }
     </script>
+<div id="modalBackdrop" class="modal-backdrop"></div>
   </body>
 </html>
