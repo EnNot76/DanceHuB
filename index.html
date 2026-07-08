@@ -1056,14 +1056,6 @@ tbody td:nth-child(10) {
         >
           💾 Lokales Backup
         </button>
-        <button
-          class="nav-button"
-          type="button"
-          onclick="resetInvoiceCounter()"
-          title="Nur für Test-Phase zurücksetzen"
-        >
-          ⚠️ Reset RG-Nummer
-        </button>
       </nav>
 
       <div class="layout">
@@ -1170,12 +1162,21 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
               💾 Lokales Backup (CSV)
             </button>
 
-            <button
-              class="home-tile home-tile-danger"
-              onclick="resetInvoiceCounter()"
-            >
-              ⚠️ Reset Rechnung (Test-Phase)
-            </button>
+  <button
+    class="home-tile home-tile-danger"
+    onclick="resetInvoiceCounter()"
+    style="flex: 1 1 260px"
+  >
+    ⚠️ Reset Rechnung (Test-Phase)
+  </button>
+
+  <button
+    class="home-tile home-tile-danger"
+    onclick="resetAllInvoicesSecret()"
+    style="flex: 1 1 260px"
+  >
+    🗑️ Rechnungsarchiv leeren
+  </button>
           </div>
         </div>
       </div>
