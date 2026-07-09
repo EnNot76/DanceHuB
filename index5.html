@@ -6,6 +6,7 @@
     <title>Dance HUB Munich WebApp - Dance-Management</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
     <style>
       :root {
         --bg-page: #f5f5f7;
@@ -1097,6 +1098,8 @@ tbody td:nth-child(10) {
           autocomplete="current-password"
         />
 
+        <div id="turnstile-container"></div>
+
         <div id="loginError" class="login-error" style="display: none"></div>
 
         <button type="submit" id="loginSubmitBtn" class="primary-btn login-submit">
@@ -1912,7 +1915,12 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
     </div>
 
     <script>
-      // ACHTUNG: Hier die eigene Worker-URL eintragen (siehe WORKER-SETUP.md)
+const widgetId = turnstile.render("#turnstile-container", {
+  sitekey: "<0x4AAAAAADykqtfrlQfkxrYO>",
+  callback: function (token) {
+    console.log("Success:", token);
+  },
+});
       const PROXY_URL = "https://dancehub-proxy.enzo-notari-76.workers.dev";
 
       let currentAuthHeader = null; // wird beim Login gesetzt, nie im Klartext gespeichert
