@@ -1360,7 +1360,7 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
                   >
                     Geburtsdatum Tänzer*in
                   </span>
-                  <input type="date" id="geburtstag" />
+                  <input type="date" id="geburtsdatum" />
                 </div>
 
                 <div
@@ -1664,7 +1664,7 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
               >
                 Geburtsdatum der Tänzer*in
               </span>
-              <input type="date" id="editGeburtstag" />
+              <input type="date" id="editGeburtsdatum" />
             </div>
 
             <div
@@ -2747,7 +2747,7 @@ async function aggiungiRecord() {
     adresse: document.getElementById("indirizzo").value.trim(),
     plz: document.getElementById("cap").value.trim(),
     stadt: document.getElementById("citta").value.trim(),
-    geburtstag: document.getElementById("geburtstag").value || "",
+    geburtsdatum: document.getElementById("geburtsdatum").value || "",
     beitrittsdatum: document.getElementById("beitrittsdatum").value || "",
     aktivMitglied: true,
     notiz: document.getElementById("notiz").value || "",
@@ -2787,7 +2787,7 @@ function renderBirthdayList() {
   const birthdays = records
     .filter((record) => record?.aktivMitglied === true)
     .map((record) => {
-      const rawBirthday = String(record?.geburtstag || "").trim();
+      const rawBirthday = String(record?.geburtsdatum || "").trim();
       if (!rawBirthday) return null;
 
       const parts = rawBirthday.split("-");
@@ -2884,7 +2884,7 @@ function renderBirthdayList() {
         document.getElementById("citta").value = "";
 
         const notizEl = document.getElementById("notiz");
-        const gebEl = document.getElementById("geburtstag");
+        const gebEl = document.getElementById("geburtsdatum");
         const beiEl = document.getElementById("beitrittsdatum");
 
         if (notizEl) notizEl.value = "";
@@ -2979,8 +2979,8 @@ function initEditAktivMitgliedUI(record) {
         document.getElementById("editCap").value = record.plz;
         document.getElementById("editCitta").value = record.stadt;
 
-        document.getElementById("editGeburtstag").value =
-          record.geburtstag || "";
+        document.getElementById("editGeburtsdatum").value =
+          record.geburtsdatum || "";
         document.getElementById("editBeitrittsdatum").value =
           record.beitrittsdatum || "";
         document.getElementById("editAustrittsdatum").value =
@@ -3019,7 +3019,7 @@ async function salvaModifiche() {
   record.adresse = document.getElementById("editIndirizzo").value.trim();
   record.plz = document.getElementById("editCap").value.trim();
   record.stadt = document.getElementById("editCitta").value.trim();
-  record.geburtstag = document.getElementById("editGeburtstag").value || "";
+  record.geburtsdatum = document.getElementById("editGeburtsdatum").value || "";
   record.beitrittsdatum =
     document.getElementById("editBeitrittsdatum").value || "";
   record.austrittsdatum =
@@ -3177,7 +3177,7 @@ async function toggleInvoicePaid(index) {
           record.adresse,
           record.plz,
           record.stadt,
-          record.geburtstag || "",
+          record.geburtsdatum || "",
           record.beitrittsdatum || "",
           record.austrittsdatum || "",
           record.aktivMitglied ? "Ja" : "Nein",
@@ -3251,7 +3251,7 @@ async function toggleInvoicePaid(index) {
     adresse: byName("Adresse", cols).trim(),
     plz: byName("PLZ", cols).trim(),
     stadt: byName("Stadt", cols).trim(),
-    geburtstag: byName("Geburtsdatum", cols).trim(),
+    geburtsdatum: byName("Geburtsdatum", cols).trim(),
     beitrittsdatum: byName("Beitrittsdatum", cols).trim(),
     austrittsdatum: byName("Austrittsdatum", cols).trim(),
 aktivMitglied: ["ja", "true", "1"].includes(byName("AktivesMitglied", cols).trim().toLowerCase()),
