@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -2039,13 +2040,14 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
       );
     }
 
-    const json = await res.json();
-    appData = json.record || {
-      records: [],
-      invoiceCounter: {},
-      invoices: [],
-      courses: []
-    };
+const json = await res.json();
+appData = json || {
+  records: [],
+  invoiceCounter: {},
+  invoices: [],
+  courses: []
+};
+
   } catch (error) {
     if (error.message === "UNAUTHORIZED") {
       throw error; // wird von checkLogin() abgefangen, keinen lokalen Testmodus starten
