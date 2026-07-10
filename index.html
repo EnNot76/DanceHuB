@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -2032,6 +2030,11 @@ Nächste Geburtstage aktiver Mitglieder ab heute, danach bereits vergangene Term
 
     if (res.status === 401) {
       throw new Error("UNAUTHORIZED");
+    }
+ 
+    if (res.status === 429) {
+       showLoginScreen("Zu viele fehlgeschlagene Versuche. Bitte warte einige Minuten.");
+       return;
     }
 
     if (!res.ok) {
