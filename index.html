@@ -2156,6 +2156,10 @@ async function saveDataToJsonBin() {
   if (res.status === 401) {
     throw new Error("UNAUTHORIZED");
   }
+  if (res.status === 429) {
+     showLoginScreen("Zu viele fehlgeschlagene Versuche. Bitte warte einige Minuten.");
+     return;
+  }
 
   if (!res.ok) {
     const errorText = await res.text();
@@ -2694,6 +2698,12 @@ async function handleLogin(event) {
       showLoginScreen("Benutzername oder Passwort falsch.");
       return;
     }
+
+    if (res.status === 429) {
+      showLoginScreen("Zu viele fehlgeschlagene Versuche. Bitte warte einige Minuten.");
+      return;
+    }
+    
     if (!res.ok) {
       showLoginScreen("Server nicht erreichbar. Bitte später erneut versuchen.");
       return;
